@@ -17,9 +17,9 @@ namespace AzureAdLicenseGovernor.Core.Mappers
             };
         }
 
-        private LicensedProduct Map(LicensedProductData toMap)
+        private LicensedProductAssignment Map(LicensedProductAssignmentData toMap)
         {
-            return new LicensedProduct
+            return new LicensedProductAssignment
             {
                 Id = toMap?.Id,
                 EnabledServicePlans = toMap?.EnabledServicePlans
@@ -43,9 +43,9 @@ namespace AzureAdLicenseGovernor.Core.Mappers
             return $"{tenantId}|{objectId}";
         }
 
-        private LicensedProductData Map(LicensedProduct toMap)
+        private LicensedProductAssignmentData Map(LicensedProductAssignment toMap)
         {
-            return new LicensedProductData
+            return new LicensedProductAssignmentData
             {
                 Id = toMap?.Id,
                 EnabledServicePlans = toMap?.EnabledServicePlans

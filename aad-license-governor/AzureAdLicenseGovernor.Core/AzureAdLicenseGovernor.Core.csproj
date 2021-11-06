@@ -20,4 +20,8 @@
     <PackageReference Include="Microsoft.Graph.Beta" Version="0.41.0-preview" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Factories\" />
+  </ItemGroup>
+
 </Project>

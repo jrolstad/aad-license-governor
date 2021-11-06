@@ -9,11 +9,11 @@ namespace AzureAdLicenseGovernor.Core.Models
         public string ObjectId { get; set; }
         public string TenantId { get; set; }
 
-        public List<LicensedProduct> LicensedProducts { get; set; }
+        public List<LicensedProductAssignment> LicensedProducts { get; set; }
 
     }
 
-    public class LicensedProduct
+    public class LicensedProductAssignment
     {
         public string Id { get; set; }
 

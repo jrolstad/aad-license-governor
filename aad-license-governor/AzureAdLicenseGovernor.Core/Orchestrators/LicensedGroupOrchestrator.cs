@@ -7,23 +7,23 @@ using System.Threading.Tasks;
 
 namespace AzureAdLicenseGovernor.Core.Orchestrators
 {
-    public class GroupOrchestrator
+    public class LicensedGroupOrchestrator
     {
         private readonly LicensedGroupRepository _licensedGroupRepository;
 
-        public GroupOrchestrator(LicensedGroupRepository licensedGroupRepository)
+        public LicensedGroupOrchestrator(LicensedGroupRepository licensedGroupRepository)
         {
             _licensedGroupRepository = licensedGroupRepository;
         }
 
-        public Task<List<LicensedGroup>> Get()
+        public Task<ICollection<LicensedGroup>> Get()
         {
             var results = _licensedGroupRepository.Get();
 
             return results;
         }
 
-        public Task<List<LicensedGroup>> Get(string tenantId)
+        public Task<ICollection<LicensedGroup>> Get(string tenantId)
         {
             var results = _licensedGroupRepository.Get(tenantId);
 

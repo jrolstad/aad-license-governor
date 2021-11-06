@@ -23,7 +23,7 @@ namespace AzureAdLicenseGovernor.Core.Repositories
             _cosmosDbService = cosmosDbService;
         }
 
-        public async Task<List<LicensedGroup>> Get()
+        public async Task<ICollection<LicensedGroup>> Get()
         {
             var query = _cosmosDbService.Query<LicensedGroupData>(CosmosConfiguration.Containers.LicensedGroups);
 
@@ -32,7 +32,7 @@ namespace AzureAdLicenseGovernor.Core.Repositories
             return data.ToList();
         }
 
-        public async Task<List<LicensedGroup>> Get(string tenantId)
+        public async Task<ICollection<LicensedGroup>> Get(string tenantId)
         {
             var query = _cosmosDbService.Query<LicensedGroupData>(CosmosConfiguration.Containers.LicensedGroups)
                 .Where(g => g.TenantId == tenantId);

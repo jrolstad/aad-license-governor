@@ -13,6 +13,7 @@ namespace AzureAdLicenseGovernor.Core.Configuration
 
     public class CosmosContainers
     {
+        public string Directories = "Directories";
         public string LicensedGroups = "LicensedGroups";
     }
 }
