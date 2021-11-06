@@ -6,9 +6,9 @@ namespace AzureAdLicenseGovernor.Core.Mappers
 {
     public class LicensedProductMapper
     {
-        public LicensedProduct Map(SubscribedSku toMap)
+        public Product Map(SubscribedSku toMap)
         {
-            return new LicensedProduct
+            return new Product
             {
                 Id = toMap?.SkuId?.ToString(),
                 Name = toMap?.SkuPartNumber,

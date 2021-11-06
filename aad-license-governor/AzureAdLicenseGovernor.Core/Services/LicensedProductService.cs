@@ -21,7 +21,7 @@ namespace AzureAdLicenseGovernor.Core.Services
             _mapper = mapper;
         }
 
-        public async Task<List<LicensedProduct>> Get(Models.Directory directory)
+        public async Task<List<Product>> Get(Models.Directory directory)
         {
             var data = await GetSubscribedSkus(directory);
             var result = data.Select(_mapper.Map).ToList();

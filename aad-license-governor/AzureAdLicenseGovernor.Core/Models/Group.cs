@@ -10,10 +10,4 @@ namespace AzureAdLicenseGovernor.Core.Models
 
         public List<LicenseAssignment> AssignedLicenses { get; set; }
     }
-
-    public class LicenseAssignment
-    {
-        public string ProductId { get; set; }
-        public List<string> DisabledServicePlans { get; set; }
-    }
 }
