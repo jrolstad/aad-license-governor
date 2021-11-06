@@ -33,15 +33,14 @@ namespace AzureAdLicenseGovernor.Core.Mappers
                 .Where(a => !expectedAssignmentsById.ContainsKey(a.ProductId))
                 .ToList();
 
-            var existingProducts = actual?
-                .Where(a => expectedAssignmentsById.ContainsKey(a.ProductId))
+            var productsToUpdate = GetProductsWithServicePlanChanges(actual, expectedAssignmentsById, availableProducts)
                 .ToList();
 
             return new LicenseAssignmentComparisonResult
             {
                 ToAdd = productsToAdd,
                 ToRemove = productsToRemove,
-                ToUpdate = new List<LicenseAssignment>()
+                ToUpdate = productsToUpdate
             };
         }
 
@@ -55,6 +54,47 @@ namespace AzureAdLicenseGovernor.Core.Mappers
             }
 
             return new string[0];
+        }
+
+        private IEnumerable<LicenseAssignment> GetProductsWithServicePlanChanges(ICollection<LicenseAssignment> existing,
+            Dictionary<string, ProductAssignment> expected,
+            Dictionary<string, Product> availableProducts)
+        {
+            var existingProducts = existing?
+               .Where(a => expected.ContainsKey(a.ProductId))
+               .ToList();
+
+            foreach (var product in existingProducts)
+            {
+                var expectedLicenseAssignment = GetExpectedLicenseAssignment(expected, availableProducts, product);
+                var existingLicenseAssignment = GetExistingLicenseAssignment(existing, product);
+
+                if (!LicenseAssignmentsAreSame(expectedLicenseAssignment, existingLicenseAssignment))
+                {
+                    yield return expectedLicenseAssignment;
+                }
+            }
+
+        }
+
+        private LicenseAssignment GetExpectedLicenseAssignment(Dictionary<string, ProductAssignment> expected, Dictionary<string, Product> availableProducts, LicenseAssignment product)
+        {
+            var expectedAssignment = expected[product.ProductId];
+            var servicePlans = GetProductServicePlans(product.ProductId, availableProducts);
+            var expectedLicenseAssignment = _licensedAssignmentMapper.Map(expectedAssignment, servicePlans);
+            return expectedLicenseAssignment;
+        }
+
+        private static LicenseAssignment GetExistingLicenseAssignment(ICollection<LicenseAssignment> existing, LicenseAssignment product)
+        {
+            return existing.FirstOrDefault(a => string.Equals(a.ProductId, product.ProductId, StringComparison.OrdinalIgnoreCase))
+                ?? new LicenseAssignment { ProductId = product.ProductId, DisabledServicePlans = new List<string>() };
+        }
+
+        private static bool LicenseAssignmentsAreSame(LicenseAssignment expectedLicenseAssignment, LicenseAssignment existingLicenseAssignment)
+        {
+            return string.Equals(expectedLicenseAssignment.ProductId, existingLicenseAssignment.ProductId, StringComparison.OrdinalIgnoreCase)
+                && expectedLicenseAssignment.DisabledServicePlans.SequenceEqual(existingLicenseAssignment.DisabledServicePlans);
         }
     }
 }
