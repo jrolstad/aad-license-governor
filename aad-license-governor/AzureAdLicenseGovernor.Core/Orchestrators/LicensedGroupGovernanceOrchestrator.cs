@@ -1,6 +1,7 @@
 ﻿using AzureAdLicenseGovernor.Core.Mappers;
 using AzureAdLicenseGovernor.Core.Models;
 using AzureAdLicenseGovernor.Core.Services;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,22 +15,22 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
         private readonly DirectoryOrchestrator _directoryOrchestrator;
         private readonly LicensedProductService _licensedProductService;
         private readonly GroupService _groupService;
-        private readonly LicensedAssignmentMapper _licensedAssignmentMapper;
         private readonly LicenseAssignmentComparer _licenseAssignmentComparer;
+        private readonly ILogger<LicensedGroupGovernanceOrchestrator> _logger;
 
         public LicensedGroupGovernanceOrchestrator(LicensedGroupOrchestrator licensedGroupOrchestrator,
             DirectoryOrchestrator directoryOrchestrator,
             LicensedProductService licensedProductService,
             GroupService groupService,
-            LicensedAssignmentMapper licensedAssignmentMapper,
-            LicenseAssignmentComparer licenseAssignmentComparer)
+            LicenseAssignmentComparer licenseAssignmentComparer,
+            ILogger<LicensedGroupGovernanceOrchestrator> logger)
         {
             _licensedGroupOrchestrator = licensedGroupOrchestrator;
             _directoryOrchestrator = directoryOrchestrator;
             _licensedProductService = licensedProductService;
             _groupService = groupService;
-            _licensedAssignmentMapper = licensedAssignmentMapper;
             _licenseAssignmentComparer = licenseAssignmentComparer;
+            _logger = logger;
         }
 
         public async Task Apply()
@@ -51,7 +52,6 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
             var groupTasks = groups.Select(group => ApplyGroup(directory,group, productsById));
 
             await Task.WhenAll(groupTasks);
-           
         }
 
         private async Task ApplyGroup(Directory directory, 
@@ -64,26 +64,92 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
                 licensedGroup.LicensedProducts,
                 productsById);
 
-            var actionTasks = new List<Task>();
-            if(comparisonResult.ToAdd.Any())
+            if (licensedGroup.Mode == ProductAssignmentMode.Enforce)
             {
-                var addTask =_groupService.AssignedLicenses(directory, licensedGroup.ObjectId, comparisonResult.ToAdd);
+                await ApplyChanges(directory, licensedGroup, comparisonResult);
+            }
+
+            LogChanges(licensedGroup,comparisonResult);
+        }
+
+        private Task ApplyChanges(Directory directory, LicensedGroup licensedGroup, LicenseAssignmentComparisonResult comparisonResult)
+        {
+            var actionTasks = new List<Task>();
+
+            if (comparisonResult.ToAdd.Any())
+            {
+                var addTask = _groupService.AssignedLicenses(directory, licensedGroup.ObjectId, comparisonResult.ToAdd);
                 actionTasks.Add(addTask);
             }
-            if(comparisonResult.ToRemove.Any())
+
+            if (comparisonResult.ToRemove.Any())
             {
                 var removeTask = _groupService.RemoveLicenses(directory, licensedGroup.ObjectId, comparisonResult.ToRemove);
                 actionTasks.Add(removeTask);
             }
 
-            if(comparisonResult.ToUpdate.Any())
+            if (comparisonResult.ToUpdate.Any())
             {
                 var updateTask = _groupService.UpdateLicenses(directory, licensedGroup.ObjectId, comparisonResult.ToRemove);
                 actionTasks.Add(updateTask);
             }
 
-            await Task.WhenAll(actionTasks);
+            return Task.WhenAll(actionTasks);
         }
- 
+
+        private void LogChanges(LicensedGroup group, LicenseAssignmentComparisonResult comparison)
+        {
+            LogAddedProducts(group, comparison);
+            LogRemovedProducts(group, comparison);
+            LogUpdatedProducts(group, comparison);
+
+            LogIfNoChanges(group,comparison);
+        }
+
+        private void LogAddedProducts(LicensedGroup group, LicenseAssignmentComparisonResult comparison)
+        {
+            if (comparison.ToAdd.Any())
+            {
+                _logger.LogInformation("Licensed products added to group");
+            }
+            else
+            {
+                _logger.LogInformation("No licensed products added to group");
+            }
+        }
+
+        private void LogRemovedProducts(LicensedGroup group, LicenseAssignmentComparisonResult comparison)
+        {
+            if (comparison.ToRemove.Any())
+            {
+                _logger.LogInformation("Licensed products removed from group");
+            }
+            else
+            {
+                _logger.LogInformation("No licensed products removed from group");
+            }
+        }
+
+        private void LogUpdatedProducts(LicensedGroup group, LicenseAssignmentComparisonResult comparison)
+        {
+            if (comparison.ToUpdate.Any())
+            {
+                _logger.LogInformation("Licensed products updated for group");
+            }
+            else
+            {
+                _logger.LogInformation("No licensed products updated for group");
+            }
+        }
+
+        private void LogIfNoChanges(LicensedGroup group, LicenseAssignmentComparisonResult comparison)
+        {
+            if (!comparison.ToAdd.Any() &&
+                            !comparison.ToRemove.Any() &&
+                            !comparison.ToUpdate.Any())
+            {
+                _logger.LogInformation("No licensing changes for group");
+            }
+        }
     }
 }
