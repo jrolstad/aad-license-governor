@@ -33,6 +33,7 @@ namespace AzureAdLicenseGovernor.Core.Configuration
             services.AddTransient<DirectoryRepository>();
             services.AddTransient<LicensedGroupRepository>();
 
+            services.AddTransient<AuthorizationService>();
             services.AddTransient<CosmosDbService>();
             services.AddTransient<GroupService>();
             services.AddTransient<LicensedProductService>();
