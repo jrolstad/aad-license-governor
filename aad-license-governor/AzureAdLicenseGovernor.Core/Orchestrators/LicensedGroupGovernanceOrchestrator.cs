@@ -45,7 +45,7 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
         private async Task Apply(Directory directory)
         {
             var products = await _licensedProductService.Get(directory);
-            var productsById = products.ToDictionary(p => p.Id);
+            var productsById = products.ToDictionary(p => p.Id,StringComparer.OrdinalIgnoreCase);
 
             var groups = await _licensedGroupOrchestrator.Get(directory.TenantId);
             var groupTasks = groups.Select(group => ApplyGroup(directory,group, productsById));

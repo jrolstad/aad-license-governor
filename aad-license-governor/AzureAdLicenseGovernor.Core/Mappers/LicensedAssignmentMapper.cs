@@ -25,6 +25,19 @@ namespace AzureAdLicenseGovernor.Core.Mappers
             };
         }
 
+        public Models.LicenseAssignment Map(Models.ProductAssignment toMap, IEnumerable<string> servicePlansForProduct)
+        {
+            var disabledServicePlans = servicePlansForProduct
+                .Except(toMap.EnabledServicePlans,StringComparer.OrdinalIgnoreCase)
+                .ToList();
+
+            return new Models.LicenseAssignment
+            {
+                ProductId = toMap.Id,
+                DisabledServicePlans = disabledServicePlans
+            };
+        }
+
 
     }
 }

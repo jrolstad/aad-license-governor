@@ -7,6 +7,13 @@ namespace AzureAdLicenseGovernor.Core.Mappers
 {
     public class LicenseAssignmentComparer
     {
+        private readonly LicensedAssignmentMapper _licensedAssignmentMapper;
+
+        public LicenseAssignmentComparer(LicensedAssignmentMapper licensedAssignmentMapper)
+        {
+            _licensedAssignmentMapper = licensedAssignmentMapper;
+        }
+
         public LicenseAssignmentComparisonResult Compare(ICollection<LicenseAssignment> actual,
             ICollection<ProductAssignment> expected,
             Dictionary<string, Product> availableProducts)
@@ -19,11 +26,11 @@ namespace AzureAdLicenseGovernor.Core.Mappers
 
             var productsToAdd = expected?
                 .Where(p => !existingAssignmentsById.ContainsKey(p.Id))
+                .Select(p=>_licensedAssignmentMapper.Map(p,GetProductServicePlans(p.Id,availableProducts)))
                 .ToList();
 
             var productsToRemove = actual?
                 .Where(a => !expectedAssignmentsById.ContainsKey(a.ProductId))
-                .Select(a => Guid.Parse(a.ProductId))
                 .ToList();
 
             var existingProducts = actual?
@@ -32,10 +39,22 @@ namespace AzureAdLicenseGovernor.Core.Mappers
 
             return new LicenseAssignmentComparisonResult
             {
-                ToAdd = new List<LicenseAssignment>(),
-                ToRemove = new List<LicenseAssignment>(),
+                ToAdd = productsToAdd,
+                ToRemove = productsToRemove,
                 ToUpdate = new List<LicenseAssignment>()
             };
+        }
+
+        private IEnumerable<string> GetProductServicePlans(string productId, Dictionary<string, Product> availableProducts)
+        {
+            if(availableProducts.TryGetValue(productId,out Product product))
+            {
+                return product?
+                    .ServicePlans?
+                    .Select(s => s.Id) ?? new string[0];
+            }
+
+            return new string[0];
         }
     }
 }
