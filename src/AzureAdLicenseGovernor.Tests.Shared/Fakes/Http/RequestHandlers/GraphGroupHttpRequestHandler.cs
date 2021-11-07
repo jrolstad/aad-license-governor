@@ -1,11 +1,14 @@
 ﻿using AzureAdLicenseGovernor.Tests.Shared.Fakes.Http.Graph;
 using AzureAdLicenseGovernor.Tests.Shared.TestContexts;
+using Newtonsoft.Json;
 using System;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace AzureAdLicenseGovernor.Tests.Shared.Fakes.Http.RequestHandlers
 {
+
     public class GraphGroupHttpRequestHandler : IHttpRequestHandler
     {
         private TestContext _context;
@@ -22,7 +25,19 @@ namespace AzureAdLicenseGovernor.Tests.Shared.Fakes.Http.RequestHandlers
 
         public Task<HttpResponseMessage> ProcessAsync(HttpRequestMessage request)
         {
-            throw new NotImplementedException();
+            var requestParts = request.RequestUri.AbsoluteUri.Replace(GraphUri.Groups, "").Split("/");
+            var id = requestParts.FirstOrDefault();
+
+            if(_context.GraphApi.Groups.TryGetValue(id,out Microsoft.Graph.Group group))
+            {
+                var response = new HttpResponseMessage(System.Net.HttpStatusCode.OK)
+                {
+                    Content = new StringContent(JsonConvert.SerializeObject(group))
+                };
+                return Task.FromResult(response);
+            }
+
+            return Task.FromResult(new HttpResponseMessage(System.Net.HttpStatusCode.NotFound));
         }
     }
 }
