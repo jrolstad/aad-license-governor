@@ -1,0 +1,37 @@
+name: continuous-integration
+
+on:
+  workflow_dispatch:
+  push:
+    branches: '**'
+  pull_request:
+    branches: '**' 
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./src
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Setup .NET Core 3.1
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.x
+
+    - name: Setup .NET 5.0
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+        
+    - name: Install dependencies
+      run: dotnet restore
+      
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+      
+    - name: Test
+      run: dotnet test --no-restore --verbosity normal
