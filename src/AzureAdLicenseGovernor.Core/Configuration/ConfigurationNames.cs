@@ -7,13 +7,13 @@
 
         public class CosmosConfigurationNames
         {
-            public string BaseUri = "Cosmos:BaseUri";
+            public string BaseUri = "Cosmos_BaseUri";
         }
 
         public class KeyVaultConfigurationNames
         {
-            public string BaseUri = "KeyVault:BaseUri";
-            public string ManagedIdentityClient = "KeyVault:ManagedIdentityClientId";
+            public string BaseUri = "KeyVault_BaseUri";
+            public string ManagedIdentityClient = "KeyVault_ManagedIdentityClientId";
         }
     }
 }
