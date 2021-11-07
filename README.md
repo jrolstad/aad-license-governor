@@ -31,7 +31,7 @@ To solve the problem of drift, this solution applies the configuration to the sp
 This solution is broken up into two main components, an API and a background worker.  The API enables [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) operations on the configuration, and the background worker is the component that applies and enforces the configuration.  As this is a native Azure application, all components use Azure PaaS services such as Azure Functions, Key Vault, CosmosDb, and Managed Identities.
 
 ### Component Diagram
-For more detail, a [Threat model](https://owasp.org/www-community/Threat_Modeling) for the solution can be found at [docs/threat-model.tm7](docs/threat-model.tm7) that shows all the components and their interactions.
+For more detail, a [Threat model](https://docs.microsoft.com/en-us/azure/security/develop/threat-modeling-tool) for the solution can be found at [docs/threat-model.tm7](docs/threat-model.tm7) that shows all the components and their interactions
 
 ### Infrastructure
 The infrastructure that is needed to run this service can be found at https://github.com/jrolstad/aad-license-governor-infra where it is defined using [Terraform](https://www.terraform.io/)
