@@ -1,4 +1,4 @@
-﻿using AzureAdLicenseGovernor.Core.Configuration;
+﻿using AzureAdLicenseGovernor.Core.Configuration.Cosmos;
 using AzureAdLicenseGovernor.Core.Mappers;
 using AzureAdLicenseGovernor.Core.Models;
 using AzureAdLicenseGovernor.Core.Models.Data;

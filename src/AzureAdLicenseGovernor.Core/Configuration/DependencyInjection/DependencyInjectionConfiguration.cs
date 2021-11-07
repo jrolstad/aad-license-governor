@@ -1,6 +1,7 @@
 ﻿using Azure.Core;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
+using AzureAdLicenseGovernor.Core.Configuration.Cosmos;
 using AzureAdLicenseGovernor.Core.Factories;
 using AzureAdLicenseGovernor.Core.Mappers;
 using AzureAdLicenseGovernor.Core.Orchestrators;
@@ -11,7 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
-namespace AzureAdLicenseGovernor.Core.Configuration
+namespace AzureAdLicenseGovernor.Core.Configuration.DependencyInjection
 {
     public static class DependencyInjectionConfiguration
     {

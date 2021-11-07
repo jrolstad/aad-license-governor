@@ -1,4 +1,4 @@
-﻿namespace AzureAdLicenseGovernor.Core.Models
+﻿namespace AzureAdLicenseGovernor.Core.Configuration.Authorization
 {
     public static class Roles
     {

@@ -1,5 +1,5 @@
 ﻿using AzureAdLicenseGovernor.Core.Extensions;
-using AzureAdLicenseGovernor.Core.Models;
+using AzureAdLicenseGovernor.Core.Configuration.Authorization;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;

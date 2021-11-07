@@ -1,4 +1,4 @@
-﻿using AzureAdLicenseGovernor.Core.Configuration;
+﻿using AzureAdLicenseGovernor.Core.Configuration.Cosmos;
 using AzureAdLicenseGovernor.Core.Models;
 using AzureAdLicenseGovernor.Core.Models.Data;
 using System.Linq;
@@ -31,7 +31,6 @@ namespace AzureAdLicenseGovernor.Core.Mappers
             return new LicensedGroupData
             {
                 Id = GetId(toMap?.TenantId,toMap?.ObjectId),
-                Area = CosmosConfiguration.DefaultPartitionKey,
                 ObjectId = toMap?.ObjectId,
                 TenantId = toMap?.TenantId,
                 LicensedProducts = toMap?.LicensedProducts?.Select(Map)?.ToList()
