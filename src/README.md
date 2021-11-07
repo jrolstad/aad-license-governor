@@ -27,9 +27,9 @@
 # Pipelines
 GitHub Actions are used for continuous integration builds
 ## Builds
-| Build                                                            | Purpose                                                                                                       |
-| ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| [.github/workflows/ci-build.yml](.github/workflows/ci-build.yml) | Continuous integration build.  Builds the solution, runs tests, and passes only when all tests are successful |
+| Build                                                       | Purpose                                                                                                       |
+| ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| [continuous-integration](../.github/workflows/ci-build.yml) | Continuous integration build.  Builds the solution, runs tests, and passes only when all tests are successful |
 
 # API Documentation
 Swagger is used to document our endpoints and make them available to be manually invoked if needed.
