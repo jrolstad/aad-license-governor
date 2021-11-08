@@ -49,8 +49,8 @@ The AzureAdLicenseGovernor.Api is a set of HTTP based Azure Functions.  Be sure 
   "Values": {
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "FUNCTIONS_WORKER_RUNTIME": "dotnet",
-    "KeyVault:BaseUri": "https://aad-license-dev.vault.azure.net/",
-    "Cosmos:BaseUri": "https://aad-license-dev.documents.azure.com:443/"
+    "KeyVault_BaseUri": "https://aadlicense-dev.vault.azure.net/",
+    "Cosmos_BaseUri": "https://aadlicense-dev.documents.azure.com:443/"
   },
   "Host": {
     "LocalHttpPort": 7071,
@@ -67,9 +67,9 @@ The AzureAdLicenseGovernor.Worker is a set of background worker Azure Functions.
   "Values": {
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "FUNCTIONS_WORKER_RUNTIME": "dotnet",
-    "KeyVault:BaseUri": "https://aad-license-dev.vault.azure.net/",
-    "Cosmos:BaseUri": "https://aad-license-dev.documents.azure.com:443/"
-    "GroupLicenseFunction:ApplyCron": "0 */1 * * * *"
+    "KeyVault_BaseUri": "https://aadlicense-dev.vault.azure.net/",
+    "Cosmos_BaseUri": "https://aadlicense-dev.documents.azure.com:443/"
+    "GroupLicenseFunction_ApplyCron": "0 */1 * * * *"
   }
 }
 ```
