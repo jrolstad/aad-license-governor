@@ -31,6 +31,7 @@ namespace AzureAdLicenseGovernor.Tests.Shared
         {
             ConfigureApplicationConfiguration(services);
             ConfigureApplication(services);
+            ConfigureFunctionsWorker(services);
             ConfigureFunctions(services);
             ConfigureFakes(services);
 
@@ -50,7 +51,8 @@ namespace AzureAdLicenseGovernor.Tests.Shared
 
         private static void ConfigureFunctionsWorker(IServiceCollection services)
         {
-            
+            services.AddFunctionsWorkerCore();
+            services.AddFunctionsWorkerDefaults();
         }
 
         private void ConfigureApplication(IServiceCollection services)
