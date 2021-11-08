@@ -23,7 +23,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureAdLicenseGovernor.Test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureAdLicenseGovernor.Api", "AzureAdLicenseGovernor.Api\AzureAdLicenseGovernor.Api.csproj", "{51946224-D9E0-421A-8330-E1B35D706D8C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureAdLicenseGovernor.Worker", "AzureAdLicenseGovernor.Worker\AzureAdLicenseGovernor.Worker.csproj", "{7CEF0686-A659-4D5C-B123-57BE64399682}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureAdLicenseGovernor.Worker", "AzureAdLicenseGovernor.Worker\AzureAdLicenseGovernor.Worker.csproj", "{7CEF0686-A659-4D5C-B123-57BE64399682}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureAdLicenseGovernor.Api.Tests", "AzureAdLicenseGovernor.Api.Tests\AzureAdLicenseGovernor.Api.Tests.csproj", "{2A942920-7DB6-4BF6-A005-09B6DF6EE1D0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,12 +49,17 @@ Global
 		{7CEF0686-A659-4D5C-B123-57BE64399682}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7CEF0686-A659-4D5C-B123-57BE64399682}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7CEF0686-A659-4D5C-B123-57BE64399682}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A942920-7DB6-4BF6-A005-09B6DF6EE1D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A942920-7DB6-4BF6-A005-09B6DF6EE1D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A942920-7DB6-4BF6-A005-09B6DF6EE1D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A942920-7DB6-4BF6-A005-09B6DF6EE1D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{E15C1B45-A5C6-45B2-A1EA-FFFDF38CC282} = {E3243FD6-36A5-4ECD-A4B2-E178ED0C2700}
+		{2A942920-7DB6-4BF6-A005-09B6DF6EE1D0} = {E3243FD6-36A5-4ECD-A4B2-E178ED0C2700}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6DA19825-E88E-4C64-BDA9-977D53804DCA}

@@ -55,15 +55,9 @@ namespace AzureAdLicenseGovernor.Tests.Shared
             services.AddFunctionsWorkerDefaults();
         }
 
-        private void ConfigureApplication(IServiceCollection services)
-        {
-            Core.Configuration.DependencyInjection.DependencyInjectionConfiguration.Register(services);
-        }
+        protected abstract void ConfigureApplication(IServiceCollection services);
 
-        protected virtual void ConfigureFunctions(IServiceCollection services)
-        {
-
-        }
+        protected abstract void ConfigureFunctions(IServiceCollection services);
 
         private void ConfigureFakes(IServiceCollection services)
         {
