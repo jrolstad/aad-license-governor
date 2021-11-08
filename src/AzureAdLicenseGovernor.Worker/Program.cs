@@ -1,8 +1,8 @@
+using AzureAdLicenseGovernor.Worker.Configuration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using AzureAdLicenseGovernor.Api.Configuration;
 
-namespace AzureAdLicenseGovernor.Api
+namespace AzureAdLicenseGovernor.Worker
 {
     public class Program
     {
