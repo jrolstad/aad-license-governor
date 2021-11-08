@@ -61,7 +61,7 @@ namespace AzureAdLicenseGovernor.Tests.Shared
 
         private void ConfigureFakes(IServiceCollection services)
         {
-            services.AddSingleton<TestContext>(provider => { return this.Context; });
+            services.AddTransient(provider => { return this.Context; });
             services.ReplaceTransient<CosmosClient, CosmosClientFake>();
             services.ReplaceTransient<SecretClient, SecretClientFake>();
             services.ReplaceTransient<ICosmosLinqQueryFactory, CosmosLinqQueryFactoryFake>();

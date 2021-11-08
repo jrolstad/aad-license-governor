@@ -9,6 +9,7 @@ namespace AzureAdLicenseGovernor.Core.Models.Data
         public string Id { get; set; }
         public string ObjectId { get; set; }
         public string TenantId { get; set; }
+        public ProductAssignmentMode Mode{ get; set; }
         public List<LicensedProductAssignmentData> LicensedProducts { get; set; }
     }
 

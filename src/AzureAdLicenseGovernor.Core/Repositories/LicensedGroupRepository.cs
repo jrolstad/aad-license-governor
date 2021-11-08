@@ -46,7 +46,7 @@ namespace AzureAdLicenseGovernor.Core.Repositories
         {
             var query = _cosmosDbService
                .Query<LicensedGroupData>(CosmosConfiguration.Containers.LicensedGroups)
-               .Where(d => d.ObjectId == objectId || d.TenantId == tenantId);
+               .Where(d => d.ObjectId == objectId && d.TenantId == tenantId);
 
             var data = await _cosmosDbService.ExecuteRead(query, _licensedGroupMapper.Map);
 
