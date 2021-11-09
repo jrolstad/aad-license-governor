@@ -15,11 +15,11 @@ namespace AzureAdLicenseGovernor.Worker.Tests.StepDefinitions
         }
 
         [When(@"the license configuration is applied")]
-        public Task WhenTheLicenseConfigurationIsApplied()
+        public async Task WhenTheLicenseConfigurationIsApplied()
         {
             var function = _testBuilder.Get<ApplyLicenseFunctions>();
 
-            return function.Apply(new TimerInfo());
+            await function.Apply(new TimerInfo());
         }
 
     }

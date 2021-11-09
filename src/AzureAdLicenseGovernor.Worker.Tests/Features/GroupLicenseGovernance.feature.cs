@@ -154,26 +154,6 @@ testRunner.And("service plans in \'tenant-one\' for product \'PROJECTPREMIUM\'",
 #line 30
 testRunner.And("groups in tenant \'tenant-one\'", ((string)(null)), table4, "And ");
 #line hidden
-            TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Product",
-                        "Enabled Features"});
-            table5.AddRow(new string[] {
-                        "PROJECTPREMIUM",
-                        "PROJECT_PROFESSIONAL,FLOW_FOR_PROJECT,EXCHANGE_S_FOUNDATION"});
-#line 36
-testRunner.And("license configuration in \'Enforce\' mode for group \'group-1\' in tenant \'tenant-one" +
-                    "\'", ((string)(null)), table5, "And ");
-#line hidden
-            TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Product",
-                        "Enabled Features"});
-            table6.AddRow(new string[] {
-                        "VISIOCLIENT",
-                        "ONEDRIVE_BASIC,VISIOONLINE,EXCHANGE_S_FOUNDATION,VISIO_CLIENT_SUBSCRIPTION"});
-#line 39
-testRunner.And("license configuration in \'Enforce\' mode for group \'group-2\' in tenant \'tenant-one" +
-                    "\'", ((string)(null)), table6, "And ");
-#line hidden
         }
         
         void System.IDisposable.Dispose()
@@ -181,15 +161,15 @@ testRunner.And("license configuration in \'Enforce\' mode for group \'group-2\' 
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Happy Path")]
+        [Xunit.SkippableFactAttribute(DisplayName="Groups With No Existing Assignments")]
         [Xunit.TraitAttribute("FeatureTitle", "Group License Governance")]
-        [Xunit.TraitAttribute("Description", "Happy Path")]
-        public virtual void HappyPath()
+        [Xunit.TraitAttribute("Description", "Groups With No Existing Assignments")]
+        public virtual void GroupsWithNoExistingAssignments()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Happy Path", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 43
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Groups With No Existing Assignments", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 37
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -211,6 +191,26 @@ this.ScenarioInitialize(scenarioInfo);
                 this.ScenarioStart();
 #line 6
 this.FeatureBackground();
+#line hidden
+                TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Product",
+                            "Enabled Features"});
+                table5.AddRow(new string[] {
+                            "PROJECTPREMIUM",
+                            "PROJECT_PROFESSIONAL,FLOW_FOR_PROJECT,EXCHANGE_S_FOUNDATION"});
+#line 38
+ testRunner.Given("license configuration in \'Enforce\' mode for group \'group-1\' in tenant \'tenant-one" +
+                        "\'", ((string)(null)), table5, "Given ");
+#line hidden
+                TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Product",
+                            "Enabled Features"});
+                table6.AddRow(new string[] {
+                            "VISIOCLIENT",
+                            "ONEDRIVE_BASIC,VISIOONLINE,EXCHANGE_S_FOUNDATION,VISIO_CLIENT_SUBSCRIPTION"});
+#line 41
+ testRunner.And("license configuration in \'Enforce\' mode for group \'group-2\' in tenant \'tenant-one" +
+                        "\'", ((string)(null)), table6, "And ");
 #line hidden
 #line 44
  testRunner.When("the license configuration is applied", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");

@@ -62,7 +62,7 @@ namespace AzureAdLicenseGovernor.Core.Mappers
         {
             var existingProducts = existing?
                .Where(a => expected.ContainsKey(a.ProductId))
-               .ToList();
+               .ToList() ?? new List<LicenseAssignment>();
 
             foreach (var product in existingProducts)
             {
