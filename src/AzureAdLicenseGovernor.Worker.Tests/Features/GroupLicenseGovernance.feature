@@ -33,14 +33,31 @@ And groups in tenant 'tenant-one'
 | group-2     |
 | group-3     |
 
+Given license configuration in 'Enforce' mode for group 'group-1' in tenant 'tenant-one'
+| Product        | Enabled Features                                            |
+| PROJECTPREMIUM | PROJECT_PROFESSIONAL,FLOW_FOR_PROJECT,EXCHANGE_S_FOUNDATION |
+And license configuration in 'Enforce' mode for group 'group-2' in tenant 'tenant-one'
+| Product     | Enabled Features                                                           |
+| VISIOCLIENT | ONEDRIVE_BASIC,VISIOONLINE,EXCHANGE_S_FOUNDATION,VISIO_CLIENT_SUBSCRIPTION |
 
 Scenario: Groups With No Existing Assignments
-	Given license configuration in 'Enforce' mode for group 'group-1' in tenant 'tenant-one'
-	| Product        | Enabled Features                                            |
-	| PROJECTPREMIUM | PROJECT_PROFESSIONAL,FLOW_FOR_PROJECT,EXCHANGE_S_FOUNDATION |
-	And license configuration in 'Enforce' mode for group 'group-2' in tenant 'tenant-one'
-	| Product     | Enabled Features                                                           |
-	| VISIOCLIENT | ONEDRIVE_BASIC,VISIOONLINE,EXCHANGE_S_FOUNDATION,VISIO_CLIENT_SUBSCRIPTION |
+	Given the group 'group-1' in tenant 'tenant-one' has no license assignments
+	Given the group 'group-2' in tenant 'tenant-one' has no license assignments
+	When the license configuration is applied
+	Then the group 'group-1' in tenant 'tenant-one' has license assignments
+	| Product        | Disabled Features                                                                                    |
+	| PROJECTPREMIUM | DYN365_CDS_PROJECT,SHAREPOINTWAC,SHAREPOINT_PROJECT,SHAREPOINTENTERPRISE,PROJECT_CLIENT_SUBSCRIPTION |
+	And the group 'group-2' in tenant 'tenant-one' has license assignments
+	| Product     | Disabled Features |
+	| VISIOCLIENT |                   |
+
+Scenario: Groups With Existing Assignments
+	Given the group 'group-1' in tenant 'tenant-one' has license assignments
+	| Product        | Disabled Features                                                                                    |
+	| PROJECTPREMIUM | DYN365_CDS_PROJECT,SHAREPOINTWAC,SHAREPOINT_PROJECT,SHAREPOINTENTERPRISE,PROJECT_CLIENT_SUBSCRIPTION |
+	And the group 'group-2' in tenant 'tenant-one' has license assignments
+	| Product     | Disabled Features |
+	| VISIOCLIENT |                   |
 	When the license configuration is applied
 	Then the group 'group-1' in tenant 'tenant-one' has license assignments
 	| Product        | Disabled Features                                                                                    |

@@ -1,6 +1,7 @@
 ﻿using AzureAdLicenseGovernor.Core.Models;
 using AzureAdLicenseGovernor.Tests.Shared.Extensions;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow;
 
@@ -93,5 +94,60 @@ namespace AzureAdLicenseGovernor.Worker.Tests.StepDefinitions
                 _testBuilder.WithProductAssignment(licensedGroup.TenantId, licensedGroup.ObjectId, productName, enabledServicePlans);
             }
         }
+
+        [Given(@"the group '([^']*)' in tenant '([^']*)' has no license assignments")]
+        public void GivenTheGroupInTenantHasNoLicenseAssignments(string groupName, string tenantName)
+        {
+            var group = _testBuilder.GetGroup(groupName);
+            if(group!=null)
+            {
+                group.AssignedLicenses = new List<Microsoft.Graph.AssignedLicense>();
+            }
+        }
+
+        [Given(@"the group '([^']*)' in tenant '([^']*)' has license assignments")]
+        public void GivenTheGroupInTenantHasLicenseAssignments(string groupName, string tenantName, Table assignments)
+        {
+            var group = _testBuilder.GetGroup(groupName);
+
+            var assignedLicenses = new List<Microsoft.Graph.AssignedLicense>();
+            foreach(var productAssignment in assignments.Rows)
+            {
+                var product = GetProduct(productAssignment);
+
+                var assignment = new Microsoft.Graph.AssignedLicense
+                {
+                    SkuId = product.SkuId,
+                    DisabledPlans = GetExpectedDisabledPlans(productAssignment, product)
+                };
+
+                assignedLicenses.Add(assignment);
+            }
+            group.AssignedLicenses = assignedLicenses;
+
+        }
+
+        private Microsoft.Graph.SubscribedSku GetProduct(TableRow row)
+        {
+            var name = row["Product"];
+            var product = _testBuilder.GetProduct(name);
+
+            return product;
+        }
+
+        private static List<Guid> GetExpectedDisabledPlans(TableRow row, Microsoft.Graph.SubscribedSku product)
+        {
+            var expectedDisabledPlanNames = row["Disabled Features"]
+                .Split(",")
+                .Select(s => s.Trim());
+
+            var expectedDisabledPlanIds = product.ServicePlans
+                .Where(s => expectedDisabledPlanNames.Contains(s.ServicePlanName, StringComparer.OrdinalIgnoreCase))
+                .Select(s => s.ServicePlanId.GetValueOrDefault())
+                .ToList();
+            return expectedDisabledPlanIds;
+        }
+
+
     }
 }
