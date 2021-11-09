@@ -181,14 +181,14 @@ testRunner.And("license configuration in \'Enforce\' mode for group \'group-2\' 
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Groups With No Existing Assignments")]
+        [Xunit.SkippableFactAttribute(DisplayName="New Assignments Are Added to the Group")]
         [Xunit.TraitAttribute("FeatureTitle", "Group License Governance")]
-        [Xunit.TraitAttribute("Description", "Groups With No Existing Assignments")]
-        public virtual void GroupsWithNoExistingAssignments()
+        [Xunit.TraitAttribute("Description", "New Assignments Are Added to the Group")]
+        public virtual void NewAssignmentsAreAddedToTheGroup()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Groups With No Existing Assignments", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("New Assignments Are Added to the Group", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 43
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -244,14 +244,14 @@ this.FeatureBackground();
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Groups With Existing Assignments")]
+        [Xunit.SkippableFactAttribute(DisplayName="Existing Assignments Who Match Do Nothing")]
         [Xunit.TraitAttribute("FeatureTitle", "Group License Governance")]
-        [Xunit.TraitAttribute("Description", "Groups With Existing Assignments")]
-        public virtual void GroupsWithExistingAssignments()
+        [Xunit.TraitAttribute("Description", "Existing Assignments Who Match Do Nothing")]
+        public virtual void ExistingAssignmentsWhoMatchDoNothing()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Groups With Existing Assignments", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Existing Assignments Who Match Do Nothing", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 54
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -315,6 +315,81 @@ this.FeatureBackground();
                             ""});
 #line 65
  testRunner.And("the group \'group-2\' in tenant \'tenant-one\' has license assignments", ((string)(null)), table12, "And ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Existing Assignments Not Matching Configured Remove Service Plans")]
+        [Xunit.TraitAttribute("FeatureTitle", "Group License Governance")]
+        [Xunit.TraitAttribute("Description", "Existing Assignments Not Matching Configured Remove Service Plans")]
+        public virtual void ExistingAssignmentsNotMatchingConfiguredRemoveServicePlans()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Existing Assignments Not Matching Configured Remove Service Plans", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 69
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 6
+this.FeatureBackground();
+#line hidden
+                TechTalk.SpecFlow.Table table13 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Product",
+                            "Disabled Features"});
+                table13.AddRow(new string[] {
+                            "PROJECTPREMIUM",
+                            "DYN365_CDS_PROJECT"});
+#line 70
+ testRunner.Given("the group \'group-1\' in tenant \'tenant-one\' has license assignments", ((string)(null)), table13, "Given ");
+#line hidden
+                TechTalk.SpecFlow.Table table14 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Product",
+                            "Disabled Features"});
+                table14.AddRow(new string[] {
+                            "VISIOCLIENT",
+                            ""});
+#line 73
+ testRunner.And("the group \'group-2\' in tenant \'tenant-one\' has license assignments", ((string)(null)), table14, "And ");
+#line hidden
+#line 76
+ testRunner.When("the license configuration is applied", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+                TechTalk.SpecFlow.Table table15 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Product",
+                            "Disabled Features"});
+                table15.AddRow(new string[] {
+                            "PROJECTPREMIUM",
+                            "DYN365_CDS_PROJECT,SHAREPOINTWAC,SHAREPOINT_PROJECT,SHAREPOINTENTERPRISE,PROJECT_" +
+                                "CLIENT_SUBSCRIPTION"});
+#line 77
+ testRunner.Then("the group \'group-1\' in tenant \'tenant-one\' has license assignments", ((string)(null)), table15, "Then ");
+#line hidden
+                TechTalk.SpecFlow.Table table16 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Product",
+                            "Disabled Features"});
+                table16.AddRow(new string[] {
+                            "VISIOCLIENT",
+                            ""});
+#line 80
+ testRunner.And("the group \'group-2\' in tenant \'tenant-one\' has license assignments", ((string)(null)), table16, "And ");
 #line hidden
             }
             this.ScenarioCleanup();

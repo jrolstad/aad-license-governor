@@ -100,7 +100,7 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
 
             if (comparisonResult.ToUpdate.Any())
             {
-                var updateTask = _groupService.UpdateLicenses(directory, licensedGroup.ObjectId, comparisonResult.ToRemove);
+                var updateTask = _groupService.UpdateLicenses(directory, licensedGroup.ObjectId, comparisonResult.ToUpdate);
                 actionTasks.Add(updateTask);
             }
 

@@ -40,7 +40,7 @@ And license configuration in 'Enforce' mode for group 'group-2' in tenant 'tenan
 | Product     | Enabled Features                                                           |
 | VISIOCLIENT | ONEDRIVE_BASIC,VISIOONLINE,EXCHANGE_S_FOUNDATION,VISIO_CLIENT_SUBSCRIPTION |
 
-Scenario: Groups With No Existing Assignments
+Scenario: New Assignments Are Added to the Group
 	Given the group 'group-1' in tenant 'tenant-one' has no license assignments
 	Given the group 'group-2' in tenant 'tenant-one' has no license assignments
 	When the license configuration is applied
@@ -51,10 +51,25 @@ Scenario: Groups With No Existing Assignments
 	| Product     | Disabled Features |
 	| VISIOCLIENT |                   |
 
-Scenario: Groups With Existing Assignments
+Scenario: Existing Assignments Who Match Do Nothing
 	Given the group 'group-1' in tenant 'tenant-one' has license assignments
 	| Product        | Disabled Features                                                                                    |
 	| PROJECTPREMIUM | DYN365_CDS_PROJECT,SHAREPOINTWAC,SHAREPOINT_PROJECT,SHAREPOINTENTERPRISE,PROJECT_CLIENT_SUBSCRIPTION |
+	And the group 'group-2' in tenant 'tenant-one' has license assignments
+	| Product     | Disabled Features |
+	| VISIOCLIENT |                   |
+	When the license configuration is applied
+	Then the group 'group-1' in tenant 'tenant-one' has license assignments
+	| Product        | Disabled Features                                                                                    |
+	| PROJECTPREMIUM | DYN365_CDS_PROJECT,SHAREPOINTWAC,SHAREPOINT_PROJECT,SHAREPOINTENTERPRISE,PROJECT_CLIENT_SUBSCRIPTION |
+	And the group 'group-2' in tenant 'tenant-one' has license assignments
+	| Product     | Disabled Features |
+	| VISIOCLIENT |                   |
+
+Scenario: Existing Assignments Not Matching Configured Remove Service Plans
+	Given the group 'group-1' in tenant 'tenant-one' has license assignments
+	| Product        | Disabled Features  |  
+	| PROJECTPREMIUM | DYN365_CDS_PROJECT |
 	And the group 'group-2' in tenant 'tenant-one' has license assignments
 	| Product     | Disabled Features |
 	| VISIOCLIENT |                   |
