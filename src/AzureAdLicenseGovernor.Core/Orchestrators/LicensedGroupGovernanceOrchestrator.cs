@@ -16,6 +16,7 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
         private readonly LicensedProductService _licensedProductService;
         private readonly GroupService _groupService;
         private readonly LicenseAssignmentComparer _licenseAssignmentComparer;
+        private readonly LicensedAssignmentMapper _licensedAssignmentMapper;
         private readonly ILogger<LicensedGroupGovernanceOrchestrator> _logger;
 
         public LicensedGroupGovernanceOrchestrator(LicensedGroupOrchestrator licensedGroupOrchestrator,
@@ -23,6 +24,7 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
             LicensedProductService licensedProductService,
             GroupService groupService,
             LicenseAssignmentComparer licenseAssignmentComparer,
+            LicensedAssignmentMapper licensedAssignmentMapper,
             ILogger<LicensedGroupGovernanceOrchestrator> logger)
         {
             _licensedGroupOrchestrator = licensedGroupOrchestrator;
@@ -30,6 +32,7 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
             _licensedProductService = licensedProductService;
             _groupService = groupService;
             _licenseAssignmentComparer = licenseAssignmentComparer;
+            _licensedAssignmentMapper = licensedAssignmentMapper;
             _logger = logger;
         }
 
@@ -47,21 +50,26 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
         {
             var products = await _licensedProductService.Get(directory);
             var productsById = products.ToDictionary(p => p.Id,StringComparer.OrdinalIgnoreCase);
+            var productsByName = products.ToDictionary(p => p.Name,StringComparer.OrdinalIgnoreCase);
 
             var groups = await _licensedGroupOrchestrator.Get(directory.TenantId);
-            var groupTasks = groups.Select(group => ApplyGroup(directory,group, productsById));
+            var groupTasks = groups.Select(group => ApplyGroup(directory,group, productsById, productsByName));
 
             await Task.WhenAll(groupTasks);
         }
 
         private async Task ApplyGroup(Directory directory, 
             LicensedGroup licensedGroup, 
-            Dictionary<string, Product> productsById)
+            Dictionary<string, Product> productsById,
+            Dictionary<string, Product> productsByName)
         {
+            
             var group = await _groupService.Get(directory, licensedGroup.ObjectId);
 
+            var configuredProducts = _licensedAssignmentMapper.MapIds(licensedGroup.LicensedProducts, productsById, productsByName);
+
             var comparisonResult = _licenseAssignmentComparer.Compare(group.AssignedLicenses,
-                licensedGroup.LicensedProducts,
+                configuredProducts,
                 productsById);
 
             if (licensedGroup.Mode == ProductAssignmentMode.Enforce)
@@ -72,7 +80,9 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
             LogChanges(licensedGroup,comparisonResult);
         }
 
-        private Task ApplyChanges(Directory directory, LicensedGroup licensedGroup, LicenseAssignmentComparisonResult comparisonResult)
+        private Task ApplyChanges(Directory directory, 
+            LicensedGroup licensedGroup, 
+            LicenseAssignmentComparisonResult comparisonResult)
         {
             var actionTasks = new List<Task>();
 
