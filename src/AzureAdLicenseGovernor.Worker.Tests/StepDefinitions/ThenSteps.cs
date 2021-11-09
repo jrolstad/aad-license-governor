@@ -55,5 +55,14 @@ namespace AzureAdLicenseGovernor.Worker.Tests.StepDefinitions
                 .ToList();
             return expectedDisabledPlanIds;
         }
+
+        [Then(@"the group '([^']*)' in tenant '([^']*)' has no license assignments")]
+        public void ThenTheGroupInTenantHasNoLicenseAssignments(string groupName, string tenantName)
+        {
+            var group = _testBuilder.GetGroup(groupName);
+
+            Assert.Empty(group.AssignedLicenses ?? new List<Microsoft.Graph.AssignedLicense>());
+        }
+
     }
 }

@@ -395,6 +395,115 @@ this.FeatureBackground();
             this.ScenarioCleanup();
         }
         
+        [Xunit.SkippableFactAttribute(DisplayName="Unrecognized Product does nothing")]
+        [Xunit.TraitAttribute("FeatureTitle", "Group License Governance")]
+        [Xunit.TraitAttribute("Description", "Unrecognized Product does nothing")]
+        public virtual void UnrecognizedProductDoesNothing()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Unrecognized Product does nothing", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 84
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 6
+this.FeatureBackground();
+#line hidden
+                TechTalk.SpecFlow.Table table17 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Product",
+                            "Enabled Features"});
+                table17.AddRow(new string[] {
+                            "OTHER",
+                            "PROJECT_PROFESSIONAL,FLOW_FOR_PROJECT,EXCHANGE_S_FOUNDATION"});
+#line 85
+ testRunner.Given("license configuration in \'Enforce\' mode for group \'group-1\' in tenant \'tenant-one" +
+                        "\'", ((string)(null)), table17, "Given ");
+#line hidden
+#line 88
+ testRunner.When("the license configuration is applied", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 89
+ testRunner.Then("the group \'group-1\' in tenant \'tenant-one\' has no license assignments", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Unrecognized Service Plan Is Not Disabled")]
+        [Xunit.TraitAttribute("FeatureTitle", "Group License Governance")]
+        [Xunit.TraitAttribute("Description", "Unrecognized Service Plan Is Not Disabled")]
+        public virtual void UnrecognizedServicePlanIsNotDisabled()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Unrecognized Service Plan Is Not Disabled", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 91
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 6
+this.FeatureBackground();
+#line hidden
+                TechTalk.SpecFlow.Table table18 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Product",
+                            "Enabled Features"});
+                table18.AddRow(new string[] {
+                            "PROJECTPREMIUM",
+                            "PROJECT_PROFESSIONAL,FLOW_FOR_PROJECT,EXCHANGE_S_FOUNDATION,OTHER"});
+#line 92
+ testRunner.Given("license configuration in \'Enforce\' mode for group \'group-1\' in tenant \'tenant-one" +
+                        "\'", ((string)(null)), table18, "Given ");
+#line hidden
+#line 95
+ testRunner.When("the license configuration is applied", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+                TechTalk.SpecFlow.Table table19 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Product",
+                            "Disabled Features"});
+                table19.AddRow(new string[] {
+                            "PROJECTPREMIUM",
+                            "DYN365_CDS_PROJECT,SHAREPOINTWAC,SHAREPOINT_PROJECT,SHAREPOINTENTERPRISE,PROJECT_" +
+                                "CLIENT_SUBSCRIPTION"});
+#line 96
+ testRunner.Then("the group \'group-1\' in tenant \'tenant-one\' has license assignments", ((string)(null)), table19, "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
         [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
         [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
         public class FixtureData : System.IDisposable

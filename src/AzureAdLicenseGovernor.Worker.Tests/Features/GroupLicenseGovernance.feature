@@ -80,3 +80,21 @@ Scenario: Existing Assignments Not Matching Configured Remove Service Plans
 	And the group 'group-2' in tenant 'tenant-one' has license assignments
 	| Product     | Disabled Features |
 	| VISIOCLIENT |                   |
+
+Scenario: Unrecognized Product does nothing
+	Given license configuration in 'Enforce' mode for group 'group-1' in tenant 'tenant-one'
+	| Product | Enabled Features                                            |
+	| OTHER   | PROJECT_PROFESSIONAL,FLOW_FOR_PROJECT,EXCHANGE_S_FOUNDATION |
+	When the license configuration is applied
+	Then the group 'group-1' in tenant 'tenant-one' has no license assignments
+
+Scenario: Unrecognized Service Plan Is Not Disabled
+	Given license configuration in 'Enforce' mode for group 'group-1' in tenant 'tenant-one'
+	| Product | Enabled Features                                            |
+	| PROJECTPREMIUM   | PROJECT_PROFESSIONAL,FLOW_FOR_PROJECT,EXCHANGE_S_FOUNDATION,OTHER |
+	When the license configuration is applied
+	Then the group 'group-1' in tenant 'tenant-one' has license assignments
+	| Product        | Disabled Features                                                                                    |
+	| PROJECTPREMIUM | DYN365_CDS_PROJECT,SHAREPOINTWAC,SHAREPOINT_PROJECT,SHAREPOINTENTERPRISE,PROJECT_CLIENT_SUBSCRIPTION |
+
+	
