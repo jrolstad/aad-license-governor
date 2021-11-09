@@ -4,6 +4,7 @@
 * Visual Studio 2022 or later
 * .NET 6
 * Azure Functions Runtime v4 or later
+* Specflow for Visual Studio Extension (Used for editing AzureAdLicenseGovernor.Worker tests)
 
 # Projects
 ## Applications
