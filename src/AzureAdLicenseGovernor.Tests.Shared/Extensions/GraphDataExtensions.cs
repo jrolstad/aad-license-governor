@@ -8,7 +8,8 @@ namespace AzureAdLicenseGovernor.Tests.Shared.Extensions
     public static class GraphDataExtensions
     {
         public static SubscribedSku WithLicensedProduct(this TestBuilderBase root,
-           string name
+           string skuPartNumber,
+           Guid? skuId=null
            )
         {
             var context = root.Context.GraphApi;
@@ -16,8 +17,8 @@ namespace AzureAdLicenseGovernor.Tests.Shared.Extensions
             var data = new SubscribedSku
             {
                 Id = Guid.NewGuid().ToString(),
-                SkuId = Guid.NewGuid(),
-                SkuPartNumber = name,
+                SkuId = skuId ?? Guid.NewGuid(),
+                SkuPartNumber = skuPartNumber,
                 ServicePlans = new List<ServicePlanInfo>()
             };
 
@@ -28,7 +29,8 @@ namespace AzureAdLicenseGovernor.Tests.Shared.Extensions
 
         public static ServicePlanInfo WithServicePlan(this TestBuilderBase root,
            string subscribedSkuId,
-           string name
+           string name,
+           Guid? servicePlanId=null
            )
         {
             var context = root.Context.GraphApi;
@@ -39,7 +41,7 @@ namespace AzureAdLicenseGovernor.Tests.Shared.Extensions
 
                 var plan = new ServicePlanInfo
                 {
-                    ServicePlanId = Guid.NewGuid(),
+                    ServicePlanId = servicePlanId ?? Guid.NewGuid(),
                     ServicePlanName = name
                 };
                 servicePlans.Add(plan);
