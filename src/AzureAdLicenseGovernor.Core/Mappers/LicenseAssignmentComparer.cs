@@ -27,14 +27,14 @@ namespace AzureAdLicenseGovernor.Core.Mappers
             var productsToAdd = expected?
                 .Where(p => !existingAssignmentsById.ContainsKey(p.Id))
                 .Select(p=>_licensedAssignmentMapper.Map(p,GetProductServicePlans(p.Id,availableProducts)))
-                .ToList();
+                .ToList() ?? new List<LicenseAssignment>();
 
             var productsToRemove = actual?
                 .Where(a => !expectedAssignmentsById.ContainsKey(a.ProductId))
-                .ToList();
+                .ToList() ?? new List<LicenseAssignment>();
 
             var productsToUpdate = GetProductsWithServicePlanChanges(actual, expectedAssignmentsById, availableProducts)
-                .ToList();
+                .ToList() ?? new List<LicenseAssignment>();
 
             return new LicenseAssignmentComparisonResult
             {
