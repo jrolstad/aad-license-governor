@@ -20,13 +20,17 @@ namespace AzureAdLicenseGovernor.Tests.Shared.Fakes.Http.RequestHandlers
 
         public bool AppliesTo(HttpRequestMessage request)
         {
-            return request.Method == HttpMethod.Get && request.RequestUri.AbsoluteUri.StartsWith(GraphUri.Groups);
+            return request.Method == HttpMethod.Get && 
+                request.RequestUri.AbsoluteUri.StartsWith(GraphUri.Groups);
         }
 
         public Task<HttpResponseMessage> ProcessAsync(HttpRequestMessage request)
         {
             var requestParts = request.RequestUri.AbsoluteUri.Replace(GraphUri.Groups, "").Split("/");
-            var id = requestParts.FirstOrDefault();
+            var id = requestParts
+                .FirstOrDefault()
+                .Split("?")
+                .FirstOrDefault();
 
             if(_context.GraphApi.Groups.TryGetValue(id,out Microsoft.Graph.Group group))
             {
