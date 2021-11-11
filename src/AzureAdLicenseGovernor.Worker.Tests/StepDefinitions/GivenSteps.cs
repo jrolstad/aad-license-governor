@@ -29,7 +29,12 @@ namespace AzureAdLicenseGovernor.Worker.Tests.StepDefinitions
             foreach(var row in products.Rows)
             {
                 var product = MapProduct(row);
-                _testBuilder.WithLicensedProduct(product.SkuPartNumber, product.SkuId);
+                _testBuilder.WithLicensedProduct(product.SkuPartNumber, 
+                    product.SkuId, 
+                    product.ConsumedUnits, 
+                    product.PrepaidUnits.Enabled, 
+                    product.PrepaidUnits.Suspended, 
+                    product.PrepaidUnits.Warning);
             }
         }
 
@@ -38,8 +43,26 @@ namespace AzureAdLicenseGovernor.Worker.Tests.StepDefinitions
             return new Microsoft.Graph.SubscribedSku
             {
                 SkuId = Guid.Parse(row["SkuId"]),
-                SkuPartNumber = row["SkuPartNumber"]
+                SkuPartNumber = row["SkuPartNumber"],
+                ConsumedUnits = ParseValue(row, "Units Consumed"),
+                PrepaidUnits = new Microsoft.Graph.LicenseUnitsDetail
+                {
+                    Enabled = ParseValue(row, "Units Enabled"),
+                    Suspended = ParseValue(row, "Units Suspended"),
+                    Warning = ParseValue(row, "Units Warning"),
+                }
             };
+        }
+
+        private int? ParseValue(TableRow row, string name)
+        {
+            if (!row.ContainsKey(name)) return null;
+            {
+                var value = row[name];
+                if (string.IsNullOrWhiteSpace(value)) return null;
+
+                return int.Parse(value);
+            }
         }
 
         [Given(@"service plans in '([^']*)' for product '([^']*)'")]
@@ -182,6 +205,21 @@ namespace AzureAdLicenseGovernor.Worker.Tests.StepDefinitions
             var directory = _testBuilder.GetDirectory(tenantName);
             directory.Monitoring.TrackGroupLicenseAssignmentFailures = false;
         }
+
+        [Given(@"the Tenant '([^']*)' is configured to track product assignment usage")]
+        public void GivenTheTenantIsConfiguredToTrackProductAssignmentUsage(string tenantName)
+        {
+            var directory = _testBuilder.GetDirectory(tenantName);
+            directory.Monitoring.TrackProductUsage = true;
+        }
+
+        [Given(@"the Tenant '([^']*)' is configured to not track product assignment usage")]
+        public void GivenTheTenantIsConfiguredToNotTrackProductAssignmentUsage(string tenantName)
+        {
+            var directory = _testBuilder.GetDirectory(tenantName);
+            directory.Monitoring.TrackProductUsage = false;
+        }
+
 
         [Given(@"the group '([^']*)' has license assignment errors")]
         public void GivenTheGroupHasLicenseAssignmentErrors(string groupName)

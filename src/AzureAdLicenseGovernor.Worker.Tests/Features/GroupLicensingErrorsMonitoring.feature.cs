@@ -40,9 +40,9 @@ namespace AzureAdLicenseGovernor.Worker.Tests.Features
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Group License Assignment Errors Are Monitored", "When a group has assigned licenses defined \r\nAnd there are errors in assigning th" +
-                    "ose licenses to its members\r\nthen there are messages logged indicating there is " +
-                    "a failure", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Group License Assignment Errors Are Monitored", "Given a group has assigned licenses defined \r\nAnd there are errors in assigning t" +
+                    "hose licenses to its members\r\nThen there are messages logged indicating there is" +
+                    " a failure", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         

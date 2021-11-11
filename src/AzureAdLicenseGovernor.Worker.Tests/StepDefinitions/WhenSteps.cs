@@ -30,6 +30,15 @@ namespace AzureAdLicenseGovernor.Worker.Tests.StepDefinitions
             await function.Run(new TimerInfo());
         }
 
+        [When(@"products are monitored")]
+        public async Task WhenProductsAreMonitored()
+        {
+            var function = _testBuilder.Get<MonitorProductsFunctions>();
+
+            await function.Run(new TimerInfo());
+        }
+
+
 
     }
 }

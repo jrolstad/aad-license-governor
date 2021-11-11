@@ -9,7 +9,11 @@ namespace AzureAdLicenseGovernor.Tests.Shared.Extensions
     {
         public static SubscribedSku WithLicensedProduct(this TestBuilderBase root,
            string skuPartNumber,
-           Guid? skuId=null
+           Guid? skuId=null,
+           int? unitsConsumed = null,
+           int? unitsEnabled = null,
+           int? unitsSuspended = null,
+           int? unitsWarning = null
            )
         {
             var context = root.Context.GraphApi;
@@ -19,7 +23,14 @@ namespace AzureAdLicenseGovernor.Tests.Shared.Extensions
                 Id = Guid.NewGuid().ToString(),
                 SkuId = skuId ?? Guid.NewGuid(),
                 SkuPartNumber = skuPartNumber,
-                ServicePlans = new List<ServicePlanInfo>()
+                ServicePlans = new List<ServicePlanInfo>(),
+                ConsumedUnits = unitsConsumed ?? 0,
+                PrepaidUnits = new LicenseUnitsDetail
+                {
+                    Enabled = unitsEnabled ?? 0,
+                    Suspended = unitsSuspended ?? 0,
+                    Warning = unitsWarning ?? 0
+                }
             };
 
             context.SubscribedSkus.AddOrUpdate(data.Id, data, (id, existing) => { return data; });

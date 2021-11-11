@@ -1,8 +1,8 @@
 ﻿Feature: Group License Assignment Errors Are Monitored
 
-When a group has assigned licenses defined 
+Given a group has assigned licenses defined 
 And there are errors in assigning those licenses to its members
-then there are messages logged indicating there is a failure
+Then there are messages logged indicating there is a failure
 
 Background: 
 Given the Azure Active Directory Tenant 'tenant-one'

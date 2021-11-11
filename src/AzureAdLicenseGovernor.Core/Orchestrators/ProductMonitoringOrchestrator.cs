@@ -177,9 +177,9 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
                 data.Add("Units-Total", item.Units.Total.ToString());
                 data.Add("Units-Assigned", item.Units.Assigned.ToString());
                 data.Add("Units-Available", item.Units.Available.ToString());
-                data.Add("Units-PercentUsed", GetPercentUsage(item).ToString());
+                data.Add("Units-PercentUsed", GetPercentUsage(item).ToString("N5"));
                 data.Add("Units-Warning", item.Units.Warning.ToString());
-                data.Add("Units-Sunspended", item.Units.Suspended.ToString());
+                data.Add("Units-Suspended", item.Units.Suspended.ToString());
 
                 _logger.LogInfo(LogMessages.ProductMonitoringLicenseUsage, data);
             }
@@ -191,7 +191,9 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
         {
             if (product.Units.Total == 0) return 1;
 
-            return product.Units.Assigned / product.Units.Total;
+            var result =  (double)product.Units.Assigned / (double)product.Units.Total;
+
+            return result;
         }
 
     }
