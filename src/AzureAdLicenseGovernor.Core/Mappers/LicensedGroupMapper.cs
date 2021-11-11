@@ -14,7 +14,8 @@ namespace AzureAdLicenseGovernor.Core.Mappers
                 ObjectId = toMap?.ObjectId,
                 TenantId = toMap?.TenantId,
                 Mode = toMap?.Mode ?? ProductAssignmentMode.Audit,
-                LicensedProducts = toMap?.LicensedProducts?.Select(Map)?.ToList()
+                LicensedProducts = toMap?.LicensedProducts?.Select(Map)?.ToList(),
+                IsMonitored = toMap?.IsMonitored ?? false
             };
         }
 
@@ -35,7 +36,8 @@ namespace AzureAdLicenseGovernor.Core.Mappers
                 ObjectId = toMap?.ObjectId,
                 TenantId = toMap?.TenantId,
                 Mode = toMap?.Mode ?? ProductAssignmentMode.Audit,
-                LicensedProducts = toMap?.LicensedProducts?.Select(Map)?.ToList()
+                LicensedProducts = toMap?.LicensedProducts?.Select(Map)?.ToList(),
+                IsMonitored = toMap?.IsMonitored ?? false
             };
         }
 

@@ -251,6 +251,7 @@ namespace AzureAdLicenseGovernor.Api.Tests.Functions
 
             Assert.Equal(expected.TenantId, actual.TenantId);
             Assert.Equal(expected.ObjectId, actual.ObjectId);
+            Assert.Equal(expected.IsMonitored, actual.IsMonitored);
 
             AssertLicensedProducts(actual, expected);
 
