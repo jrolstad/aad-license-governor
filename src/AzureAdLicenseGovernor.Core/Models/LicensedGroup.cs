@@ -13,6 +13,7 @@ namespace AzureAdLicenseGovernor.Core.Models
 
         [JsonConverter(typeof(StringEnumConverter))]
         public ProductAssignmentMode Mode { get; set; }
+        public bool IsMonitored { get; set; }
 
         public List<ProductAssignment> LicensedProducts { get; set; }
 

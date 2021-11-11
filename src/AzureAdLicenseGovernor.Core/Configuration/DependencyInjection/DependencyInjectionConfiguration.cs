@@ -29,6 +29,7 @@ namespace AzureAdLicenseGovernor.Core.Configuration.DependencyInjection
 
             services.AddTransient<DirectoryOrchestrator>();
             services.AddTransient<LicensedGroupGovernanceOrchestrator>();
+            services.AddTransient<LicensedGroupMonitoringOrchestrator>();
             services.AddTransient<LicensedGroupOrchestrator>();
 
             services.AddTransient<DirectoryRepository>();
@@ -38,6 +39,7 @@ namespace AzureAdLicenseGovernor.Core.Configuration.DependencyInjection
             services.AddTransient<CosmosDbService>();
             services.AddTransient<GroupService>();
             services.AddTransient<LicensedProductService>();
+            services.AddTransient<LoggingService>();
 
             ConfigureKeyVault(services);
             ConfigureCosmosDb(services);

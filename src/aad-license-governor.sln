@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureAdLicenseGovernor.Work
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureAdLicenseGovernor.Api.Tests", "AzureAdLicenseGovernor.Api.Tests\AzureAdLicenseGovernor.Api.Tests.csproj", "{2A942920-7DB6-4BF6-A005-09B6DF6EE1D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureAdLicenseGovernor.Worker.Tests", "AzureAdLicenseGovernor.Worker.Tests\AzureAdLicenseGovernor.Worker.Tests.csproj", "{F1513755-8110-4E1E-A4E0-D3CD16687DD3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureAdLicenseGovernor.Worker.Tests", "AzureAdLicenseGovernor.Worker.Tests\AzureAdLicenseGovernor.Worker.Tests.csproj", "{F1513755-8110-4E1E-A4E0-D3CD16687DD3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

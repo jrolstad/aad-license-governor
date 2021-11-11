@@ -9,5 +9,6 @@ namespace AzureAdLicenseGovernor.Core.Models
         public string DisplayName { get; set; }
 
         public List<LicenseAssignment> AssignedLicenses { get; set; }
+        public string LicenseProcessingState { get;  set; }
     }
 }

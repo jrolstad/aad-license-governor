@@ -30,10 +30,26 @@ namespace AzureAdLicenseGovernor.Core.Services
 
             var data =await client.Groups[id]
                 .Request()
-                .Select("id,displayName,assignedLicenses")
+                .Select("id,displayName,assignedLicenses,licenseprocessingstate")
                 .GetAsync();
 
             var result = _mapper.Map(directory, data);
+
+            return result;
+        }
+
+        public async Task<ICollection<Group>> GetGroupsWithLicensingErrors(Directory directory)
+        {
+            var client = await _graphClientFactory.CreateAsync(directory);
+
+            var data = await client.Groups
+                .Request()
+                .Filter("hasMembersWithLicenseErrors eq true")
+                .Select("id,displayName,assignedLicenses,licenseprocessingstate")
+                .GetAsync();
+
+            var result = data.Select(d=>_mapper.Map(directory, d))
+                .ToList();
 
             return result;
         }

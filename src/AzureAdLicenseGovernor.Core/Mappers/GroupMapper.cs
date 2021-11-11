@@ -20,7 +20,8 @@ namespace AzureAdLicenseGovernor.Core.Mappers
                 ObjectId = toMap?.Id,
                 TenantId = directory.TenantId,
                 DisplayName = toMap?.DisplayName,
-                AssignedLicenses = toMap?.AssignedLicenses?.Select(_licensedAssignmentMapper.Map)?.ToList()
+                AssignedLicenses = toMap?.AssignedLicenses?.Select(_licensedAssignmentMapper.Map)?.ToList(),
+                LicenseProcessingState = toMap?.LicenseProcessingState?.State
             };
         }
 
