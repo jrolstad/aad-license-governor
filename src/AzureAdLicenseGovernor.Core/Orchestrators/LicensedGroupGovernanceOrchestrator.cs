@@ -148,7 +148,7 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
             }
             else
             {
-                _logger.LogInfo("License Governance|Changes Summary:None",data);
+                _logger.LogInfo("License Governance|Change Summary:None",data);
             }
         }
 

@@ -25,7 +25,7 @@ namespace AzureAdLicenseGovernor.Core.Configuration.DependencyInjection
             services.AddTransient<LicenseAssignmentComparer>();
             services.AddTransient<LicensedAssignmentMapper>();
             services.AddTransient<LicensedGroupMapper>();
-            services.AddTransient<LicensedProductMapper>();
+            services.AddTransient<ProductMapper>();
 
             services.AddTransient<DirectoryOrchestrator>();
             services.AddTransient<LicensedGroupGovernanceOrchestrator>();

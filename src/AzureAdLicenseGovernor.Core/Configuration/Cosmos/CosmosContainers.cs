@@ -4,5 +4,6 @@
     {
         public string Directories = "Directories";
         public string LicensedGroups = "LicensedGroups";
+        public string ProductSnapshots = "ProductSnapshots";
     }
 }

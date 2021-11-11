@@ -12,10 +12,10 @@ namespace AzureAdLicenseGovernor.Core.Services
     public class LicensedProductService
     {
         private readonly IGraphClientFactory _graphClientFactory;
-        private readonly LicensedProductMapper _mapper;
+        private readonly ProductMapper _mapper;
 
         public LicensedProductService(IGraphClientFactory graphClientFactory,
-            LicensedProductMapper mapper)
+            ProductMapper mapper)
         {
             _graphClientFactory = graphClientFactory;
             _mapper = mapper;
