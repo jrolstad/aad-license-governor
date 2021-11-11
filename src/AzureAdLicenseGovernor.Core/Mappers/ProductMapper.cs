@@ -12,7 +12,7 @@ namespace AzureAdLicenseGovernor.Core.Mappers
     {
         public Product Map(SubscribedSku toMap)
         {
-            return new Product
+            var data = new Product
             {
                 Id = toMap?.SkuId?.ToString(),
                 Name = toMap?.SkuPartNumber,
@@ -21,12 +21,17 @@ namespace AzureAdLicenseGovernor.Core.Mappers
                 ServicePlans = toMap?.ServicePlans?.Select(Map)?.ToList(),
                 Units = new ProductUnits
                 {
-                    Consumed = toMap?.ConsumedUnits ?? 0,
+                    Assigned = toMap?.ConsumedUnits ?? 0,
                     Enabled = toMap?.PrepaidUnits?.Enabled ?? 0,
                     Suspended = toMap?.PrepaidUnits?.Suspended ?? 0,
                     Warning = toMap?.PrepaidUnits?.Warning ?? 0,
                 }
             };
+
+            data.Units.Total = data.Units.Enabled + data.Units.Suspended + data.Units.Warning;
+            data.Units.Available = data.Units.Total - data.Units.Assigned;
+
+            return data;
         }
 
         public ServicePlan Map(ServicePlanInfo toMap)

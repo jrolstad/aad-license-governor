@@ -16,9 +16,11 @@ namespace AzureAdLicenseGovernor.Core.Models
 
     public class ProductUnits
     {
-        public int Consumed { get; set; }
+        public int Assigned { get; set; }
         public int Enabled { get; set; }
         public int Suspended { get; set; }
         public int Warning { get; set; }
+        public int Total { get; set; }
+        public int Available { get; set; }
     }
 }

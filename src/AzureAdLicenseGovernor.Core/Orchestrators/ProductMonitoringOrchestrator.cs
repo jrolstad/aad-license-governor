@@ -42,20 +42,22 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
             await Task.WhenAll(directoryTasks);
         }
 
-        private Task Monitor(Directory directory)
+        private async Task Monitor(Directory directory)
         {
+            var products = await _productService.Get(directory);
+
             var monitoringTasks = new List<Task>
             {
-                MonitorProductChanges(directory),
+                MonitorProductChanges(directory,products),
+                MonitorProductUsage(directory,products)
             };
 
-            return Task.WhenAll(monitoringTasks);
+            await Task.WhenAll(monitoringTasks);
         }
 
-        private async Task MonitorProductChanges(Directory directory)
+        private async Task MonitorProductChanges(Directory directory, List<Product> current)
         {
             var snapshot = await _productRepository.GetSnapshot(directory.TenantId);
-            var current = await _productService.Get(directory);
 
             if (!snapshot.Any())
             {
@@ -66,6 +68,7 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
             await _productRepository.SaveSnapshot(directory.TenantId, current);
 
         }
+
         private void LogChanges(string tenantId, TenantProductComparisonResult differences)
         {
             LogSummary(tenantId, differences);
@@ -88,11 +91,11 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
                 differences.Removed.Any() ||
                 differences.Updated.Any())
             {
-                _logger.LogInfo("Product Governance|Change Summary", data);
+                _logger.LogInfo("Product Monitoring|Change Summary", data);
             }
             else
             {
-                _logger.LogInfo("Product Governance|Change Summary:None", data);
+                _logger.LogInfo("Product Monitoring|Change Summary:None", data);
             }
         }
 
@@ -101,7 +104,7 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
             foreach (var item in differences.Added)
             {
                 var data = GetProductAttributes(tenantId, item);
-                _logger.LogInfo("Product Governance|New Product", data);
+                _logger.LogInfo("Product Monitoring|New Product", data);
             }
         }
 
@@ -110,7 +113,7 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
             foreach (var item in differences.Removed)
             {
                 var data = GetProductAttributes(tenantId, item);
-                _logger.LogInfo("Product Governance|Removed Product", data);
+                _logger.LogInfo("Product Monitoring|Removed Product", data);
             }
         }
 
@@ -119,45 +122,78 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
             foreach (var item in differences.Updated)
             {
                 var data = GetProductAttributes(tenantId, item.Product);
-                _logger.LogInfo("Product Governance|Update Product", data);
+                _logger.LogInfo("Product Monitoring|Updated Product", data);
 
-                LogAdded(tenantId, item);
-                LogRemoved(tenantId, item);
+                LogAddedServicePlans(tenantId, item);
+                LogRemovedServicePlans(tenantId, item);
             }
         }
 
-        private void LogAdded(string tenantId,  ProductComparisonResult differences)
+        private void LogAddedServicePlans(string tenantId,  ProductComparisonResult differences)
         {
             foreach (var item in differences.ServicePlans.Added)
             {
-                var data = GetProductAttributes(tenantId, differences.Product);
-                data.Add("ServicePlanId", item.Id);
-                data.Add("ServicePlanName", item.Name);
+                var data = GetProductAttributes(tenantId, differences.Product, item);
 
-                _logger.LogInfo("Product Governance|New Service Plan", data);
+                _logger.LogInfo("Product Monitoring|New Service Plan", data);
             }
         }
 
-        private void LogRemoved(string tenantId, ProductComparisonResult differences)
+        private void LogRemovedServicePlans(string tenantId, ProductComparisonResult differences)
         {
             foreach (var item in differences.ServicePlans.Added)
             {
-                var data = GetProductAttributes(tenantId, differences.Product);
-                data.Add("ServicePlanId", item.Id);
-                data.Add("ServicePlanName", item.Name);
+                var data = GetProductAttributes(tenantId, differences.Product, item);
 
-                _logger.LogInfo("Product Governance|Removed Service Plan", data);
+                _logger.LogInfo("Product Monitoring|Removed Service Plan", data);
             };
         }
 
-        private Dictionary<string,string> GetProductAttributes(string tenantId, Product product)
+        private Dictionary<string,string> GetProductAttributes(string tenantId, Product product, ServicePlan servicePlan=null)
         {
-            return new Dictionary<string, string>
+            var data =  new Dictionary<string, string>
                 {
                      {"TenantId",tenantId },
-                     {"ProductId",product.Id },
-                     {"ProductName",product.Name },
+                     {"ProductId",product?.Id },
+                     {"ProductName",product?.Name },
                 };
+
+            if(servicePlan!=null)
+            {
+                data.Add("ServicePlanId", servicePlan.Id);
+                data.Add("ServicePlanName", servicePlan.Name);
+            }
+
+            return data;
         }
+
+
+
+
+        private Task MonitorProductUsage(Directory directory, List<Product> products)
+        {
+            foreach(var item in products)
+            {
+                var data = GetProductAttributes(directory.TenantId, item);
+                data.Add("Units-Total", item.Units.Total.ToString());
+                data.Add("Units-Assigned", item.Units.Assigned.ToString());
+                data.Add("Units-Available", item.Units.Available.ToString());
+                data.Add("Units-PercentUsed", GetPercentUsage(item).ToString());
+                data.Add("Units-Warning", item.Units.Warning.ToString());
+                data.Add("Units-Sunspended", item.Units.Suspended.ToString());
+
+                _logger.LogInfo("Product Monitoring|Removed Service Plan", data);
+            }
+
+            return Task.CompletedTask;
+        }
+
+        private double GetPercentUsage(Product product)
+        {
+            if (product.Units.Total == 0) return 1;
+
+            return product.Units.Assigned / product.Units.Total;
+        }
+
     }
 }
