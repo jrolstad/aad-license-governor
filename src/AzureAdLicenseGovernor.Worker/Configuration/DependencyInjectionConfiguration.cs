@@ -7,6 +7,8 @@ namespace AzureAdLicenseGovernor.Worker.Configuration
     {
         public static void Configure(HostBuilderContext context, IServiceCollection services)
         {
+            services.AddApplicationInsightsTelemetryWorkerService();
+
             Core.Configuration.DependencyInjection.DependencyInjectionConfiguration.Register(services);
         }
     }
