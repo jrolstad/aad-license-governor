@@ -59,14 +59,13 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
 
             var snapshot = await _productRepository.GetSnapshot(directory.TenantId);
 
-            if (!snapshot.Any())
+            if (snapshot.Any())
             {
                 var differences = _productComparer.Compare(snapshot, current);
                 LogChanges(directory.TenantId, differences);
             }
 
             await _productRepository.SaveSnapshot(directory.TenantId, current);
-
         }
 
         private void LogChanges(string tenantId, TenantProductComparisonResult differences)
