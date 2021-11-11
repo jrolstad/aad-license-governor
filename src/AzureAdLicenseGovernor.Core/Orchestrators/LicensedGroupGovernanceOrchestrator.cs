@@ -118,6 +118,7 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
                 {
                     {"TenantId",group.TenantId },
                     {"GroupId",group.ObjectId },
+                    {"AssignmentMode",group.Mode.ToString() },
                     {"Action",action },
                     {"ProductId",assignment.ProductId },
                     {"DisabledServicePlans", string.Join(",",assignment.DisabledServicePlans ?? new List<string>()) },
@@ -133,6 +134,7 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
                 {
                     {"TenantId",group.TenantId },
                     {"GroupId",group.ObjectId },
+                    {"AssignmentMode",group.Mode.ToString() },
                     {"Added",comparison.ToAdd.Count.ToString() },
                     {"Removed",comparison.ToRemove.Count.ToString() },
                     {"Updated",comparison.ToUpdate.Count.ToString() },

@@ -58,15 +58,18 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
         private async Task MonitorGroup(Directory directory, LicensedGroup group)
         {
             var groupData = await _groupService.Get(directory, group.ObjectId);
-            LogGroupLicenseProcessingState(groupData);
+            LogGroupLicenseProcessingState(groupData,group);
         }
 
-        private void LogGroupLicenseProcessingState(Group groupData)
+        private void LogGroupLicenseProcessingState(Group groupData, LicensedGroup group)
         {
             var data = new Dictionary<string, string>
             {
                 {"TenantId",groupData.TenantId },
                 {"GroupId",groupData.ObjectId },
+                {"DisplayName",groupData.DisplayName },
+                {"IsMonitored",group.IsMonitored.ToString() },
+                {"AssignmentMode",group.Mode.ToString() },
                 {"LicenseProcessingState",groupData.LicenseProcessingState },
             };
             _logger.LogInfo("Group Monitor:Processing State", data);
@@ -94,13 +97,14 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
             _logger.LogMetric("Group Monitor:Groups with licensing errors", groups.Count,data);
         }
 
-        private void LogGroupLicensingErrors(Group group)
+        private void LogGroupLicensingErrors(Group groupData)
         {
             var data = new Dictionary<string, string>
                 {
-                    {"TenantId",group.TenantId },
-                    {"GroupId",group.ObjectId },
-                    {"LicenseProcessingState",group.LicenseProcessingState },
+                    {"TenantId",groupData.TenantId },
+                    {"GroupId",groupData.ObjectId },
+                    {"DisplayName",groupData.DisplayName },
+                    {"LicenseProcessingState",groupData.LicenseProcessingState },
                 };
             _logger.LogInfo("Group Monitor:Licensing Errors", data);
         }
