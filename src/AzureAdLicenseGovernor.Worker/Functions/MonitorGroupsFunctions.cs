@@ -6,19 +6,19 @@ namespace AzureAdLicenseGovernor.Worker.Functions
 {
     public class MonitorGroupsFunctions
     {
-        private readonly LicensedGroupMonitoringOrchestrator _licensedGroupMonitoringOrchestrator;
+        private readonly LicensedGroupMonitoringOrchestrator _orchestrator;
 
-        public MonitorGroupsFunctions(LicensedGroupMonitoringOrchestrator licensedGroupMonitoringOrchestrator)
+        public MonitorGroupsFunctions(LicensedGroupMonitoringOrchestrator orchestrator)
         {
-            _licensedGroupMonitoringOrchestrator = licensedGroupMonitoringOrchestrator;
+            _orchestrator = orchestrator;
         }
 
         [Function("license-governance-monitor")]
         public Task Run([TimerTrigger("%GroupLicenseFunction_MonitorCron%")] TimerInfo myTimer)
         {
-            return _licensedGroupMonitoringOrchestrator.Monitor();
+            return _orchestrator.Monitor();
         }
     }
 
-    
+
 }

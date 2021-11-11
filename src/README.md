@@ -71,7 +71,8 @@ The AzureAdLicenseGovernor.Worker is a set of background worker Azure Functions.
     "KeyVault_BaseUri": "https://aadlicense-dev.vault.azure.net/",
     "Cosmos_BaseUri": "https://aadlicense-dev.documents.azure.com:443/"
     "GroupLicenseFunction_ApplyCron": "0 */1 * * * *",
-    "GroupLicenseFunction_MonitorCron": "0 */1 * * * *"
+    "GroupLicenseFunction_MonitorCron": "0 */1 * * * *",
+    "ProductFunction_MonitorCron": "0 */1 * * * *"
   }
 }
 ```
