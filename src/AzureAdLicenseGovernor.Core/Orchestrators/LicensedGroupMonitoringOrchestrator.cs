@@ -63,7 +63,7 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
 
         private void LogGroupLicenseProcessingState(Group groupData)
         {
-            var data = new Dictionary<string, object>
+            var data = new Dictionary<string, string>
             {
                 {"TenantId",groupData.TenantId },
                 {"GroupId",groupData.ObjectId },
@@ -86,17 +86,17 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
 
         private void LogGroupLicenseErrorSummary(Directory directory, ICollection<Group> groups)
         {
-            var data = new Dictionary<string, object>
+            var data = new Dictionary<string, string>
             {
                 { "TenantId",directory.TenantId },
-                { "Count", groups.Count }
+                { "Count", groups.Count.ToString() }
             };
-            _logger.LogInfo("Group Monitor:Licensing Error Summary", data);
+            _logger.LogMetric("Group Monitor:Groups with licensing errors", groups.Count,data);
         }
 
         private void LogGroupLicensingErrors(Group group)
         {
-            var data = new Dictionary<string, object>
+            var data = new Dictionary<string, string>
                 {
                     {"TenantId",group.TenantId },
                     {"GroupId",group.ObjectId },
