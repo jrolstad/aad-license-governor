@@ -110,7 +110,11 @@ namespace AzureAdLicenseGovernor.Worker.Tests.StepDefinitions
         {
             var messages = _testBuilder.GetLogEntries(message);
 
-            Assert.Empty(messages);
+            if (messages.Any())
+            {
+                throw new Exception($"Log Entry with message '{message}' was found");
+            }
+           
         }
 
 

@@ -61,7 +61,7 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
 
             if (snapshot.Any())
             {
-                var differences = _productComparer.Compare(snapshot, current);
+                var differences = _productComparer.Compare(current, snapshot);
                 LogChanges(directory.TenantId, differences);
             }
 
@@ -140,7 +140,7 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
 
         private void LogRemovedServicePlans(string tenantId, ProductComparisonResult differences)
         {
-            foreach (var item in differences.ServicePlans.Added)
+            foreach (var item in differences.ServicePlans.Removed)
             {
                 var data = GetProductAttributes(tenantId, differences.Product, item);
 
