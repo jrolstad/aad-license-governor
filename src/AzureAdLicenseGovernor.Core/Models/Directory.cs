@@ -16,11 +16,19 @@ namespace AzureAdLicenseGovernor.Core.Models
         public bool CanManageObjects { get; set; }
         public string ClientId { get; set; }
         public DirectoryClientType ClientType { get; set; }
+        public DirectoryMonitoring Monitoring { get; set; }
     }
 
     public enum DirectoryClientType
     {
         Application,
         ManagedIdentity
+    }
+
+    public class DirectoryMonitoring
+    {
+        public bool TrackGroupLicenseAssignmentFailures { get; set; }
+        public bool TrackProductChanges { get; set; }
+        public bool TrackProductUsage { get; set; }
     }
 }

@@ -19,5 +19,6 @@ namespace AzureAdLicenseGovernor.Core.Models.Data
         public bool CanManageObjects { get; set; }
         public string ClientId { get; set; }
         public DirectoryClientType ClientType { get; set; }
+        public DirectoryMonitoring Monitoring { get; set; }
     }
 }

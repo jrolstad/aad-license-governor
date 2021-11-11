@@ -19,7 +19,13 @@ namespace AzureAdLicenseGovernor.Core.Mappers
                 GraphUrl = toMap?.GraphUrl,
                 PortalUrl = toMap?.PortalUrl,
                 ClientId = toMap?.ClientId,
-                ClientType = toMap?.ClientType ?? DirectoryClientType.Application
+                ClientType = toMap?.ClientType ?? DirectoryClientType.Application,
+                Monitoring = toMap?.Monitoring ?? new DirectoryMonitoring
+                {
+                    TrackGroupLicenseAssignmentFailures = false,
+                    TrackProductChanges = false,
+                    TrackProductUsage = false
+                }
             };
         }
 
@@ -37,7 +43,13 @@ namespace AzureAdLicenseGovernor.Core.Mappers
                 GraphUrl = toMap?.GraphUrl,
                 PortalUrl = toMap?.PortalUrl,
                 ClientId = toMap?.ClientId,
-                ClientType = toMap?.ClientType ?? DirectoryClientType.Application
+                ClientType = toMap?.ClientType ?? DirectoryClientType.Application,
+                Monitoring = toMap?.Monitoring ?? new DirectoryMonitoring
+                {
+                    TrackGroupLicenseAssignmentFailures = false,
+                    TrackProductChanges = false,
+                    TrackProductUsage = false
+                }
             };
         }
     }

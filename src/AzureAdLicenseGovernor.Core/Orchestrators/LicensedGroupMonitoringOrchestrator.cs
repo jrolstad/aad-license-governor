@@ -77,6 +77,8 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
 
         private async Task MonitorGroupsWithLicensingErrors(Directory directory)
         {
+            if (!directory.Monitoring.TrackGroupLicenseAssignmentFailures) return;
+
             var groups = await _groupService.GetGroupsWithLicensingErrors(directory);
 
             LogGroupLicenseErrorSummary(directory, groups);

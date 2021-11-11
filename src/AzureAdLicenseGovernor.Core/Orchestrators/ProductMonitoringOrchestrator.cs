@@ -55,6 +55,8 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
 
         private async Task MonitorProductChanges(Directory directory, List<Product> current)
         {
+            if (!directory.Monitoring.TrackProductChanges) return;
+
             var snapshot = await _productRepository.GetSnapshot(directory.TenantId);
 
             if (!snapshot.Any())
@@ -167,7 +169,9 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
 
         private Task MonitorProductUsage(Directory directory, List<Product> products)
         {
-            foreach(var item in products)
+            if (!directory.Monitoring.TrackProductUsage) return Task.CompletedTask;
+
+            foreach (var item in products)
             {
                 var data = GetProductAttributes(directory.TenantId, item);
                 data.Add("Units-Total", item.Units.Total.ToString());

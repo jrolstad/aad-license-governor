@@ -49,7 +49,7 @@ The AzureAdLicenseGovernor.Api is a set of HTTP based Azure Functions.  Be sure 
   "IsEncrypted": false,
   "Values": {
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
-    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
     "KeyVault_BaseUri": "https://aadlicense-dev.vault.azure.net/",
     "Cosmos_BaseUri": "https://aadlicense-dev.documents.azure.com:443/"
   },
@@ -67,7 +67,7 @@ The AzureAdLicenseGovernor.Worker is a set of background worker Azure Functions.
   "IsEncrypted": false,
   "Values": {
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
-    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
     "KeyVault_BaseUri": "https://aadlicense-dev.vault.azure.net/",
     "Cosmos_BaseUri": "https://aadlicense-dev.documents.azure.com:443/"
     "GroupLicenseFunction_ApplyCron": "0 */1 * * * *",
