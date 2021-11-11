@@ -22,7 +22,7 @@ namespace AzureAdLicenseGovernor.Api.Functions
 
         [Function("licensegovernance-put")]
         public async Task<HttpResponseData> Put(
-           [HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "license/governance/apply")]
+           [HttpTrigger(AuthorizationLevel.Anonymous, "put","get", Route = "license/governance/apply")]
             HttpRequestData req,
            FunctionContext executionContext)
         {

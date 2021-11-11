@@ -17,7 +17,7 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
         private readonly GroupService _groupService;
         private readonly LicenseAssignmentComparer _licenseAssignmentComparer;
         private readonly LicensedAssignmentMapper _licensedAssignmentMapper;
-        private readonly ILogger<LicensedGroupGovernanceOrchestrator> _logger;
+        private readonly LoggingService _logger;
 
         public LicensedGroupGovernanceOrchestrator(LicensedGroupOrchestrator licensedGroupOrchestrator,
             DirectoryOrchestrator directoryOrchestrator,
@@ -25,7 +25,7 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
             GroupService groupService,
             LicenseAssignmentComparer licenseAssignmentComparer,
             LicensedAssignmentMapper licensedAssignmentMapper,
-            ILogger<LicensedGroupGovernanceOrchestrator> logger)
+            LoggingService logger)
         {
             _licensedGroupOrchestrator = licensedGroupOrchestrator;
             _directoryOrchestrator = directoryOrchestrator;
@@ -77,7 +77,7 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
                 await ApplyChanges(directory, licensedGroup, comparisonResult);
             }
 
-            LogChanges(licensedGroup,comparisonResult);
+            LogChangeSummary(licensedGroup,comparisonResult);
         }
 
         private Task ApplyChanges(Directory directory, 
@@ -88,18 +88,21 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
 
             if (comparisonResult.ToAdd.Any())
             {
+                LogLicenseChanges("Add", licensedGroup, comparisonResult.ToAdd);
                 var addTask = _groupService.AssignedLicenses(directory, licensedGroup.ObjectId, comparisonResult.ToAdd);
                 actionTasks.Add(addTask);
             }
 
             if (comparisonResult.ToRemove.Any())
             {
+                LogLicenseChanges("Remove", licensedGroup, comparisonResult.ToRemove);
                 var removeTask = _groupService.RemoveLicenses(directory, licensedGroup.ObjectId, comparisonResult.ToRemove);
                 actionTasks.Add(removeTask);
             }
 
             if (comparisonResult.ToUpdate.Any())
             {
+                LogLicenseChanges("Update", licensedGroup, comparisonResult.ToUpdate);
                 var updateTask = _groupService.UpdateLicenses(directory, licensedGroup.ObjectId, comparisonResult.ToUpdate);
                 actionTasks.Add(updateTask);
             }
@@ -107,59 +110,46 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
             return Task.WhenAll(actionTasks);
         }
 
-        private void LogChanges(LicensedGroup group, LicenseAssignmentComparisonResult comparison)
+        private void LogLicenseChanges(string action, LicensedGroup group, IEnumerable<LicenseAssignment> changes)
         {
-            LogAddedProducts(group, comparison);
-            LogRemovedProducts(group, comparison);
-            LogUpdatedProducts(group, comparison);
-
-            LogIfNoChanges(group,comparison);
-        }
-
-        private void LogAddedProducts(LicensedGroup group, LicenseAssignmentComparisonResult comparison)
-        {
-            if (comparison.ToAdd.Any())
+            foreach(var assignment in changes)
             {
-                _logger.LogInformation("Licensed products added to group");
+                var data = new Dictionary<string, string>
+                {
+                    {"TenantId",group.TenantId },
+                    {"GroupId",group.ObjectId },
+                    {"Action",action },
+                    {"ProductId",assignment.ProductId },
+                    {"DisabledServicePlans", string.Join(",",assignment.DisabledServicePlans ?? new List<string>()) },
+                };
+
+                _logger.LogInfo("License Governance|Group License Assignment Change", data);
+            }
+            
+        }
+        private void LogChangeSummary(LicensedGroup group, LicenseAssignmentComparisonResult comparison)
+        {
+            var data = new Dictionary<string, string>
+                {
+                    {"TenantId",group.TenantId },
+                    {"GroupId",group.ObjectId },
+                    {"Added",comparison.ToAdd.Count.ToString() },
+                    {"Removed",comparison.ToRemove.Count.ToString() },
+                    {"Updated",comparison.ToUpdate.Count.ToString() },
+                };
+
+            if (comparison.ToUpdate.Any() ||
+                comparison.ToAdd.Any() ||
+                comparison.ToRemove.Any())
+            {
+                _logger.LogInfo("License Governance|Change Summary",data);
             }
             else
             {
-                _logger.LogInformation("No licensed products added to group");
+                _logger.LogInfo("License Governance|Changes Summary:None",data);
             }
         }
 
-        private void LogRemovedProducts(LicensedGroup group, LicenseAssignmentComparisonResult comparison)
-        {
-            if (comparison.ToRemove.Any())
-            {
-                _logger.LogInformation("Licensed products removed from group");
-            }
-            else
-            {
-                _logger.LogInformation("No licensed products removed from group");
-            }
-        }
-
-        private void LogUpdatedProducts(LicensedGroup group, LicenseAssignmentComparisonResult comparison)
-        {
-            if (comparison.ToUpdate.Any())
-            {
-                _logger.LogInformation("Licensed products updated for group");
-            }
-            else
-            {
-                _logger.LogInformation("No licensed products updated for group");
-            }
-        }
-
-        private void LogIfNoChanges(LicensedGroup group, LicenseAssignmentComparisonResult comparison)
-        {
-            if (!comparison.ToAdd.Any() &&
-                            !comparison.ToRemove.Any() &&
-                            !comparison.ToUpdate.Any())
-            {
-                _logger.LogInformation("No licensing changes for group");
-            }
-        }
+        
     }
 }
