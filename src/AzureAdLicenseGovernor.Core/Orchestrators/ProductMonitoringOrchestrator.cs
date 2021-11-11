@@ -91,11 +91,11 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
                 differences.Removed.Any() ||
                 differences.Updated.Any())
             {
-                _logger.LogInfo("Product Monitoring|Change Summary", data);
+                _logger.LogInfo(LogMessages.ProductMonitoringChangeSummary, data);
             }
             else
             {
-                _logger.LogInfo("Product Monitoring|Change Summary:None", data);
+                _logger.LogInfo(LogMessages.ProductMonitoringNoChange, data);
             }
         }
 
@@ -104,7 +104,7 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
             foreach (var item in differences.Added)
             {
                 var data = GetProductAttributes(tenantId, item);
-                _logger.LogInfo("Product Monitoring|New Product", data);
+                _logger.LogInfo(LogMessages.ProductMonitoringNewProduct, data);
             }
         }
 
@@ -113,7 +113,7 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
             foreach (var item in differences.Removed)
             {
                 var data = GetProductAttributes(tenantId, item);
-                _logger.LogInfo("Product Monitoring|Removed Product", data);
+                _logger.LogInfo(LogMessages.ProductMonitoringRemovedProduct, data);
             }
         }
 
@@ -122,7 +122,7 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
             foreach (var item in differences.Updated)
             {
                 var data = GetProductAttributes(tenantId, item.Product);
-                _logger.LogInfo("Product Monitoring|Updated Product", data);
+                _logger.LogInfo(LogMessages.ProductMonitoringUpdatedProduct, data);
 
                 LogAddedServicePlans(tenantId, item);
                 LogRemovedServicePlans(tenantId, item);
@@ -135,7 +135,7 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
             {
                 var data = GetProductAttributes(tenantId, differences.Product, item);
 
-                _logger.LogInfo("Product Monitoring|New Service Plan", data);
+                _logger.LogInfo(LogMessages.ProductMonitoringNewServicePlan, data);
             }
         }
 
@@ -145,7 +145,7 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
             {
                 var data = GetProductAttributes(tenantId, differences.Product, item);
 
-                _logger.LogInfo("Product Monitoring|Removed Service Plan", data);
+                _logger.LogInfo(LogMessages.ProductMonitoringRemovedServicePlan, data);
             };
         }
 
@@ -167,9 +167,6 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
             return data;
         }
 
-
-
-
         private Task MonitorProductUsage(Directory directory, List<Product> products)
         {
             foreach(var item in products)
@@ -182,7 +179,7 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
                 data.Add("Units-Warning", item.Units.Warning.ToString());
                 data.Add("Units-Sunspended", item.Units.Suspended.ToString());
 
-                _logger.LogInfo("Product Monitoring|Removed Service Plan", data);
+                _logger.LogInfo(LogMessages.ProductMonitoringLicenseUsage, data);
             }
 
             return Task.CompletedTask;

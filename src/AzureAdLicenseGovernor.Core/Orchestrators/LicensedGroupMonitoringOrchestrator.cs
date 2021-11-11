@@ -72,7 +72,7 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
                 {"AssignmentMode",group.Mode.ToString() },
                 {"LicenseProcessingState",groupData.LicenseProcessingState },
             };
-            _logger.LogInfo("Group Monitor:Processing State", data);
+            _logger.LogInfo(LogMessages.GroupMonitorProcessingState, data);
         }
 
         private async Task MonitorGroupsWithLicensingErrors(Directory directory)
@@ -94,7 +94,7 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
                 { "TenantId",directory.TenantId },
                 { "Count", groups.Count.ToString() }
             };
-            _logger.LogMetric("Group Monitor:Groups with licensing errors", groups.Count,data);
+            _logger.LogMetric(LogMessages.GroupMonitorLicensingErrorEvent, groups.Count,data);
         }
 
         private void LogGroupLicensingErrors(Group groupData)
@@ -106,7 +106,7 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
                     {"DisplayName",groupData.DisplayName },
                     {"LicenseProcessingState",groupData.LicenseProcessingState },
                 };
-            _logger.LogInfo("Group Monitor:Licensing Errors", data);
+            _logger.LogInfo(LogMessages.GroupMonitorLicensingErrors, data);
         }
     }
 }

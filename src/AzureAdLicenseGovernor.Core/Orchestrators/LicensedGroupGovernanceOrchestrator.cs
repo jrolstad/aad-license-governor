@@ -124,7 +124,7 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
                     {"DisabledServicePlans", string.Join(",",assignment.DisabledServicePlans ?? new List<string>()) },
                 };
 
-                _logger.LogInfo("License Governance|Group License Assignment Change", data);
+                _logger.LogInfo(LogMessages.LicenseGovernanceAssignmentChange, data);
             }
             
         }
@@ -144,11 +144,11 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
                 comparison.ToAdd.Any() ||
                 comparison.ToRemove.Any())
             {
-                _logger.LogInfo("License Governance|Change Summary",data);
+                _logger.LogInfo(LogMessages.LicenseGovernanceChangeSummary, data);
             }
             else
             {
-                _logger.LogInfo("License Governance|Change Summary:None",data);
+                _logger.LogInfo(LogMessages.LicenseGovernanceNoChange, data);
             }
         }
 
