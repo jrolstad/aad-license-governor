@@ -9,5 +9,6 @@ namespace AzureAdLicenseGovernor.Tests.Shared.TestContexts
     {
         public ConcurrentDictionary<string, DirectoryData> Directories = new ConcurrentDictionary<string, DirectoryData>();
         public ConcurrentDictionary<string, LicensedGroupData> Groups = new ConcurrentDictionary<string, LicensedGroupData>();
+        public ConcurrentDictionary<string, ProductDataSnapshot> ProductSnapshots = new ConcurrentDictionary<string, ProductDataSnapshot>();
     }
 }

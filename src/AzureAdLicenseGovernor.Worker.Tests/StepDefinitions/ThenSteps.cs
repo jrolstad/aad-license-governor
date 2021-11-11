@@ -64,5 +64,19 @@ namespace AzureAdLicenseGovernor.Worker.Tests.StepDefinitions
             Assert.Empty(group.AssignedLicenses ?? new List<Microsoft.Graph.AssignedLicense>());
         }
 
+        [Then(@"there is a '([^']*)' message logged with data")]
+        public void ThenThereIsAMessageLoggedWithData(string message, Table data)
+        {
+            throw new PendingStepException();
+        }
+
+        [Then(@"there is not a '([^']*)' message logged")]
+        public void ThenThereIsNotAMessageLogged(string message)
+        {
+            throw new PendingStepException();
+        }
+
+
+
     }
 }

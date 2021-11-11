@@ -148,6 +148,21 @@ namespace AzureAdLicenseGovernor.Worker.Tests.StepDefinitions
             return expectedDisabledPlanIds;
         }
 
+        [Given(@"the governed group '([^']*)' is tracking license processing state")]
+        public void GivenTheGovernedGroupIsTrackingLicenseProcessingState(string groupName)
+        {
+            var group = _testBuilder.GetGovernedGroup(groupName);
+            group.TrackLicenseProcessingState = true;
+        }
+
+        [Given(@"the governed group '([^']*)' is not tracking license processing state")]
+        public void GivenTheGovernedGroupIsNotTrackingLicenseProcessingState(string groupName)
+        {
+            var group = _testBuilder.GetGovernedGroup(groupName);
+            group.TrackLicenseProcessingState = false;
+        }
+
+
 
     }
 }

@@ -22,5 +22,14 @@ namespace AzureAdLicenseGovernor.Worker.Tests.StepDefinitions
             await function.Apply(new TimerInfo());
         }
 
+        [When(@"governed groups are monitored")]
+        public async Task WhenGovernedGroupsAreMonitored()
+        {
+            var function = _testBuilder.Get<MonitorGroupsFunctions>();
+
+            await function.Run(new TimerInfo());
+        }
+
+
     }
 }

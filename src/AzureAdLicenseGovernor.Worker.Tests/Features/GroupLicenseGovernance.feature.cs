@@ -83,96 +83,96 @@ namespace AzureAdLicenseGovernor.Worker.Tests.Features
 #line 7
 testRunner.Given("the Azure Active Directory Tenant \'tenant-one\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
                         "SkuId",
                         "SkuPartNumber"});
-            table1.AddRow(new string[] {
+            table4.AddRow(new string[] {
                         "c5928f49-12ba-48f7-ada3-0d743a3601d5",
                         "VISIOCLIENT"});
-            table1.AddRow(new string[] {
+            table4.AddRow(new string[] {
                         "09015f9f-377f-4538-bbb5-f75ceb09358a",
                         "PROJECTPREMIUM"});
 #line 9
-testRunner.And("licensed products in \'tenant-one\'", ((string)(null)), table1, "And ");
+testRunner.And("licensed products in \'tenant-one\'", ((string)(null)), table4, "And ");
 #line hidden
-            TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
                         "ServicePlanId",
                         "ServicePlanName"});
-            table2.AddRow(new string[] {
+            table5.AddRow(new string[] {
                         "da792a53-cbc0-4184-a10d-e544dd34b3c1",
                         "ONEDRIVE_BASIC"});
-            table2.AddRow(new string[] {
+            table5.AddRow(new string[] {
                         "2bdbaf8f-738f-4ac7-9234-3c3ee2ce7d0f",
                         "VISIOONLINE"});
-            table2.AddRow(new string[] {
+            table5.AddRow(new string[] {
                         "113feb6c-3fe4-4440-bddc-54d774bf0318",
                         "EXCHANGE_S_FOUNDATION"});
-            table2.AddRow(new string[] {
+            table5.AddRow(new string[] {
                         "663a804f-1c30-4ff0-9915-9db84f0d1cea",
                         "VISIO_CLIENT_SUBSCRIPTION"});
 #line 13
-testRunner.And("service plans in \'tenant-one\' for product \'VISIOCLIENT\'", ((string)(null)), table2, "And ");
+testRunner.And("service plans in \'tenant-one\' for product \'VISIOCLIENT\'", ((string)(null)), table5, "And ");
 #line hidden
-            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
                         "ServicePlanId",
                         "ServicePlanName"});
-            table3.AddRow(new string[] {
+            table6.AddRow(new string[] {
                         "818523f5-016b-4355-9be8-ed6944946ea7",
                         "PROJECT_PROFESSIONAL"});
-            table3.AddRow(new string[] {
+            table6.AddRow(new string[] {
                         "fa200448-008c-4acb-abd4-ea106ed2199d",
                         "FLOW_FOR_PROJECT"});
-            table3.AddRow(new string[] {
+            table6.AddRow(new string[] {
                         "50554c47-71d9-49fd-bc54-42a2765c555c",
                         "DYN365_CDS_PROJECT"});
-            table3.AddRow(new string[] {
+            table6.AddRow(new string[] {
                         "113feb6c-3fe4-4440-bddc-54d774bf0318",
                         "EXCHANGE_S_FOUNDATION"});
-            table3.AddRow(new string[] {
+            table6.AddRow(new string[] {
                         "e95bec33-7c88-4a70-8e19-b10bd9d0c014",
                         "SHAREPOINTWAC"});
-            table3.AddRow(new string[] {
+            table6.AddRow(new string[] {
                         "fe71d6c3-a2ea-4499-9778-da042bf08063",
                         "SHAREPOINT_PROJECT"});
-            table3.AddRow(new string[] {
+            table6.AddRow(new string[] {
                         "5dbe027f-2339-4123-9542-606e4d348a72",
                         "SHAREPOINTENTERPRISE"});
-            table3.AddRow(new string[] {
+            table6.AddRow(new string[] {
                         "fafd7243-e5c1-4a3a-9e40-495efcb1d3c3",
                         "PROJECT_CLIENT_SUBSCRIPTION"});
 #line 19
-testRunner.And("service plans in \'tenant-one\' for product \'PROJECTPREMIUM\'", ((string)(null)), table3, "And ");
+testRunner.And("service plans in \'tenant-one\' for product \'PROJECTPREMIUM\'", ((string)(null)), table6, "And ");
 #line hidden
-            TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
                         "DisplayName"});
-            table4.AddRow(new string[] {
+            table7.AddRow(new string[] {
                         "group-1"});
-            table4.AddRow(new string[] {
+            table7.AddRow(new string[] {
                         "group-2"});
-            table4.AddRow(new string[] {
+            table7.AddRow(new string[] {
                         "group-3"});
 #line 30
-testRunner.And("groups in tenant \'tenant-one\'", ((string)(null)), table4, "And ");
+testRunner.And("groups in tenant \'tenant-one\'", ((string)(null)), table7, "And ");
 #line hidden
-            TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
                         "Product",
                         "Enabled Features"});
-            table5.AddRow(new string[] {
+            table8.AddRow(new string[] {
                         "PROJECTPREMIUM",
                         "PROJECT_PROFESSIONAL,FLOW_FOR_PROJECT,EXCHANGE_S_FOUNDATION"});
 #line 36
 testRunner.Given("license configuration in \'Enforce\' mode for group \'group-1\' in tenant \'tenant-one" +
-                    "\'", ((string)(null)), table5, "Given ");
+                    "\'", ((string)(null)), table8, "Given ");
 #line hidden
-            TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
                         "Product",
                         "Enabled Features"});
-            table6.AddRow(new string[] {
+            table9.AddRow(new string[] {
                         "VISIOCLIENT",
                         "ONEDRIVE_BASIC,VISIOONLINE,EXCHANGE_S_FOUNDATION,VISIO_CLIENT_SUBSCRIPTION"});
 #line 39
 testRunner.And("license configuration in \'Enforce\' mode for group \'group-2\' in tenant \'tenant-one" +
-                    "\'", ((string)(null)), table6, "And ");
+                    "\'", ((string)(null)), table9, "And ");
 #line hidden
         }
         
@@ -221,24 +221,24 @@ this.FeatureBackground();
 #line 46
  testRunner.When("the license configuration is applied", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-                TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
                             "Product",
                             "Disabled Features"});
-                table7.AddRow(new string[] {
+                table10.AddRow(new string[] {
                             "PROJECTPREMIUM",
                             "DYN365_CDS_PROJECT,SHAREPOINTWAC,SHAREPOINT_PROJECT,SHAREPOINTENTERPRISE,PROJECT_" +
                                 "CLIENT_SUBSCRIPTION"});
 #line 47
- testRunner.Then("the group \'group-1\' in tenant \'tenant-one\' has license assignments", ((string)(null)), table7, "Then ");
+ testRunner.Then("the group \'group-1\' in tenant \'tenant-one\' has license assignments", ((string)(null)), table10, "Then ");
 #line hidden
-                TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
                             "Product",
                             "Disabled Features"});
-                table8.AddRow(new string[] {
+                table11.AddRow(new string[] {
                             "VISIOCLIENT",
                             ""});
 #line 50
- testRunner.And("the group \'group-2\' in tenant \'tenant-one\' has license assignments", ((string)(null)), table8, "And ");
+ testRunner.And("the group \'group-2\' in tenant \'tenant-one\' has license assignments", ((string)(null)), table11, "And ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -275,46 +275,46 @@ this.ScenarioInitialize(scenarioInfo);
 #line 6
 this.FeatureBackground();
 #line hidden
-                TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
-                            "Product",
-                            "Disabled Features"});
-                table9.AddRow(new string[] {
-                            "PROJECTPREMIUM",
-                            "DYN365_CDS_PROJECT,SHAREPOINTWAC,SHAREPOINT_PROJECT,SHAREPOINTENTERPRISE,PROJECT_" +
-                                "CLIENT_SUBSCRIPTION"});
-#line 55
- testRunner.Given("the group \'group-1\' in tenant \'tenant-one\' has license assignments", ((string)(null)), table9, "Given ");
-#line hidden
-                TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
-                            "Product",
-                            "Disabled Features"});
-                table10.AddRow(new string[] {
-                            "VISIOCLIENT",
-                            ""});
-#line 58
- testRunner.And("the group \'group-2\' in tenant \'tenant-one\' has license assignments", ((string)(null)), table10, "And ");
-#line hidden
-#line 61
- testRunner.When("the license configuration is applied", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-                TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
-                            "Product",
-                            "Disabled Features"});
-                table11.AddRow(new string[] {
-                            "PROJECTPREMIUM",
-                            "DYN365_CDS_PROJECT,SHAREPOINTWAC,SHAREPOINT_PROJECT,SHAREPOINTENTERPRISE,PROJECT_" +
-                                "CLIENT_SUBSCRIPTION"});
-#line 62
- testRunner.Then("the group \'group-1\' in tenant \'tenant-one\' has license assignments", ((string)(null)), table11, "Then ");
-#line hidden
                 TechTalk.SpecFlow.Table table12 = new TechTalk.SpecFlow.Table(new string[] {
                             "Product",
                             "Disabled Features"});
                 table12.AddRow(new string[] {
+                            "PROJECTPREMIUM",
+                            "DYN365_CDS_PROJECT,SHAREPOINTWAC,SHAREPOINT_PROJECT,SHAREPOINTENTERPRISE,PROJECT_" +
+                                "CLIENT_SUBSCRIPTION"});
+#line 55
+ testRunner.Given("the group \'group-1\' in tenant \'tenant-one\' has license assignments", ((string)(null)), table12, "Given ");
+#line hidden
+                TechTalk.SpecFlow.Table table13 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Product",
+                            "Disabled Features"});
+                table13.AddRow(new string[] {
+                            "VISIOCLIENT",
+                            ""});
+#line 58
+ testRunner.And("the group \'group-2\' in tenant \'tenant-one\' has license assignments", ((string)(null)), table13, "And ");
+#line hidden
+#line 61
+ testRunner.When("the license configuration is applied", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+                TechTalk.SpecFlow.Table table14 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Product",
+                            "Disabled Features"});
+                table14.AddRow(new string[] {
+                            "PROJECTPREMIUM",
+                            "DYN365_CDS_PROJECT,SHAREPOINTWAC,SHAREPOINT_PROJECT,SHAREPOINTENTERPRISE,PROJECT_" +
+                                "CLIENT_SUBSCRIPTION"});
+#line 62
+ testRunner.Then("the group \'group-1\' in tenant \'tenant-one\' has license assignments", ((string)(null)), table14, "Then ");
+#line hidden
+                TechTalk.SpecFlow.Table table15 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Product",
+                            "Disabled Features"});
+                table15.AddRow(new string[] {
                             "VISIOCLIENT",
                             ""});
 #line 65
- testRunner.And("the group \'group-2\' in tenant \'tenant-one\' has license assignments", ((string)(null)), table12, "And ");
+ testRunner.And("the group \'group-2\' in tenant \'tenant-one\' has license assignments", ((string)(null)), table15, "And ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -351,45 +351,45 @@ this.ScenarioInitialize(scenarioInfo);
 #line 6
 this.FeatureBackground();
 #line hidden
-                TechTalk.SpecFlow.Table table13 = new TechTalk.SpecFlow.Table(new string[] {
-                            "Product",
-                            "Disabled Features"});
-                table13.AddRow(new string[] {
-                            "PROJECTPREMIUM",
-                            "DYN365_CDS_PROJECT"});
-#line 70
- testRunner.Given("the group \'group-1\' in tenant \'tenant-one\' has license assignments", ((string)(null)), table13, "Given ");
-#line hidden
-                TechTalk.SpecFlow.Table table14 = new TechTalk.SpecFlow.Table(new string[] {
-                            "Product",
-                            "Disabled Features"});
-                table14.AddRow(new string[] {
-                            "VISIOCLIENT",
-                            ""});
-#line 73
- testRunner.And("the group \'group-2\' in tenant \'tenant-one\' has license assignments", ((string)(null)), table14, "And ");
-#line hidden
-#line 76
- testRunner.When("the license configuration is applied", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-                TechTalk.SpecFlow.Table table15 = new TechTalk.SpecFlow.Table(new string[] {
-                            "Product",
-                            "Disabled Features"});
-                table15.AddRow(new string[] {
-                            "PROJECTPREMIUM",
-                            "DYN365_CDS_PROJECT,SHAREPOINTWAC,SHAREPOINT_PROJECT,SHAREPOINTENTERPRISE,PROJECT_" +
-                                "CLIENT_SUBSCRIPTION"});
-#line 77
- testRunner.Then("the group \'group-1\' in tenant \'tenant-one\' has license assignments", ((string)(null)), table15, "Then ");
-#line hidden
                 TechTalk.SpecFlow.Table table16 = new TechTalk.SpecFlow.Table(new string[] {
                             "Product",
                             "Disabled Features"});
                 table16.AddRow(new string[] {
+                            "PROJECTPREMIUM",
+                            "DYN365_CDS_PROJECT"});
+#line 70
+ testRunner.Given("the group \'group-1\' in tenant \'tenant-one\' has license assignments", ((string)(null)), table16, "Given ");
+#line hidden
+                TechTalk.SpecFlow.Table table17 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Product",
+                            "Disabled Features"});
+                table17.AddRow(new string[] {
+                            "VISIOCLIENT",
+                            ""});
+#line 73
+ testRunner.And("the group \'group-2\' in tenant \'tenant-one\' has license assignments", ((string)(null)), table17, "And ");
+#line hidden
+#line 76
+ testRunner.When("the license configuration is applied", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+                TechTalk.SpecFlow.Table table18 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Product",
+                            "Disabled Features"});
+                table18.AddRow(new string[] {
+                            "PROJECTPREMIUM",
+                            "DYN365_CDS_PROJECT,SHAREPOINTWAC,SHAREPOINT_PROJECT,SHAREPOINTENTERPRISE,PROJECT_" +
+                                "CLIENT_SUBSCRIPTION"});
+#line 77
+ testRunner.Then("the group \'group-1\' in tenant \'tenant-one\' has license assignments", ((string)(null)), table18, "Then ");
+#line hidden
+                TechTalk.SpecFlow.Table table19 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Product",
+                            "Disabled Features"});
+                table19.AddRow(new string[] {
                             "VISIOCLIENT",
                             ""});
 #line 80
- testRunner.And("the group \'group-2\' in tenant \'tenant-one\' has license assignments", ((string)(null)), table16, "And ");
+ testRunner.And("the group \'group-2\' in tenant \'tenant-one\' has license assignments", ((string)(null)), table19, "And ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -426,15 +426,15 @@ this.ScenarioInitialize(scenarioInfo);
 #line 6
 this.FeatureBackground();
 #line hidden
-                TechTalk.SpecFlow.Table table17 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table20 = new TechTalk.SpecFlow.Table(new string[] {
                             "Product",
                             "Enabled Features"});
-                table17.AddRow(new string[] {
+                table20.AddRow(new string[] {
                             "OTHER",
                             "PROJECT_PROFESSIONAL,FLOW_FOR_PROJECT,EXCHANGE_S_FOUNDATION"});
 #line 85
  testRunner.Given("license configuration in \'Enforce\' mode for group \'group-1\' in tenant \'tenant-one" +
-                        "\'", ((string)(null)), table17, "Given ");
+                        "\'", ((string)(null)), table20, "Given ");
 #line hidden
 #line 88
  testRunner.When("the license configuration is applied", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -477,28 +477,28 @@ this.ScenarioInitialize(scenarioInfo);
 #line 6
 this.FeatureBackground();
 #line hidden
-                TechTalk.SpecFlow.Table table18 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table21 = new TechTalk.SpecFlow.Table(new string[] {
                             "Product",
                             "Enabled Features"});
-                table18.AddRow(new string[] {
+                table21.AddRow(new string[] {
                             "PROJECTPREMIUM",
                             "PROJECT_PROFESSIONAL,FLOW_FOR_PROJECT,EXCHANGE_S_FOUNDATION,OTHER"});
 #line 92
  testRunner.Given("license configuration in \'Enforce\' mode for group \'group-1\' in tenant \'tenant-one" +
-                        "\'", ((string)(null)), table18, "Given ");
+                        "\'", ((string)(null)), table21, "Given ");
 #line hidden
 #line 95
  testRunner.When("the license configuration is applied", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-                TechTalk.SpecFlow.Table table19 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table22 = new TechTalk.SpecFlow.Table(new string[] {
                             "Product",
                             "Disabled Features"});
-                table19.AddRow(new string[] {
+                table22.AddRow(new string[] {
                             "PROJECTPREMIUM",
                             "DYN365_CDS_PROJECT,SHAREPOINTWAC,SHAREPOINT_PROJECT,SHAREPOINTENTERPRISE,PROJECT_" +
                                 "CLIENT_SUBSCRIPTION"});
 #line 96
- testRunner.Then("the group \'group-1\' in tenant \'tenant-one\' has license assignments", ((string)(null)), table19, "Then ");
+ testRunner.Then("the group \'group-1\' in tenant \'tenant-one\' has license assignments", ((string)(null)), table22, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

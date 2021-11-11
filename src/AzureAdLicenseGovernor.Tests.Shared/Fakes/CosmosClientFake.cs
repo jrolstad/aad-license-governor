@@ -206,6 +206,7 @@ namespace AzureAdLicenseGovernor.Tests.Shared.Fakes
 
             if (typeToFind == typeof(DirectoryData)) return _context.Data.Directories as ConcurrentDictionary<string, T>;
             if (typeToFind == typeof(LicensedGroupData)) return _context.Data.Groups as ConcurrentDictionary<string, T>;
+            if (typeToFind == typeof(ProductDataSnapshot)) return _context.Data.ProductSnapshots as ConcurrentDictionary<string, T>;
 
             throw new ArgumentOutOfRangeException($"Unsupported Type: {typeToFind.Name}");
         }

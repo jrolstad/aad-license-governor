@@ -35,5 +35,20 @@ namespace AzureAdLicenseGovernor.Tests.Shared.Extensions
                 .Value;
 
         }
+
+        public static LicensedGroupData GetGovernedGroup(this TestBuilderBase testBuilder, string name)
+        {
+            var group = testBuilder.GetGroup(name);
+
+            var governedGroup = testBuilder.Context
+                .Data
+                .Groups
+                .Where(g => g.Value.ObjectId == group.Id)
+                .Select(g=>g.Value)
+                .FirstOrDefault();
+
+            return governedGroup;
+
+        }
     }
 }
