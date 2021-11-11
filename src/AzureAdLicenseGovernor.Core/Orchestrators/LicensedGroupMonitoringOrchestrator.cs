@@ -49,7 +49,7 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
         {
             var groups = await _licensedGroupOrchestrator.Get(directory.TenantId);
             var groupTasks = groups
-                .Where(g => g.IsMonitored)
+                .Where(g => g.TrackLicenseProcessingState)
                 .Select(group => MonitorGroup(directory, group));
 
             await Task.WhenAll(groupTasks);
@@ -68,7 +68,7 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
                 {"TenantId",groupData.TenantId },
                 {"GroupId",groupData.ObjectId },
                 {"DisplayName",groupData.DisplayName },
-                {"IsMonitored",group.IsMonitored.ToString() },
+                {"TrackLicenseProcessingState",group.TrackLicenseProcessingState.ToString() },
                 {"AssignmentMode",group.Mode.ToString() },
                 {"LicenseProcessingState",groupData.LicenseProcessingState },
             };
