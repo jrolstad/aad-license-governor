@@ -21,7 +21,8 @@ namespace AzureAdLicenseGovernor.Tests.Shared.Fakes.Http
             {
                 new GraphSubscribedSkuHttpRequestHandler(context),
                 new GraphGroupHttpRequestHandler(context),
-                new GraphGroupAssignedLicenseHttpRequestHandler(context)
+                new GraphGroupAssignedLicenseHttpRequestHandler(context),
+                new GraphGroupSearchHttpRequestHandler(context),
             };
         }
 

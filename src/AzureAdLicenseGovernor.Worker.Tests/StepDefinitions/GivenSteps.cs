@@ -169,6 +169,34 @@ namespace AzureAdLicenseGovernor.Worker.Tests.StepDefinitions
             group.TrackLicenseProcessingState = false;
         }
 
+        [Given(@"the Tenant '([^']*)' is configured to track group license assignment errors")]
+        public void GivenTheTenantIsConfiguredToTrackGroupLicenseAssignmentErrors(string tenantName)
+        {
+            var directory = _testBuilder.GetDirectory(tenantName);
+            directory.Monitoring.TrackGroupLicenseAssignmentFailures = true;
+        }
+
+        [Given(@"the Tenant '([^']*)' is not configured to track group license assignment errors")]
+        public void GivenTheTenantIsNotConfiguredToTrackGroupLicenseAssignmentErrors(string tenantName)
+        {
+            var directory = _testBuilder.GetDirectory(tenantName);
+            directory.Monitoring.TrackGroupLicenseAssignmentFailures = false;
+        }
+
+        [Given(@"the group '([^']*)' has license assignment errors")]
+        public void GivenTheGroupHasLicenseAssignmentErrors(string groupName)
+        {
+            var group = _testBuilder.GetGroup(groupName);
+            group.HasMembersWithLicenseErrors = true;
+        }
+
+        [Given(@"the group '([^']*)' does not have license assignment errors")]
+        public void GivenTheGroupDoesNotHaveLicenseAssignmentErrors(string groupName)
+        {
+            var group = _testBuilder.GetGroup(groupName);
+            group.HasMembersWithLicenseErrors = false;
+        }
+
 
 
     }

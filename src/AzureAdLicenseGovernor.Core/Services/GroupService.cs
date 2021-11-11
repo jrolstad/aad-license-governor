@@ -48,8 +48,8 @@ namespace AzureAdLicenseGovernor.Core.Services
                 .Select("id,displayName,assignedLicenses,licenseprocessingstate")
                 .GetAsync();
 
-            var result = data.Select(d=>_mapper.Map(directory, d))
-                .ToList();
+            var result = data?.Select(d=>_mapper.Map(directory, d))
+                .ToList()?? new List<Group>();
 
             return result;
         }

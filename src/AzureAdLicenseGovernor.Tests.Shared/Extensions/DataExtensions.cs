@@ -82,7 +82,13 @@ namespace AzureAdLicenseGovernor.Tests.Shared.Extensions
                 PortalUrl = portalUrl,
                 ClientType = clientType,
                 ClientId = clientId,
-                IsDefault = isDefault
+                IsDefault = isDefault,
+                Monitoring = new DirectoryMonitoring
+                {
+                    TrackGroupLicenseAssignmentFailures = false,
+                    TrackProductChanges = false,
+                    TrackProductUsage = false
+                }
 
             };
 
