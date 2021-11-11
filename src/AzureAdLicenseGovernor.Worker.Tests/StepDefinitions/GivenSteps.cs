@@ -1,8 +1,10 @@
 ﻿using AzureAdLicenseGovernor.Core.Models;
 using AzureAdLicenseGovernor.Tests.Shared.Extensions;
+using AzureAdLicenseGovernor.Worker.Functions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 
 namespace AzureAdLicenseGovernor.Worker.Tests.StepDefinitions
@@ -220,6 +222,20 @@ namespace AzureAdLicenseGovernor.Worker.Tests.StepDefinitions
             directory.Monitoring.TrackProductUsage = false;
         }
 
+        [Given(@"the Tenant '([^']*)' is configured to not track product changes")]
+        public void GivenTheTenantIsConfiguredToNotTrackProductChanges(string tenantName)
+        {
+            var directory = _testBuilder.GetDirectory(tenantName);
+            directory.Monitoring.TrackProductChanges = false;
+        }
+
+        [Given(@"the Tenant '([^']*)' is configured to track product changes")]
+        public void GivenTheTenantIsConfiguredToTrackProductChanges(string tenantName)
+        {
+            var directory = _testBuilder.GetDirectory(tenantName);
+            directory.Monitoring.TrackProductChanges = true;
+        }
+
 
         [Given(@"the group '([^']*)' has license assignment errors")]
         public void GivenTheGroupHasLicenseAssignmentErrors(string groupName)
@@ -235,6 +251,41 @@ namespace AzureAdLicenseGovernor.Worker.Tests.StepDefinitions
             group.HasMembersWithLicenseErrors = false;
         }
 
+        [Given(@"products are previously monitored")]
+        public async Task WhenProductsArePreviouslyMonitored()
+        {
+            var function = _testBuilder.Get<MonitorProductsFunctions>();
+
+            await function.Run(new TimerInfo());
+        }
+
+        [Given(@"the snapshot for licensed products in '([^']*)' has products")]
+        public void GivenTheSnapshotForLicensedProductsInHasProducts(string tenantName, Table table)
+        {
+            var directory = _testBuilder.GetDirectory(tenantName);
+
+            foreach(var row in table.Rows)
+            {
+                var productId = row["SkuId"];
+                var productName = row["SkuPartNumber"];
+                _testBuilder.WithProductSnapshot(directory.TenantId, productId, productName);
+            }
+            
+        }
+
+        [Given(@"the snapshot for product '([^']*)' in '([^']*)' has service plans")]
+        public void GivenTheSnapshotForProductInHasServicePlans(string productName, string tenantName, Table table)
+        {
+            var directory = _testBuilder.GetDirectory(tenantName);
+
+            foreach (var row in table.Rows)
+            {
+                var servicePlanId = row["ServicePlanId"];
+                var servicePlanName = row["ServicePlanName"];
+
+                _testBuilder.WithProductSnapshotServicePlan(directory.TenantId, productName, servicePlanId, servicePlanName);
+            }
+        }
 
 
     }

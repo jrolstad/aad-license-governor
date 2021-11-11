@@ -83,14 +83,14 @@ namespace AzureAdLicenseGovernor.Worker.Tests.Features
 #line 7
 testRunner.Given("the Azure Active Directory Tenant \'tenant-one\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-            TechTalk.SpecFlow.Table table25 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table49 = new TechTalk.SpecFlow.Table(new string[] {
                         "SkuId",
                         "SkuPartNumber",
                         "Units Consumed",
                         "Units Enabled",
                         "Units Suspended",
                         "Units Warning"});
-            table25.AddRow(new string[] {
+            table49.AddRow(new string[] {
                         "c5928f49-12ba-48f7-ada3-0d743a3601d5",
                         "VISIOCLIENT",
                         "10",
@@ -98,7 +98,7 @@ testRunner.Given("the Azure Active Directory Tenant \'tenant-one\'", ((string)(n
                         "0",
                         "5"});
 #line 9
-testRunner.And("licensed products in \'tenant-one\'", ((string)(null)), table25, "And ");
+testRunner.And("licensed products in \'tenant-one\'", ((string)(null)), table49, "And ");
 #line hidden
         }
         
@@ -144,38 +144,38 @@ testRunner.Given("the Tenant \'tenant-one\' is configured to track product assig
 #line 15
 testRunner.When("products are monitored", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-                TechTalk.SpecFlow.Table table26 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table50 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name",
                             "Value"});
-                table26.AddRow(new string[] {
+                table50.AddRow(new string[] {
                             "TenantId",
                             "{tenant-one}"});
-                table26.AddRow(new string[] {
+                table50.AddRow(new string[] {
                             "ProductId",
                             "c5928f49-12ba-48f7-ada3-0d743a3601d5"});
-                table26.AddRow(new string[] {
+                table50.AddRow(new string[] {
                             "ProductName",
                             "VISIOCLIENT"});
-                table26.AddRow(new string[] {
+                table50.AddRow(new string[] {
                             "Units-Total",
                             "55"});
-                table26.AddRow(new string[] {
+                table50.AddRow(new string[] {
                             "Units-Assigned",
                             "10"});
-                table26.AddRow(new string[] {
+                table50.AddRow(new string[] {
                             "Units-Available",
                             "45"});
-                table26.AddRow(new string[] {
+                table50.AddRow(new string[] {
                             "Units-PercentUsed",
                             "0.18182"});
-                table26.AddRow(new string[] {
+                table50.AddRow(new string[] {
                             "Units-Warning",
                             "5"});
-                table26.AddRow(new string[] {
+                table50.AddRow(new string[] {
                             "Units-Suspended",
                             "0"});
 #line 16
-testRunner.Then("there is a \'Product Monitoring|LicenseUsage\' message logged with data", ((string)(null)), table26, "Then ");
+testRunner.Then("there is a \'Product Monitoring|LicenseUsage\' message logged with data", ((string)(null)), table50, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

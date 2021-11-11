@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Concurrent;
 
 namespace AzureAdLicenseGovernor.Tests.Shared.TestContexts
 {
     public class LoggingContext
     {
-        public List<LogEntry> Logs = new();
+        public ConcurrentBag<LogEntry> Logs = new();
     }
 
     public class LogEntry

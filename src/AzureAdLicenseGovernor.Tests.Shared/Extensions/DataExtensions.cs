@@ -96,5 +96,63 @@ namespace AzureAdLicenseGovernor.Tests.Shared.Extensions
 
             return data;
         }
+
+        public static void WithProductSnapshot(this TestBuilderBase testBuilder,
+            string tenantId,
+            string productId,
+            string productName)
+        {
+            if (testBuilder.Context.Data.ProductSnapshots.TryGetValue(tenantId, out var existing))
+            {
+                var productData = new ProductData
+                {
+                    Id = productId,
+                    TenantId = tenantId,
+                    Name = productName
+                };
+                existing.Products.Add(productData);
+
+            }
+            else
+            {
+                var newSnapshot = new ProductDataSnapshot
+                {
+                    Id = tenantId,
+                    TenantId = tenantId,
+                    Products = new List<ProductData>
+                {
+                    new ProductData
+                    {
+                        Id = productId,
+                        TenantId = tenantId,
+                        Name = productName
+                    }
+                }
+                };
+
+                testBuilder.Context.Data.ProductSnapshots.AddOrUpdate(tenantId, newSnapshot, (id, existing) => newSnapshot);
+            }
+        }
+
+        public static void WithProductSnapshotServicePlan(this TestBuilderBase testBuilder,
+            string tenantId,
+            string productName,
+            string servicePlanId,
+            string servicePlanName)
+        {
+            if(testBuilder.Context.Data.ProductSnapshots.TryGetValue(tenantId,out var snapshot))
+            {
+                var product = snapshot.Products.FirstOrDefault(p => p.Name == productName);
+                if(product!=null)
+                {
+                    product.ServicePlans = product.ServicePlans ?? new List<ServicePlan>();
+                    product.ServicePlans.Add(new ServicePlan 
+                    { 
+                        Id = servicePlanId,
+                        Name = servicePlanName
+                    });
+                }
+            }
+        }
     }
 }
