@@ -67,13 +67,50 @@ namespace AzureAdLicenseGovernor.Worker.Tests.StepDefinitions
         [Then(@"there is a '([^']*)' message logged with data")]
         public void ThenThereIsAMessageLoggedWithData(string message, Table data)
         {
-            throw new PendingStepException();
+            var messages = _testBuilder.GetLogEntries(message);
+
+            Assert.Single(messages);
+            var logEntry = messages.First();
+
+            Assert.NotNull(logEntry.Data);
+
+
+            foreach (var row in data.Rows)
+            {
+                var name = row["Name"];
+                var expected = logEntry.Data[name];
+                var actual = row["Value"];
+                var resolvedActual = ResolveValue(name, actual);
+
+                Assert.Equal(expected, resolvedActual);
+            }
         }
+
+        private string ResolveValue(string name, string value)
+        {
+            if(name == "TenantId" && value.StartsWith("{"))
+            {
+                var tenantName = value.Replace("{", "").Replace("}", "");
+                var directory = _testBuilder.GetDirectory(tenantName);
+                return directory.TenantId;
+            }
+            if(name == "GroupId" && value.StartsWith("{"))
+            {
+                var groupName = value.Replace("{", "").Replace("}", "");
+                var group = _testBuilder.GetGroup(groupName);
+                return group.Id;
+            }
+
+            return value;
+        }
+
 
         [Then(@"there is not a '([^']*)' message logged")]
         public void ThenThereIsNotAMessageLogged(string message)
         {
-            throw new PendingStepException();
+            var messages = _testBuilder.GetLogEntries(message);
+
+            Assert.Empty(messages);
         }
 
 

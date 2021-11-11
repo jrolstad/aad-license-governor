@@ -19,6 +19,8 @@ namespace AzureAdLicenseGovernor.Worker.Tests
         protected override void ConfigureFunctions(IServiceCollection services)
         {
             services.AddTransient<ApplyLicenseFunctions>();
+            services.AddTransient<MonitorGroupsFunctions>();
+            services.AddTransient<MonitorProductsFunctions>();
         }
     }
 }

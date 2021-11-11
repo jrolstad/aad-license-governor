@@ -87,13 +87,13 @@ testRunner.Given("the Azure Active Directory Tenant \'tenant-one\'", ((string)(n
                         "License Processing State"});
             table1.AddRow(new string[] {
                         "group-1",
-                        ""});
+                        "ProcessingComplete"});
             table1.AddRow(new string[] {
                         "group-2",
-                        ""});
+                        "QueuedForProcessing"});
             table1.AddRow(new string[] {
                         "group-3",
-                        ""});
+                        "ProcessingInProgress"});
 #line 9
 testRunner.And("groups in tenant \'tenant-one\'", ((string)(null)), table1, "And ");
 #line hidden
@@ -154,6 +154,24 @@ testRunner.When("governed groups are monitored", ((string)(null)), ((TechTalk.Sp
                 TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name",
                             "Value"});
+                table3.AddRow(new string[] {
+                            "TenantId",
+                            "{tenant-one}"});
+                table3.AddRow(new string[] {
+                            "GroupId",
+                            "{group-1}"});
+                table3.AddRow(new string[] {
+                            "DisplayName",
+                            "group-1"});
+                table3.AddRow(new string[] {
+                            "TrackLicenseProcessingState",
+                            "True"});
+                table3.AddRow(new string[] {
+                            "AssignmentMode",
+                            "Enforce"});
+                table3.AddRow(new string[] {
+                            "LicenseProcessingState",
+                            "ProcessingComplete"});
 #line 22
 testRunner.Then("there is a \'Group Monitor|Processing State\' message logged with data", ((string)(null)), table3, "Then ");
 #line hidden
@@ -169,7 +187,7 @@ testRunner.Then("there is a \'Group Monitor|Processing State\' message logged wi
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Untracked Groups are not logged", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 25
+#line 31
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -192,13 +210,13 @@ this.ScenarioInitialize(scenarioInfo);
 #line 6
 this.FeatureBackground();
 #line hidden
-#line 26
+#line 32
 testRunner.Given("the governed group \'group-1\' is not tracking license processing state", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 27
+#line 33
 testRunner.When("governed groups are monitored", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 28
+#line 34
 testRunner.Then("there is not a \'Group Monitor|Processing State\' message logged", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

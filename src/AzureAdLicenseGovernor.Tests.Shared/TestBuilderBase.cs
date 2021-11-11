@@ -66,6 +66,7 @@ namespace AzureAdLicenseGovernor.Tests.Shared
             services.ReplaceTransient<SecretClient, SecretClientFake>();
             services.ReplaceTransient<ICosmosLinqQueryFactory, CosmosLinqQueryFactoryFake>();
             services.ReplaceTransient<IGraphClientFactory, GraphClientFactoryFake>();
+            services.ReplaceTransient<ILoggingService, LoggingServiceFake>();
         }
 
         public T Get<T>()

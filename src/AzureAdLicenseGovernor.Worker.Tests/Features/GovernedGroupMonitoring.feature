@@ -24,7 +24,7 @@ Then there is a 'Group Monitor|Processing State' message logged with data
 | TenantId                    | {tenant-one}       |
 | GroupId                     | {group-1}          |
 | DisplayName                 | group-1            |
-| TrackLicenseProcessingState | true               |
+| TrackLicenseProcessingState | True               |
 | AssignmentMode              | Enforce            |
 | LicenseProcessingState      | ProcessingComplete |
 

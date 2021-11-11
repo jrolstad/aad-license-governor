@@ -17,7 +17,7 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
         private readonly GroupService _groupService;
         private readonly LicenseAssignmentComparer _licenseAssignmentComparer;
         private readonly LicensedAssignmentMapper _licensedAssignmentMapper;
-        private readonly LoggingService _logger;
+        private readonly ILoggingService _logger;
 
         public LicensedGroupGovernanceOrchestrator(LicensedGroupOrchestrator licensedGroupOrchestrator,
             DirectoryOrchestrator directoryOrchestrator,
@@ -25,7 +25,7 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
             GroupService groupService,
             LicenseAssignmentComparer licenseAssignmentComparer,
             LicensedAssignmentMapper licensedAssignmentMapper,
-            LoggingService logger)
+            ILoggingService logger)
         {
             _licensedGroupOrchestrator = licensedGroupOrchestrator;
             _directoryOrchestrator = directoryOrchestrator;

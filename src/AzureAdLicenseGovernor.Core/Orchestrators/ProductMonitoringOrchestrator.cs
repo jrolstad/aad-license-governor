@@ -14,13 +14,13 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
         private readonly LicensedProductService _productService;
         private readonly ProductRepository _productRepository;
         private readonly ProductComparer _productComparer;
-        private readonly LoggingService _logger;
+        private readonly ILoggingService _logger;
 
         public ProductMonitoringOrchestrator(DirectoryOrchestrator directoryOrchestrator, 
             LicensedProductService productService,
             ProductRepository productRepository,
             ProductComparer productComparer,
-            LoggingService loggingService
+            ILoggingService loggingService
             )
         {
             _directoryOrchestrator = directoryOrchestrator;

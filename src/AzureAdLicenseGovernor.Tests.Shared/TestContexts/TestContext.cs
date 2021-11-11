@@ -9,5 +9,6 @@ namespace AzureAdLicenseGovernor.Tests.Shared.TestContexts
         public DataTestContext Data = new DataTestContext();
         public GraphApiContext GraphApi = new GraphApiContext();
         public AuthenticatedUserContext Identity = new AuthenticatedUserContext();
+        public LoggingContext Log = new LoggingContext();
     }
 }

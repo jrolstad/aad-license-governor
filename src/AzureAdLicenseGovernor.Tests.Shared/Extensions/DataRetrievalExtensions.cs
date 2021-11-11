@@ -1,4 +1,5 @@
 ﻿using AzureAdLicenseGovernor.Core.Models.Data;
+using AzureAdLicenseGovernor.Tests.Shared.TestContexts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,6 +50,12 @@ namespace AzureAdLicenseGovernor.Tests.Shared.Extensions
 
             return governedGroup;
 
+        }
+
+        public static IEnumerable<LogEntry> GetLogEntries(this TestBuilderBase testBuilder, string message)
+        {
+            return testBuilder.Context.Log.Logs
+                .Where(l => l.Message == message);
         }
     }
 }

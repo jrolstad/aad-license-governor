@@ -42,7 +42,7 @@ namespace AzureAdLicenseGovernor.Core.Configuration.DependencyInjection
             services.AddTransient<CosmosDbService>();
             services.AddTransient<GroupService>();
             services.AddTransient<LicensedProductService>();
-            services.AddTransient<LoggingService>();
+            services.AddTransient<ILoggingService,LoggingService>();
 
             ConfigureKeyVault(services);
             ConfigureCosmosDb(services);

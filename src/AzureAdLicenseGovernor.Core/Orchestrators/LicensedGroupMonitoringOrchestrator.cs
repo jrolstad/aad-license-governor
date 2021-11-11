@@ -11,12 +11,12 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
         private readonly LicensedGroupOrchestrator _licensedGroupOrchestrator;
         private readonly DirectoryOrchestrator _directoryOrchestrator;
         private readonly GroupService _groupService;
-        private readonly LoggingService _logger;
+        private readonly ILoggingService _logger;
 
         public LicensedGroupMonitoringOrchestrator(LicensedGroupOrchestrator licensedGroupOrchestrator,
             DirectoryOrchestrator directoryOrchestrator,
             GroupService groupService,
-            LoggingService logger)
+            ILoggingService logger)
         {
             _licensedGroupOrchestrator = licensedGroupOrchestrator;
             _directoryOrchestrator = directoryOrchestrator;

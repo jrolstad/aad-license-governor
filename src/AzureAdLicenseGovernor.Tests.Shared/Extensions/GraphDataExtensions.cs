@@ -58,7 +58,8 @@ namespace AzureAdLicenseGovernor.Tests.Shared.Extensions
 
         public static Group WithGroup(this TestBuilderBase root,
             string tenantId,
-            string name
+            string name,
+            string licenseProcessingState = null
             )
         {
             var context = root.Context.GraphApi;
@@ -68,6 +69,7 @@ namespace AzureAdLicenseGovernor.Tests.Shared.Extensions
                 Id = Guid.NewGuid().ToString(),
                 DisplayName = name,
                 AssignedLicenses = new List<AssignedLicense>(),
+                LicenseProcessingState = new LicenseProcessingState { State = licenseProcessingState}
             };
 
             context.Groups.AddOrUpdate(data.Id, data, (id, existing) => { return data; });

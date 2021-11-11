@@ -4,7 +4,13 @@ using System.Collections.Generic;
 
 namespace AzureAdLicenseGovernor.Core.Services
 {
-    public class LoggingService
+    public interface ILoggingService
+    {
+        void LogInfo(string message, Dictionary<string, string> properties = null);
+        void LogMetric(string name, double value, Dictionary<string, string> properties = null);
+    }
+
+    public class LoggingService: ILoggingService
     {
         private TelemetryClient _logger;
 

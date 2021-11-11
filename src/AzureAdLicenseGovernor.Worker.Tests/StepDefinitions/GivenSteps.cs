@@ -71,7 +71,14 @@ namespace AzureAdLicenseGovernor.Worker.Tests.StepDefinitions
             foreach(var group in groups.Rows)
             {
                 var groupName = group["DisplayName"];
-                _testBuilder.WithGroup(directory.TenantId, groupName);
+
+                string? processingState = null;
+                if(group.ContainsKey("License Processing State"))
+                {
+                    processingState = group["License Processing State"];
+                }
+
+                _testBuilder.WithGroup(directory.TenantId, groupName, processingState);
             }
         }
 
