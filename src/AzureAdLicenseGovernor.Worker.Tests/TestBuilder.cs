@@ -4,7 +4,9 @@ using AzureAdLicenseGovernor.Worker.Functions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Collections.Generic;
+using Xunit;
 
+[assembly: CollectionBehavior(DisableTestParallelization = true)]
 namespace AzureAdLicenseGovernor.Worker.Tests
 {
     public class TestBuilder : TestBuilderBase

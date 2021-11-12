@@ -8,12 +8,10 @@ using Microsoft.Azure.Cosmos;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AzureAdLicenseGovernor.Tests.Shared
 {
-    public abstract class TestBuilderBase
+    public abstract class TestBuilderBase: IDisposable
     {
         private static ServiceProvider _serviceProvider;
 
