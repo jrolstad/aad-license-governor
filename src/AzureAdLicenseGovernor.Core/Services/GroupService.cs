@@ -54,12 +54,16 @@ namespace AzureAdLicenseGovernor.Core.Services
             return result;
         }
 
-        public async Task AssignedLicenses(Directory directory, 
+        public async Task AssignLicenses(Directory directory, 
             string id,
             ICollection<LicenseAssignment> toAdd)
         {
             var client = await _graphClientFactory.CreateAsync(directory);
+            await AssignLicense(id, toAdd, client);
+        }
 
+        private async Task AssignLicense(string id, ICollection<LicenseAssignment> toAdd, Microsoft.Graph.IGraphServiceClient client)
+        {
             var assignmentsToAdd = toAdd.Select(_licensedAssignmentMapper.Map);
 
             await client.Groups[id]
@@ -73,9 +77,13 @@ namespace AzureAdLicenseGovernor.Core.Services
             ICollection<LicenseAssignment> toRemove)
         {
             var client = await _graphClientFactory.CreateAsync(directory);
+            await RemoveLicense(id, toRemove, client);
+        }
 
+        private static async Task RemoveLicense(string id, ICollection<LicenseAssignment> toRemove, Microsoft.Graph.IGraphServiceClient client)
+        {
             var assignmentsToRemove = toRemove
-                .Select(a => Guid.Parse(a.ProductId));
+                            .Select(a => Guid.Parse(a.ProductId));
 
             await client.Groups[id]
                 .AssignLicense(new List<Microsoft.Graph.AssignedLicense>(), assignmentsToRemove)
@@ -89,14 +97,9 @@ namespace AzureAdLicenseGovernor.Core.Services
         {
             var client = await _graphClientFactory.CreateAsync(directory);
 
-            var assignmentsToRemove = toUpdate
-                .Select(a => Guid.Parse(a.ProductId));
-            var assignmentsToAdd = toUpdate.Select(_licensedAssignmentMapper.Map);
-
-            await client.Groups[id]
-                .AssignLicense(assignmentsToAdd,assignmentsToRemove)
-                .Request()
-                .PostAsync();
+            // There is no update, instead remove existing and add new configuration
+            await RemoveLicense(id, toUpdate, client);
+            await AssignLicense(id, toUpdate, client);
         }
     }
 }

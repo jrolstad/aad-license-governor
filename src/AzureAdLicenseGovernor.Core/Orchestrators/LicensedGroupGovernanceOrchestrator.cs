@@ -89,7 +89,7 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
             if (comparisonResult.ToAdd.Any())
             {
                 LogLicenseChanges("Add", licensedGroup, comparisonResult.ToAdd);
-                var addTask = _groupService.AssignedLicenses(directory, licensedGroup.ObjectId, comparisonResult.ToAdd);
+                var addTask = _groupService.AssignLicenses(directory, licensedGroup.ObjectId, comparisonResult.ToAdd);
                 actionTasks.Add(addTask);
             }
 
