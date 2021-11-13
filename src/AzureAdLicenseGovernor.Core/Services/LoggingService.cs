@@ -7,7 +7,7 @@ namespace AzureAdLicenseGovernor.Core.Services
     public interface ILoggingService
     {
         void LogInfo(string message, Dictionary<string, string> properties = null);
-        void LogMetric(string name, double value, Dictionary<string, string> properties = null);
+        void LogMetric(string message, string name, double value, Dictionary<string, string> properties = null);
     }
 
     public class LoggingService: ILoggingService
@@ -21,12 +21,16 @@ namespace AzureAdLicenseGovernor.Core.Services
 
         public void LogInfo(string message,Dictionary<string,string> properties=null)
         {
-            _logger.TrackTrace(message, properties);
+            _logger.TrackEvent(message, properties);
         }
 
-        public void LogMetric(string name, double value, Dictionary<string, string> properties=null)
+        public void LogMetric(string message, string name, double value, Dictionary<string, string> properties=null)
         {
-            _logger.TrackMetric(name, value, properties);
+            var metrics = new Dictionary<string,double>
+            {
+                { name, value }
+            };
+            _logger.TrackEvent(message, properties, metrics);
         }
     }
 }

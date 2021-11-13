@@ -23,7 +23,7 @@ namespace AzureAdLicenseGovernor.Tests.Shared.Fakes
             _context.Log.Logs.Add(entry);
         }
 
-        public void LogMetric(string name, double value, Dictionary<string, string> properties = null)
+        public void LogMetric(string message, string name, double value, Dictionary<string, string> properties = null)
         {
             var entry = new LogEntry
             {

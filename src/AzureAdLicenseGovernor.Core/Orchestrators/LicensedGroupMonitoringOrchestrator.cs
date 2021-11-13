@@ -94,9 +94,11 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
             var data = new Dictionary<string, string>
             {
                 { "TenantId",directory.TenantId },
-                { "Count", groups.Count.ToString() }
             };
-            _logger.LogMetric(LogMessages.GroupMonitorLicensingErrorEvent, groups.Count,data);
+            _logger.LogMetric(LogMessages.GroupMonitorLicensingErrorEvent,
+                "GroupCount",
+                groups.Count,
+                data);
         }
 
         private void LogGroupLicensingErrors(Group groupData)
