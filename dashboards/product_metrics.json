@@ -1,0 +1,650 @@
+{
+  "properties": {
+    "lenses": {
+      "0": {
+        "order": 0,
+        "parts": {
+          "0": {
+            "position": {
+              "x": 0,
+              "y": 0,
+              "colSpan": 6,
+              "rowSpan": 4
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "resourceTypeMode",
+                  "isOptional": true
+                },
+                {
+                  "name": "ComponentId",
+                  "isOptional": true
+                },
+                {
+                  "name": "Scope",
+                  "value": {
+                    "resourceIds": [
+                      "/subscriptions/2d518713-c5a2-4fcb-a600-307c349add12/resourceGroups/aadlicense-prd/providers/microsoft.insights/components/aadlicense-prd"
+                    ]
+                  },
+                  "isOptional": true
+                },
+                {
+                  "name": "PartId",
+                  "value": "13d56ba5-85c7-4524-a013-77a819510837",
+                  "isOptional": true
+                },
+                {
+                  "name": "Version",
+                  "value": "2.0",
+                  "isOptional": true
+                },
+                {
+                  "name": "TimeRange",
+                  "value": "P7D",
+                  "isOptional": true
+                },
+                {
+                  "name": "DashboardId",
+                  "isOptional": true
+                },
+                {
+                  "name": "DraftRequestParameters",
+                  "isOptional": true
+                },
+                {
+                  "name": "Query",
+                  "value": "customEvents\n| where name startswith \"Product Monitoring|Change Summary\"\n| extend tenant_id = tostring(customDimensions[\"TenantId\"])\n| extend updated = tolong(customDimensions[\"Updated\"])\n| extend removed = tolong(customDimensions[\"Removed\"])\n| extend added = tolong(customDimensions[\"Added\"])\n| summarize added=max(added), updated=max(updated), removed=max(removed) by startofday(timestamp)\n",
+                  "isOptional": true
+                },
+                {
+                  "name": "ControlType",
+                  "value": "FrameControlChart",
+                  "isOptional": true
+                },
+                {
+                  "name": "SpecificChart",
+                  "value": "StackedColumn",
+                  "isOptional": true
+                },
+                {
+                  "name": "PartTitle",
+                  "value": "Analytics",
+                  "isOptional": true
+                },
+                {
+                  "name": "PartSubTitle",
+                  "value": "aadlicense-prd",
+                  "isOptional": true
+                },
+                {
+                  "name": "Dimensions",
+                  "value": {
+                    "xAxis": {
+                      "name": "timestamp",
+                      "type": "datetime"
+                    },
+                    "yAxis": [
+                      {
+                        "name": "added",
+                        "type": "long"
+                      },
+                      {
+                        "name": "updated",
+                        "type": "long"
+                      },
+                      {
+                        "name": "removed",
+                        "type": "long"
+                      }
+                    ],
+                    "splitBy": [],
+                    "aggregation": "Sum"
+                  },
+                  "isOptional": true
+                },
+                {
+                  "name": "LegendOptions",
+                  "value": {
+                    "isEnabled": true,
+                    "position": "Bottom"
+                  },
+                  "isOptional": true
+                },
+                {
+                  "name": "IsQueryContainTimeRange",
+                  "value": false,
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
+              "settings": {},
+              "partHeader": {
+                "title": "Product Activity",
+                "subtitle": "by date"
+              }
+            }
+          },
+          "1": {
+            "position": {
+              "x": 6,
+              "y": 0,
+              "colSpan": 7,
+              "rowSpan": 4
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "resourceTypeMode",
+                  "isOptional": true
+                },
+                {
+                  "name": "ComponentId",
+                  "isOptional": true
+                },
+                {
+                  "name": "Scope",
+                  "value": {
+                    "resourceIds": [
+                      "/subscriptions/2d518713-c5a2-4fcb-a600-307c349add12/resourceGroups/aadlicense-prd/providers/microsoft.insights/components/aadlicense-prd"
+                    ]
+                  },
+                  "isOptional": true
+                },
+                {
+                  "name": "PartId",
+                  "value": "79809822-2223-4e8a-9d14-83a64d99e779",
+                  "isOptional": true
+                },
+                {
+                  "name": "Version",
+                  "value": "2.0",
+                  "isOptional": true
+                },
+                {
+                  "name": "TimeRange",
+                  "value": "P7D",
+                  "isOptional": true
+                },
+                {
+                  "name": "DashboardId",
+                  "isOptional": true
+                },
+                {
+                  "name": "DraftRequestParameters",
+                  "isOptional": true
+                },
+                {
+                  "name": "Query",
+                  "value": "customEvents\n| where name in(\"Product Monitoring|Updated Product\",\"Product Monitoring|New Product\")\n| extend action = tostring(split(name,\"|\")[1])\n| extend product_name = tostring(customDimensions[\"ProductName\"])\n| extend tenant_id = tostring(customDimensions[\"TenantId\"])\n| project tenant_id, product_name, action, timestamp \n| order by tenant_id, action, product_name\n//\"Product Monitoring|New Service Plan\"\n",
+                  "isOptional": true
+                },
+                {
+                  "name": "ControlType",
+                  "value": "AnalyticsGrid",
+                  "isOptional": true
+                },
+                {
+                  "name": "SpecificChart",
+                  "isOptional": true
+                },
+                {
+                  "name": "PartTitle",
+                  "value": "Analytics",
+                  "isOptional": true
+                },
+                {
+                  "name": "PartSubTitle",
+                  "value": "aadlicense-prd",
+                  "isOptional": true
+                },
+                {
+                  "name": "Dimensions",
+                  "isOptional": true
+                },
+                {
+                  "name": "LegendOptions",
+                  "isOptional": true
+                },
+                {
+                  "name": "IsQueryContainTimeRange",
+                  "value": false,
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
+              "settings": {
+                "content": {
+                  "GridColumnsWidth": {
+                    "tenant_id": "116px"
+                  }
+                }
+              },
+              "partHeader": {
+                "title": "Product Activity",
+                "subtitle": "details"
+              }
+            }
+          },
+          "2": {
+            "position": {
+              "x": 13,
+              "y": 0,
+              "colSpan": 7,
+              "rowSpan": 4
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "resourceTypeMode",
+                  "isOptional": true
+                },
+                {
+                  "name": "ComponentId",
+                  "isOptional": true
+                },
+                {
+                  "name": "Scope",
+                  "value": {
+                    "resourceIds": [
+                      "/subscriptions/2d518713-c5a2-4fcb-a600-307c349add12/resourceGroups/aadlicense-prd/providers/microsoft.insights/components/aadlicense-prd"
+                    ]
+                  },
+                  "isOptional": true
+                },
+                {
+                  "name": "PartId",
+                  "value": "11b2908f-5c98-45c5-9313-f431b4e35a21",
+                  "isOptional": true
+                },
+                {
+                  "name": "Version",
+                  "value": "2.0",
+                  "isOptional": true
+                },
+                {
+                  "name": "TimeRange",
+                  "value": "P7D",
+                  "isOptional": true
+                },
+                {
+                  "name": "DashboardId",
+                  "isOptional": true
+                },
+                {
+                  "name": "DraftRequestParameters",
+                  "isOptional": true
+                },
+                {
+                  "name": "Query",
+                  "value": "customEvents\n| where name in(\"Product Monitoring|New Service Plan\")\n| extend action = tostring(split(name, \"|\")[1])\n| extend product_name = tostring(customDimensions[\"ProductName\"])\n| extend serviceplan_name = tostring(customDimensions[\"ServicePlanName\"])\n| extend tenant_id = tostring(customDimensions[\"TenantId\"])\n| distinct tenant_id, product_name, serviceplan_name, timestamp \n| order by tenant_id, product_name, serviceplan_name\n//\"Product Monitoring|New Service Plan\"\n\n",
+                  "isOptional": true
+                },
+                {
+                  "name": "ControlType",
+                  "value": "AnalyticsGrid",
+                  "isOptional": true
+                },
+                {
+                  "name": "SpecificChart",
+                  "isOptional": true
+                },
+                {
+                  "name": "PartTitle",
+                  "value": "Analytics",
+                  "isOptional": true
+                },
+                {
+                  "name": "PartSubTitle",
+                  "value": "aadlicense-prd",
+                  "isOptional": true
+                },
+                {
+                  "name": "Dimensions",
+                  "isOptional": true
+                },
+                {
+                  "name": "LegendOptions",
+                  "isOptional": true
+                },
+                {
+                  "name": "IsQueryContainTimeRange",
+                  "value": false,
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
+              "settings": {
+                "content": {
+                  "GridColumnsWidth": {
+                    "product_name": "131px",
+                    "tenant_id": "104px",
+                    "serviceplan_name": "270px"
+                  },
+                  "Query": "customEvents\n| where name in(\"Product Monitoring|New Service Plan\")\n| extend action = tostring(split(name, \"|\")[1])\n| extend product_name = tostring(customDimensions[\"ProductName\"])\n| extend serviceplan_name = tostring(customDimensions[\"ServicePlanName\"])\n| extend tenant_id = tostring(customDimensions[\"TenantId\"])\n| distinct tenant_id, product_name, serviceplan_name \n| order by tenant_id, product_name, serviceplan_name\n//\"Product Monitoring|New Service Plan\"\n\n"
+                }
+              },
+              "partHeader": {
+                "title": "New Service Plans",
+                "subtitle": "details"
+              }
+            }
+          },
+          "3": {
+            "position": {
+              "x": 0,
+              "y": 4,
+              "colSpan": 6,
+              "rowSpan": 6
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "resourceTypeMode",
+                  "isOptional": true
+                },
+                {
+                  "name": "ComponentId",
+                  "isOptional": true
+                },
+                {
+                  "name": "Scope",
+                  "value": {
+                    "resourceIds": [
+                      "/subscriptions/2d518713-c5a2-4fcb-a600-307c349add12/resourceGroups/aadlicense-prd/providers/microsoft.insights/components/aadlicense-prd"
+                    ]
+                  },
+                  "isOptional": true
+                },
+                {
+                  "name": "PartId",
+                  "value": "722cc829-b9d0-42cc-a67b-eda5e4b167f3",
+                  "isOptional": true
+                },
+                {
+                  "name": "Version",
+                  "value": "2.0",
+                  "isOptional": true
+                },
+                {
+                  "name": "TimeRange",
+                  "isOptional": true
+                },
+                {
+                  "name": "DashboardId",
+                  "isOptional": true
+                },
+                {
+                  "name": "DraftRequestParameters",
+                  "isOptional": true
+                },
+                {
+                  "name": "Query",
+                  "value": "customEvents\n| where name == \"Product Monitoring|LicenseUsage\"\n| extend tenant_id = tostring(customDimensions[\"TenantId\"])\n| extend product_name = tostring(customDimensions[\"ProductName\"])\n| extend percent_used = todecimal(customDimensions[\"Units-PercentUsed\"]) * 100\n| where product_name in(\"EMSPREMIUM\",\"VISIOCLIENT\",\"PROJECTPREMIUM\")\n| where tenant_id == \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\n| where timestamp > ago(180d)\n| project percent_used, product_name, timestamp\n\n",
+                  "isOptional": true
+                },
+                {
+                  "name": "ControlType",
+                  "value": "FrameControlChart",
+                  "isOptional": true
+                },
+                {
+                  "name": "SpecificChart",
+                  "value": "Line",
+                  "isOptional": true
+                },
+                {
+                  "name": "PartTitle",
+                  "value": "Analytics",
+                  "isOptional": true
+                },
+                {
+                  "name": "PartSubTitle",
+                  "value": "aadlicense-prd",
+                  "isOptional": true
+                },
+                {
+                  "name": "Dimensions",
+                  "value": {
+                    "xAxis": {
+                      "name": "timestamp",
+                      "type": "datetime"
+                    },
+                    "yAxis": [
+                      {
+                        "name": "percent_used",
+                        "type": "decimal"
+                      }
+                    ],
+                    "splitBy": [
+                      {
+                        "name": "product_name",
+                        "type": "string"
+                      }
+                    ],
+                    "aggregation": "Sum"
+                  },
+                  "isOptional": true
+                },
+                {
+                  "name": "LegendOptions",
+                  "value": {
+                    "isEnabled": true,
+                    "position": "Bottom"
+                  },
+                  "isOptional": true
+                },
+                {
+                  "name": "IsQueryContainTimeRange",
+                  "value": true,
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
+              "settings": {
+                "content": {
+                  "Query": "customEvents\n| where name == \"Product Monitoring|LicenseUsage\"\n| extend tenant_id = tostring(customDimensions[\"TenantId\"])\n| extend product_name = tostring(customDimensions[\"ProductName\"])\n| extend percent_used = todecimal(customDimensions[\"Units-PercentUsed\"]) * 100\n| where product_name in(\"WIN10_VDA_E5\",\"VISIOCLIENT\",\"PROJECTPREMIUM\",\"ENTERPRISEPREMIUM\",\"SMB_APPS\",\"UNIVERSAL_PRINT\")\n| where tenant_id == \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\n| project percent_used, product_name, timestamp\n\n",
+                  "IsQueryContainTimeRange": false
+                }
+              },
+              "filters": {
+                "MsPortalFx_TimeRange": {
+                  "model": {
+                    "format": "local",
+                    "granularity": "auto",
+                    "relative": "30d"
+                  }
+                }
+              },
+              "partHeader": {
+                "title": "Monitored Product License Consumption Trends",
+                "subtitle": "for the past 30 days"
+              }
+            }
+          },
+          "4": {
+            "position": {
+              "x": 6,
+              "y": 4,
+              "colSpan": 14,
+              "rowSpan": 6
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "resourceTypeMode",
+                  "isOptional": true
+                },
+                {
+                  "name": "ComponentId",
+                  "isOptional": true
+                },
+                {
+                  "name": "Scope",
+                  "value": {
+                    "resourceIds": [
+                      "/subscriptions/2d518713-c5a2-4fcb-a600-307c349add12/resourceGroups/aadlicense-prd/providers/microsoft.insights/components/aadlicense-prd"
+                    ]
+                  },
+                  "isOptional": true
+                },
+                {
+                  "name": "PartId",
+                  "value": "10d7444a-3f37-4392-bc52-c480ad1ff162",
+                  "isOptional": true
+                },
+                {
+                  "name": "Version",
+                  "value": "2.0",
+                  "isOptional": true
+                },
+                {
+                  "name": "TimeRange",
+                  "isOptional": true
+                },
+                {
+                  "name": "DashboardId",
+                  "isOptional": true
+                },
+                {
+                  "name": "DraftRequestParameters",
+                  "isOptional": true
+                },
+                {
+                  "name": "Query",
+                  "value": "customEvents\n| where name == \"Product Monitoring|LicenseUsage\"\n| extend tenant_id = tostring(customDimensions[\"TenantId\"])\n| extend product_name = tostring(customDimensions[\"ProductName\"])\n| extend percent_used = todecimal(customDimensions[\"Units-PercentUsed\"])*100\n| where timestamp > ago(1d)\n| summarize max(percent_used) by product_name\n| order by product_name asc\n",
+                  "isOptional": true
+                },
+                {
+                  "name": "ControlType",
+                  "value": "FrameControlChart",
+                  "isOptional": true
+                },
+                {
+                  "name": "SpecificChart",
+                  "value": "StackedColumn",
+                  "isOptional": true
+                },
+                {
+                  "name": "PartTitle",
+                  "value": "Analytics",
+                  "isOptional": true
+                },
+                {
+                  "name": "PartSubTitle",
+                  "value": "aadlicense-prd",
+                  "isOptional": true
+                },
+                {
+                  "name": "Dimensions",
+                  "value": {
+                    "xAxis": {
+                      "name": "product_name",
+                      "type": "string"
+                    },
+                    "yAxis": [
+                      {
+                        "name": "max_percent_used",
+                        "type": "decimal"
+                      }
+                    ],
+                    "splitBy": [],
+                    "aggregation": "Sum"
+                  },
+                  "isOptional": true
+                },
+                {
+                  "name": "LegendOptions",
+                  "value": {
+                    "isEnabled": true,
+                    "position": "Bottom"
+                  },
+                  "isOptional": true
+                },
+                {
+                  "name": "IsQueryContainTimeRange",
+                  "value": true,
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
+              "settings": {
+                "content": {
+                  "Query": "customEvents\n| where name == \"Product Monitoring|LicenseUsage\"\n| extend tenant_id = tostring(customDimensions[\"TenantId\"])\n| extend product_name = tostring(customDimensions[\"ProductName\"])\n| extend percent_used = min_of(todecimal(customDimensions[\"Units-PercentUsed\"]),1) * 100\n| where tenant_id == \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\n| where timestamp > ago(1d)\n| summarize percent_used = max(percent_used) by product_name\n| order by product_name asc\n\n",
+                  "Dimensions": {
+                    "xAxis": {
+                      "name": "product_name",
+                      "type": "string"
+                    },
+                    "yAxis": [
+                      {
+                        "name": "percent_used",
+                        "type": "decimal"
+                      }
+                    ],
+                    "splitBy": [],
+                    "aggregation": "Sum"
+                  },
+                  "LegendOptions": {
+                    "isEnabled": false,
+                    "position": "Bottom"
+                  }
+                }
+              },
+              "partHeader": {
+                "title": "License Consumption Percent Used",
+                "subtitle": "by product"
+              }
+            }
+          }
+        }
+      }
+    },
+    "metadata": {
+      "model": {
+        "timeRange": {
+          "value": {
+            "relative": {
+              "duration": 24,
+              "timeUnit": 1
+            }
+          },
+          "type": "MsPortalFx.Composition.Configuration.ValueTypes.TimeRange"
+        },
+        "filterLocale": {
+          "value": "en-us"
+        },
+        "filters": {
+          "value": {
+            "MsPortalFx_TimeRange": {
+              "model": {
+                "format": "local",
+                "granularity": "auto",
+                "relative": "7d"
+              },
+              "displayCache": {
+                "name": "Local Time",
+                "value": "Past 7 days"
+              },
+              "filteredPartIds": [
+                "StartboardPart-LogsDashboardPart-b04f2462-8dd3-49ac-b13d-78c496e99a9f",
+                "StartboardPart-LogsDashboardPart-b04f2462-8dd3-49ac-b13d-78c496e99aa1",
+                "StartboardPart-LogsDashboardPart-b04f2462-8dd3-49ac-b13d-78c496e99aa3",
+                "StartboardPart-LogsDashboardPart-b04f2462-8dd3-49ac-b13d-78c496e99aa5",
+                "StartboardPart-LogsDashboardPart-b04f2462-8dd3-49ac-b13d-78c496e99aa7"
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "name": "AAD License Governor Product Metrics",
+  "type": "Microsoft.Portal/dashboards",
+  "location": "INSERT LOCATION",
+  "tags": {
+    "hidden-title": "AAD License Governor Product Metrics"
+  },
+  "apiVersion": "2015-08-01-preview"
+}
