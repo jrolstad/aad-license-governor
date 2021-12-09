@@ -1,4 +1,5 @@
-﻿using AzureAdLicenseGovernor.Core.Models;
+﻿using AzureAdLicenseGovernor.Core.Extensions;
+using AzureAdLicenseGovernor.Core.Models;
 using AzureAdLicenseGovernor.Core.Services;
 using System.Collections.Generic;
 using System.Linq;
@@ -82,11 +83,7 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
             var groups = await _groupService.GetGroupsWithLicensingErrors(directory);
 
             LogGroupLicenseErrorSummary(directory, groups);
-
-            foreach (var group in groups)
-            {
-                LogGroupLicensingErrors(group);
-            }
+            Parallel.ForEach(groups, LogGroupLicensingErrors);
         }
 
         private void LogGroupLicenseErrorSummary(Directory directory, ICollection<Group> groups)
