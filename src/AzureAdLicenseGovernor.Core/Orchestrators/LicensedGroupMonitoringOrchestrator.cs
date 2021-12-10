@@ -59,7 +59,7 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
         private async Task MonitorGroup(Directory directory, LicensedGroup group)
         {
             var groupData = await _groupService.Get(directory, group.ObjectId);
-            LogGroupLicenseProcessingState(groupData,group);
+            LogGroupLicenseProcessingState(groupData, group);
         }
 
         private void LogGroupLicenseProcessingState(Group groupData, LicensedGroup group)
@@ -84,6 +84,8 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
 
             LogGroupLicenseErrorSummary(directory, groups);
             Parallel.ForEach(groups, LogGroupLicensingErrors);
+
+            await MonitorUsersWithLicensingErrors(directory, groups);
         }
 
         private void LogGroupLicenseErrorSummary(Directory directory, ICollection<Group> groups)
@@ -108,6 +110,52 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
                     {"LicenseProcessingState",groupData.LicenseProcessingState },
                 };
             _logger.LogInfo(LogMessages.GroupMonitorLicensingErrors, data);
+        }
+
+        private Task MonitorUsersWithLicensingErrors(Directory directory, IEnumerable<Group> groupsWithErrors)
+        {
+            if (directory.Monitoring?.TrackUserLicenseAssignmentFailures == false) return Task.CompletedTask;
+
+            var groupMonitoringTasks = groupsWithErrors
+                .Select(g => MonitorUsersWithLicensingErrors(directory, g));
+
+            return Task.WhenAll(groupMonitoringTasks);
+        }
+
+        private async Task MonitorUsersWithLicensingErrors(Directory directory, Group group)
+        {
+            var users = await _groupService.GetUsersWithLicensingErrors(directory, group.ObjectId);
+
+            LogUserLicenseErrorSummary(directory, group, users);
+            Parallel.ForEach(users, user => LogUserLicensingErrors(group, user));
+        }
+
+        private void LogUserLicenseErrorSummary(Directory directory, Group group, ICollection<User> groups)
+        {
+            var data = new Dictionary<string, string>
+            {
+                {"TenantId",directory.TenantId },
+                {"GroupId",group.ObjectId },
+                {"DisplayName",group.DisplayName },
+            };
+
+            _logger.LogMetric(LogMessages.GroupMonitorUserLicensingErrorEvent,
+                "UserCount",
+                groups.Count,
+                data);
+        }
+
+        private void LogUserLicensingErrors(Group group, User user)
+        {
+            var data = new Dictionary<string, string>
+                {
+                    {"TenantId",group?.TenantId },
+                    {"GroupId",group?.ObjectId },
+                    {"GroupDisplayName",group?.DisplayName },
+                    {"UserId",user?.ObjectId },
+                    {"UserPrincipalName",user?.UserPrincipalName }
+                };
+            _logger.LogInfo(LogMessages.GroupMonitorUserLicensingErrors, data);
         }
     }
 }

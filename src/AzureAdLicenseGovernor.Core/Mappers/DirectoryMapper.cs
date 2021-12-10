@@ -23,6 +23,7 @@ namespace AzureAdLicenseGovernor.Core.Mappers
                 Monitoring = toMap?.Monitoring ?? new DirectoryMonitoring
                 {
                     TrackGroupLicenseAssignmentFailures = false,
+                    TrackUserLicenseAssignmentFailures = false,
                     TrackProductChanges = false,
                     TrackProductUsage = false
                 }
@@ -47,6 +48,7 @@ namespace AzureAdLicenseGovernor.Core.Mappers
                 Monitoring = toMap?.Monitoring ?? new DirectoryMonitoring
                 {
                     TrackGroupLicenseAssignmentFailures = false,
+                    TrackUserLicenseAssignmentFailures = false,
                     TrackProductChanges = false,
                     TrackProductUsage = false
                 }

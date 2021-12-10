@@ -28,6 +28,7 @@ namespace AzureAdLicenseGovernor.Core.Models
     public class DirectoryMonitoring
     {
         public bool TrackGroupLicenseAssignmentFailures { get; set; }
+        public bool TrackUserLicenseAssignmentFailures { get; set; }
         public bool TrackProductChanges { get; set; }
         public bool TrackProductUsage { get; set; }
     }

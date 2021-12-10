@@ -14,14 +14,17 @@ namespace AzureAdLicenseGovernor.Core.Services
         private readonly IGraphClientFactory _graphClientFactory;
         private readonly GroupMapper _mapper;
         private readonly LicensedAssignmentMapper _licensedAssignmentMapper;
+        private readonly UserMapper _userMapper;
 
         public GroupService(IGraphClientFactory graphClientFactory, 
             GroupMapper mapper,
-            LicensedAssignmentMapper licensedAssignmentMapper)
+            LicensedAssignmentMapper licensedAssignmentMapper,
+            UserMapper userMapper)
         {
             _graphClientFactory = graphClientFactory;
             _mapper = mapper;
             _licensedAssignmentMapper = licensedAssignmentMapper;
+            _userMapper = userMapper;
         }
 
         public async Task<Group> Get(Directory directory, string id)
@@ -50,6 +53,27 @@ namespace AzureAdLicenseGovernor.Core.Services
 
             var result = data?.Select(d=>_mapper.Map(directory, d))
                 .ToList()?? new List<Group>();
+
+            return result;
+        }
+
+        public async Task<ICollection<User>> GetUsersWithLicensingErrors(Directory directory, string groupId)
+        {
+            var client = await _graphClientFactory.CreateAsync(directory);
+
+            var data = await client.Groups
+                [groupId]
+                .MembersWithLicenseErrors
+                .Request()
+                .GetAsync();
+
+            var result = new List<User>(data.Select(u=>_userMapper.Map(directory,u)));
+            
+            while(data.NextPageRequest !=null)
+            {
+                data = await data.NextPageRequest.GetAsync();
+                result.AddRange(data.Select(u => _userMapper.Map(directory, u)));
+            }
 
             return result;
         }
