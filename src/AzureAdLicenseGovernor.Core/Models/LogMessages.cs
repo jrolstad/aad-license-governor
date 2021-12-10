@@ -7,7 +7,9 @@ namespace AzureAdLicenseGovernor.Core.Models
     public static class LogMessages
     {
         public const string GroupMonitorLicensingErrorEvent = "Group Monitor|Groups with licensing errors";
+        public const string GroupMonitorUserLicensingErrorEvent = "Group Monitor|Users with licensing errors";
         public const string GroupMonitorLicensingErrors = "Group Monitor|Licensing Errors";
+        public const string GroupMonitorUserLicensingErrors = "Group Monitor|User Licensing Errors";
         public const string GroupMonitorProcessingState = "Group Monitor|Processing State";
 
         public const string LicenseGovernanceAssignmentChange = "License Governance|Group License Assignment Change";
