@@ -1,4 +1,6 @@
-﻿
+﻿using System.Collections.Generic;
+using System.Linq;
+
 namespace AzureAdLicenseGovernor.Core.Mappers
 {
     public class UserMapper
@@ -13,7 +15,8 @@ namespace AzureAdLicenseGovernor.Core.Mappers
                 {
                     TenantId = directory.TenantId,
                     ObjectId = user?.Id,
-                    UserPrincipalName = user?.UserPrincipalName
+                    UserPrincipalName = user?.UserPrincipalName,
+                    LicenseStates = user?.LicenseAssignmentStates?.Select(Map)?.ToList() ?? new List<Models.LicenseAssignmentState>()
                 };
             }
 
@@ -21,9 +24,19 @@ namespace AzureAdLicenseGovernor.Core.Mappers
             {
                 TenantId = directory.TenantId,
                 ObjectId = toMap?.Id,
-                UserPrincipalName = null
+                UserPrincipalName = null,
+                LicenseStates = new List<Models.LicenseAssignmentState>()
             };
-            
+        }
+
+        private Models.LicenseAssignmentState Map(Microsoft.Graph.LicenseAssignmentState toMap)
+        {
+            return new Models.LicenseAssignmentState
+            {
+                SkuId = toMap?.SkuId?.ToString(),
+                Status = toMap?.State,
+                Error = toMap?.Error
+            };
         }
     }
 }

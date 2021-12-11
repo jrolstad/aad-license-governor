@@ -1,6 +1,7 @@
 ﻿using AzureAdLicenseGovernor.Core.Extensions;
 using AzureAdLicenseGovernor.Core.Models;
 using AzureAdLicenseGovernor.Core.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,15 +14,18 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
         private readonly DirectoryOrchestrator _directoryOrchestrator;
         private readonly GroupService _groupService;
         private readonly ILoggingService _logger;
+        private readonly UserService _userService;
 
         public LicensedGroupMonitoringOrchestrator(LicensedGroupOrchestrator licensedGroupOrchestrator,
             DirectoryOrchestrator directoryOrchestrator,
             GroupService groupService,
+            UserService userService,
             ILoggingService logger)
         {
             _licensedGroupOrchestrator = licensedGroupOrchestrator;
             _directoryOrchestrator = directoryOrchestrator;
             _groupService = groupService;
+            _userService = userService;
             _logger = logger;
         }
 
@@ -112,22 +116,27 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
             _logger.LogInfo(LogMessages.GroupMonitorLicensingErrors, data);
         }
 
-        private Task MonitorUsersWithLicensingErrors(Directory directory, IEnumerable<Group> groupsWithErrors)
+        private async Task MonitorUsersWithLicensingErrors(Directory directory, IEnumerable<Group> groupsWithErrors)
         {
-            if (directory.Monitoring?.TrackUserLicenseAssignmentFailures == false) return Task.CompletedTask;
+            if (directory.Monitoring?.TrackUserLicenseAssignmentFailures == false) return;
 
             var groupMonitoringTasks = groupsWithErrors
                 .Select(g => MonitorUsersWithLicensingErrors(directory, g));
 
-            return Task.WhenAll(groupMonitoringTasks);
+            var usersWithErrors =  await Task.WhenAll(groupMonitoringTasks);
+            var users = usersWithErrors.SelectMany(u => u);
+
+            await MonitorUserLicenseAssignmentErrors(directory, users);
         }
 
-        private async Task MonitorUsersWithLicensingErrors(Directory directory, Group group)
+        private async Task<ICollection<User>> MonitorUsersWithLicensingErrors(Directory directory, Group group)
         {
             var users = await _groupService.GetUsersWithLicensingErrors(directory, group.ObjectId);
 
             LogUserLicenseErrorSummary(directory, group, users);
             Parallel.ForEach(users, user => LogUserLicensingErrors(group, user));
+
+            return users;
         }
 
         private void LogUserLicenseErrorSummary(Directory directory, Group group, ICollection<User> groups)
@@ -156,6 +165,40 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
                     {"UserPrincipalName",user?.UserPrincipalName }
                 };
             _logger.LogInfo(LogMessages.GroupMonitorUserLicensingErrors, data);
+        }
+
+        private async Task MonitorUserLicenseAssignmentErrors(Directory directory, IEnumerable<User> users)
+        {
+            var userIds = users?
+                .Select(u => u.ObjectId)
+                .Distinct() ?? new List<string>();
+
+            var userData = await _userService.GetUserLicenseAssignmentStates(directory, userIds);
+            Parallel.ForEach(userData, user => LogUserLicenseAssignment(directory, user));
+        }
+
+        private void LogUserLicenseAssignment(Directory directory, User user)
+        {
+            if (user.LicenseStates?.Any() == false) return;
+
+            var baseData = new Dictionary<string, string>
+                {
+                    {"TenantId",directory?.TenantId },
+                    {"UserId",user?.ObjectId },
+                    {"UserPrincipalName",user?.UserPrincipalName }
+                };
+
+            Parallel.ForEach(user.LicenseStates, state => 
+            {
+                var data = new Dictionary<string, string>(baseData) 
+                {
+                    {"SkuId",state?.SkuId },
+                    {"Status",state?.Status },
+                    {"Error",state?.Error },
+                };
+                
+                _logger.LogInfo(LogMessages.GroupMonitorUserLicensingStates, data);
+            });
         }
     }
 }
