@@ -74,13 +74,14 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
 
             if (licensedGroup.Mode == ProductAssignmentMode.Enforce)
             {
-                await ApplyChanges(directory, licensedGroup, comparisonResult);
+                await ApplyChanges(directory, group, licensedGroup, comparisonResult);
             }
 
-            LogChangeSummary(licensedGroup,comparisonResult);
+            LogChangeSummary(group, licensedGroup,comparisonResult);
         }
 
-        private Task ApplyChanges(Directory directory, 
+        private Task ApplyChanges(Directory directory,
+            Group group,
             LicensedGroup licensedGroup, 
             LicenseAssignmentComparisonResult comparisonResult)
         {
@@ -88,21 +89,21 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
 
             if (comparisonResult.ToAdd.Any())
             {
-                LogLicenseChanges("Add", licensedGroup, comparisonResult.ToAdd);
+                LogLicenseChanges("Add", group, licensedGroup, comparisonResult.ToAdd);
                 var addTask = _groupService.AssignLicenses(directory, licensedGroup.ObjectId, comparisonResult.ToAdd);
                 actionTasks.Add(addTask);
             }
 
             if (comparisonResult.ToRemove.Any())
             {
-                LogLicenseChanges("Remove", licensedGroup, comparisonResult.ToRemove);
+                LogLicenseChanges("Remove", group, licensedGroup, comparisonResult.ToRemove);
                 var removeTask = _groupService.RemoveLicenses(directory, licensedGroup.ObjectId, comparisonResult.ToRemove);
                 actionTasks.Add(removeTask);
             }
 
             if (comparisonResult.ToUpdate.Any())
             {
-                LogLicenseChanges("Update", licensedGroup, comparisonResult.ToUpdate);
+                LogLicenseChanges("Update", group, licensedGroup, comparisonResult.ToUpdate);
                 var updateTask = _groupService.UpdateLicenses(directory, licensedGroup.ObjectId, comparisonResult.ToUpdate);
                 actionTasks.Add(updateTask);
             }
@@ -110,7 +111,7 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
             return Task.WhenAll(actionTasks);
         }
 
-        private void LogLicenseChanges(string action, LicensedGroup group, IEnumerable<LicenseAssignment> changes)
+        private void LogLicenseChanges(string action, Group groupData, LicensedGroup group, IEnumerable<LicenseAssignment> changes)
         {
             foreach(var assignment in changes)
             {
@@ -118,6 +119,7 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
                 {
                     {"TenantId",group.TenantId },
                     {"GroupId",group.ObjectId },
+                    {"GroupName", groupData?.DisplayName },
                     {"AssignmentMode",group.Mode.ToString() },
                     {"Action",action },
                     {"ProductId",assignment.ProductId },
@@ -128,12 +130,13 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
             }
             
         }
-        private void LogChangeSummary(LicensedGroup group, LicenseAssignmentComparisonResult comparison)
+        private void LogChangeSummary(Group groupData, LicensedGroup group, LicenseAssignmentComparisonResult comparison)
         {
             var data = new Dictionary<string, string>
                 {
                     {"TenantId",group.TenantId },
                     {"GroupId",group.ObjectId },
+                    {"GroupName", groupData?.DisplayName },
                     {"AssignmentMode",group.Mode.ToString() },
                     {"Added",comparison.ToAdd.Count.ToString() },
                     {"Removed",comparison.ToRemove.Count.ToString() },
