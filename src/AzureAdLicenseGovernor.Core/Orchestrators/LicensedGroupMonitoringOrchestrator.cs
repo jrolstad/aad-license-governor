@@ -139,7 +139,7 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
             return users;
         }
 
-        private void LogUserLicenseErrorSummary(Directory directory, Group group, ICollection<User> groups)
+        private void LogUserLicenseErrorSummary(Directory directory, Group group, ICollection<User> users)
         {
             var data = new Dictionary<string, string>
             {
@@ -150,7 +150,7 @@ namespace AzureAdLicenseGovernor.Core.Orchestrators
 
             _logger.LogMetric(LogMessages.GroupMonitorUserLicensingErrorEvent,
                 "UserCount",
-                groups.Count,
+                users.Count,
                 data);
         }
 
