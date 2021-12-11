@@ -127,7 +127,7 @@
             "position": {
               "x": 6,
               "y": 0,
-              "colSpan": 7,
+              "colSpan": 9,
               "rowSpan": 4
             },
             "metadata": {
@@ -151,7 +151,7 @@
                 },
                 {
                   "name": "PartId",
-                  "value": "26dd0643-8959-420d-910a-d7671315da30",
+                  "value": "306d71b6-3474-4c68-a611-6ed0c63102aa",
                   "isOptional": true
                 },
                 {
@@ -161,7 +161,6 @@
                 },
                 {
                   "name": "TimeRange",
-                  "value": "P7D",
                   "isOptional": true
                 },
                 {
@@ -174,108 +173,7 @@
                 },
                 {
                   "name": "Query",
-                  "value": "customEvents\n| where name == \"Group Monitor|Licensing Errors\"\n| extend tenant_id = tostring(customDimensions[\"TenantId\"])\n| extend group_name = tostring(customDimensions[\"DisplayName\"])\n| extend group_processing_state = tostring(customDimensions[\"LicenseProcessingState\"])\n| summarize last_error = max(timestamp) by tenant_id, group_name, group_processing_state\n| order by tenant_id asc, group_name asc\n",
-                  "isOptional": true
-                },
-                {
-                  "name": "ControlType",
-                  "value": "AnalyticsGrid",
-                  "isOptional": true
-                },
-                {
-                  "name": "SpecificChart",
-                  "isOptional": true
-                },
-                {
-                  "name": "PartTitle",
-                  "value": "Analytics",
-                  "isOptional": true
-                },
-                {
-                  "name": "PartSubTitle",
-                  "value": "aadlicense-prd",
-                  "isOptional": true
-                },
-                {
-                  "name": "Dimensions",
-                  "isOptional": true
-                },
-                {
-                  "name": "LegendOptions",
-                  "isOptional": true
-                },
-                {
-                  "name": "IsQueryContainTimeRange",
-                  "value": false,
-                  "isOptional": true
-                }
-              ],
-              "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
-              "settings": {
-                "content": {
-                  "GridColumnsWidth": {
-                    "tenant_id": "116px"
-                  }
-                }
-              },
-              "partHeader": {
-                "title": "Groups with Licensing Errors",
-                "subtitle": "details"
-              }
-            }
-          },
-          "2": {
-            "position": {
-              "x": 13,
-              "y": 0,
-              "colSpan": 6,
-              "rowSpan": 4
-            },
-            "metadata": {
-              "inputs": [
-                {
-                  "name": "resourceTypeMode",
-                  "isOptional": true
-                },
-                {
-                  "name": "ComponentId",
-                  "isOptional": true
-                },
-                {
-                  "name": "Scope",
-                  "value": {
-                    "resourceIds": [
-                      "/subscriptions/2d518713-c5a2-4fcb-a600-307c349add12/resourceGroups/aadlicense-prd/providers/microsoft.insights/components/aadlicense-prd"
-                    ]
-                  },
-                  "isOptional": true
-                },
-                {
-                  "name": "PartId",
-                  "value": "8f592fa7-cb4d-4a0a-a8d6-ba66b142e7fd",
-                  "isOptional": true
-                },
-                {
-                  "name": "Version",
-                  "value": "2.0",
-                  "isOptional": true
-                },
-                {
-                  "name": "TimeRange",
-                  "value": "P7D",
-                  "isOptional": true
-                },
-                {
-                  "name": "DashboardId",
-                  "isOptional": true
-                },
-                {
-                  "name": "DraftRequestParameters",
-                  "isOptional": true
-                },
-                {
-                  "name": "Query",
-                  "value": "customEvents\n| where name == \"Group Monitor|Processing State\"\n| extend group_id = tostring(customDimensions[\"GroupId\"])\n| extend processing_state = tostring(customDimensions[\"LicenseProcessingState\"])\n| summarize dcount(group_id) by processing_state, startofday(timestamp)",
+                  "value": "customEvents\n| where timestamp > ago(1d)\n| where name == \"Group Monitor|Users with licensing errors\"\n| extend user_count = tolong(customMeasurements[\"UserCount\"])\n| extend group_name = tostring(customDimensions[\"DisplayName\"])\n| summarize max(user_count) by group_name\n",
                   "isOptional": true
                 },
                 {
@@ -285,7 +183,7 @@
                 },
                 {
                   "name": "SpecificChart",
-                  "value": "StackedColumn",
+                  "value": "Donut",
                   "isOptional": true
                 },
                 {
@@ -302,21 +200,16 @@
                   "name": "Dimensions",
                   "value": {
                     "xAxis": {
-                      "name": "timestamp",
-                      "type": "datetime"
+                      "name": "group_name",
+                      "type": "string"
                     },
                     "yAxis": [
                       {
-                        "name": "dcount_group_id",
+                        "name": "max_user_count",
                         "type": "long"
                       }
                     ],
-                    "splitBy": [
-                      {
-                        "name": "processing_state",
-                        "type": "string"
-                      }
-                    ],
+                    "splitBy": [],
                     "aggregation": "Sum"
                   },
                   "isOptional": true
@@ -331,19 +224,26 @@
                 },
                 {
                   "name": "IsQueryContainTimeRange",
-                  "value": false,
+                  "value": true,
                   "isOptional": true
                 }
               ],
               "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
-              "settings": {},
-              "partHeader": {
-                "title": "Managed Group License Processing State",
-                "subtitle": "by day"
+              "settings": {
+                "content": {
+                  "Query": "customEvents\n| where name == \"Group Monitor|Users with licensing errors\"\n| extend user_count = tolong(customMeasurements[\"UserCount\"])\n| extend group_name = tostring(customDimensions[\"DisplayName\"])\n| summarize max(user_count) by group_name\n\n",
+                  "PartTitle": "Licensing Errors",
+                  "PartSubTitle": "by group",
+                  "LegendOptions": {
+                    "isEnabled": true,
+                    "position": "Right"
+                  },
+                  "IsQueryContainTimeRange": false
+                }
               }
             }
           },
-          "3": {
+          "2": {
             "position": {
               "x": 0,
               "y": 4,
@@ -371,7 +271,7 @@
                 },
                 {
                   "name": "PartId",
-                  "value": "10fb676d-13a6-42aa-a6d1-05314bd105f4",
+                  "value": "1db78e8f-5514-4051-b8c6-92e9829068a5",
                   "isOptional": true
                 },
                 {
@@ -381,7 +281,6 @@
                 },
                 {
                   "name": "TimeRange",
-                  "value": "P7D",
                   "isOptional": true
                 },
                 {
@@ -394,7 +293,7 @@
                 },
                 {
                   "name": "Query",
-                  "value": "customEvents\n| where name startswith \"License Governance|Change Summary\"\n| extend mode = tostring(customDimensions[\"AssignmentMode\"])\n| extend action_add = tolong(customDimensions[\"Added\"])\n| extend action_remove = tolong(customDimensions[\"Removed\"])\n| extend action_update = tolong(customDimensions[\"Updated\"])\n| summarize added = max(action_add), removed = max(action_remove), updated = max(action_update) by startofday(timestamp)",
+                  "value": "customEvents\n| where timestamp > ago(1d)\n| where name == \"Group Monitor|Users with licensing errors\"\n| extend user_count = tolong(customMeasurements[\"UserCount\"])\n| summarize users_with_errors=max(user_count) by startofday(timestamp)\n",
                   "isOptional": true
                 },
                 {
@@ -426,15 +325,7 @@
                     },
                     "yAxis": [
                       {
-                        "name": "added",
-                        "type": "long"
-                      },
-                      {
-                        "name": "removed",
-                        "type": "long"
-                      },
-                      {
-                        "name": "updated",
+                        "name": "users_with_errors",
                         "type": "long"
                       }
                     ],
@@ -453,27 +344,49 @@
                 },
                 {
                   "name": "IsQueryContainTimeRange",
-                  "value": false,
+                  "value": true,
                   "isOptional": true
                 }
               ],
               "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
               "settings": {
                 "content": {
-                  "Query": "customEvents\n| where name startswith \"License Governance|Change Summary\"\n| extend mode = tostring(customDimensions[\"AssignmentMode\"])\n| extend action_add = tolong(customDimensions[\"Added\"])\n| extend action_remove = tolong(customDimensions[\"Removed\"])\n| extend action_update = tolong(customDimensions[\"Updated\"])\n| where mode == \"Enforce\"\n| summarize added = max(action_add), removed = max(action_remove), updated = max(action_update) by startofday(timestamp)\n"
+                  "Query": "customEvents\n| where name == \"Group Monitor|User Licensing Errors\"\n| extend user_principal_name = tostring(customDimensions[\"UserPrincipalName\"])\n| extend tenant_id = tostring(customDimensions[\"TenantId\"])\n| summarize users_with_licensing_errors=dcount(user_principal_name) by tenant_id, startofday(timestamp)\n\n",
+                  "PartTitle": "Users with Licensing Errors",
+                  "PartSubTitle": "by tenant",
+                  "Dimensions": {
+                    "xAxis": {
+                      "name": "timestamp",
+                      "type": "datetime"
+                    },
+                    "yAxis": [
+                      {
+                        "name": "users_with_licensing_errors",
+                        "type": "long"
+                      }
+                    ],
+                    "splitBy": [
+                      {
+                        "name": "tenant_id",
+                        "type": "string"
+                      }
+                    ],
+                    "aggregation": "Sum"
+                  },
+                  "LegendOptions": {
+                    "isEnabled": true,
+                    "position": "Bottom"
+                  },
+                  "IsQueryContainTimeRange": false
                 }
-              },
-              "partHeader": {
-                "title": "Group License Enforcement Actions",
-                "subtitle": "by action"
               }
             }
           },
-          "4": {
+          "3": {
             "position": {
               "x": 6,
               "y": 4,
-              "colSpan": 7,
+              "colSpan": 9,
               "rowSpan": 4
             },
             "metadata": {
@@ -497,112 +410,7 @@
                 },
                 {
                   "name": "PartId",
-                  "value": "0ac805e6-105b-49fb-9461-c3f9e215a443",
-                  "isOptional": true
-                },
-                {
-                  "name": "Version",
-                  "value": "2.0",
-                  "isOptional": true
-                },
-                {
-                  "name": "TimeRange",
-                  "value": "P7D",
-                  "isOptional": true
-                },
-                {
-                  "name": "DashboardId",
-                  "isOptional": true
-                },
-                {
-                  "name": "DraftRequestParameters",
-                  "isOptional": true
-                },
-                {
-                  "name": "Query",
-                  "value": "customEvents\n| where name startswith \"License Governance|Change Summary\"\n| extend mode = tostring(customDimensions[\"AssignmentMode\"])\n| extend tenant_id = tostring(customDimensions[\"TenantId\"])\n| extend group_id = tostring(customDimensions[\"GroupId\"])\n| extend action_add = tolong(customDimensions[\"Added\"])\n| extend action_remove = tolong(customDimensions[\"Removed\"])\n| extend action_update = tolong(customDimensions[\"Updated\"])\n| summarize added = max(action_add), removed = max(action_remove), updated = max(action_update) by group_id, mode\n| order by group_id asc, mode asc\n\n",
-                  "isOptional": true
-                },
-                {
-                  "name": "ControlType",
-                  "value": "AnalyticsGrid",
-                  "isOptional": true
-                },
-                {
-                  "name": "SpecificChart",
-                  "isOptional": true
-                },
-                {
-                  "name": "PartTitle",
-                  "value": "Analytics",
-                  "isOptional": true
-                },
-                {
-                  "name": "PartSubTitle",
-                  "value": "aadlicense-prd",
-                  "isOptional": true
-                },
-                {
-                  "name": "Dimensions",
-                  "isOptional": true
-                },
-                {
-                  "name": "LegendOptions",
-                  "isOptional": true
-                },
-                {
-                  "name": "IsQueryContainTimeRange",
-                  "value": false,
-                  "isOptional": true
-                }
-              ],
-              "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
-              "settings": {
-                "content": {
-                  "GridColumnsWidth": {
-                    "mode": "86px",
-                    "added": "88px",
-                    "removed": "90px",
-                    "updated": "97px",
-                    "group_id": "196px"
-                  }
-                }
-              },
-              "partHeader": {
-                "title": "Managed Group Actions",
-                "subtitle": "by mode and day"
-              }
-            }
-          },
-          "5": {
-            "position": {
-              "x": 13,
-              "y": 4,
-              "colSpan": 6,
-              "rowSpan": 4
-            },
-            "metadata": {
-              "inputs": [
-                {
-                  "name": "resourceTypeMode",
-                  "isOptional": true
-                },
-                {
-                  "name": "ComponentId",
-                  "isOptional": true
-                },
-                {
-                  "name": "Scope",
-                  "value": {
-                    "resourceIds": [
-                      "/subscriptions/2d518713-c5a2-4fcb-a600-307c349add12/resourceGroups/aadlicense-prd/providers/microsoft.insights/components/aadlicense-prd"
-                    ]
-                  },
-                  "isOptional": true
-                },
-                {
-                  "name": "PartId",
-                  "value": "5c5fe38a-20d4-4604-9c12-25322af316d3",
+                  "value": "0b6b36e8-8297-4c27-9734-6e57e9d2f159",
                   "isOptional": true
                 },
                 {
@@ -625,7 +433,7 @@
                 },
                 {
                   "name": "Query",
-                  "value": "customEvents\n| where name startswith \"License Governance|Change Summary\"\n| extend mode = tostring(customDimensions[\"AssignmentMode\"])\n| extend group_id = tostring(customDimensions[\"GroupId\"])\n| extend action_add = tolong(customDimensions[\"Added\"])\n| extend action_remove = tolong(customDimensions[\"Removed\"])\n| extend action_update = tolong(customDimensions[\"Updated\"])\n| where (action_add + action_update + action_remove) > 0\n| summarize updated_groups = dcount(group_id) by mode, startofday(timestamp)\n",
+                  "value": "let products = customEvents\n| where name == \"Product Monitoring|LicenseUsage\"\n| extend sku_id = tostring(customDimensions[\"ProductId\"])\n| extend product_name = tostring(customDimensions[\"ProductName\"])\n| distinct sku_id, product_name;\n\nlet errors = customEvents\n| where name == \"Group Monitor|User Licensing State\"\n| extend user_id = tostring(customDimensions[\"UserId\"])\n| extend status = tostring(customDimensions[\"Status\"])\n| extend error = tostring(customDimensions[\"Error\"])\n| extend sku_id = tostring(customDimensions[\"SkuId\"])\n| where status != \"Active\"\n| summarize user_count=dcount(user_id) by sku_id;\n\nerrors\n| join products on sku_id\n| project user_count, product_name\n",
                   "isOptional": true
                 },
                 {
@@ -635,7 +443,7 @@
                 },
                 {
                   "name": "SpecificChart",
-                  "value": "StackedColumn",
+                  "value": "Donut",
                   "isOptional": true
                 },
                 {
@@ -652,21 +460,16 @@
                   "name": "Dimensions",
                   "value": {
                     "xAxis": {
-                      "name": "timestamp",
-                      "type": "datetime"
+                      "name": "product_name",
+                      "type": "string"
                     },
                     "yAxis": [
                       {
-                        "name": "updated_groups",
+                        "name": "user_count",
                         "type": "long"
                       }
                     ],
-                    "splitBy": [
-                      {
-                        "name": "mode",
-                        "type": "string"
-                      }
-                    ],
+                    "splitBy": [],
                     "aggregation": "Sum"
                   },
                   "isOptional": true
@@ -675,7 +478,7 @@
                   "name": "LegendOptions",
                   "value": {
                     "isEnabled": true,
-                    "position": "Bottom"
+                    "position": "Right"
                   },
                   "isOptional": true
                 },
@@ -686,10 +489,127 @@
                 }
               ],
               "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
-              "settings": {},
-              "partHeader": {
-                "title": "Group License Modifications",
-                "subtitle": "by mode and day"
+              "settings": {
+                "content": {
+                  "Query": "let products = customEvents\n| where name == \"Product Monitoring|LicenseUsage\"\n| extend sku_id = tostring(customDimensions[\"ProductId\"])\n| extend product_name = tostring(customDimensions[\"ProductName\"])\n| distinct sku_id, product_name;\n\nlet errors = customEvents\n| where name == \"Group Monitor|User Licensing State\"\n| extend user_id = tostring(customDimensions[\"UserId\"])\n| extend status = tostring(customDimensions[\"Status\"])\n| extend error = tostring(customDimensions[\"Error\"])\n| extend sku_id = tostring(customDimensions[\"SkuId\"])\n| where status != \"Active\"\n| summarize user_count=dcount(user_id) by sku_id;\n\nerrors\n| join kind=leftouter products on sku_id\n| project user_count, product_name = iif(product_name==\"\",sku_id,product_name)\n",
+                  "PartTitle": "User Licensing Errors",
+                  "PartSubTitle": "by product"
+                }
+              }
+            }
+          },
+          "4": {
+            "position": {
+              "x": 6,
+              "y": 8,
+              "colSpan": 9,
+              "rowSpan": 4
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "resourceTypeMode",
+                  "isOptional": true
+                },
+                {
+                  "name": "ComponentId",
+                  "isOptional": true
+                },
+                {
+                  "name": "Scope",
+                  "value": {
+                    "resourceIds": [
+                      "/subscriptions/2d518713-c5a2-4fcb-a600-307c349add12/resourceGroups/aadlicense-prd/providers/microsoft.insights/components/aadlicense-prd"
+                    ]
+                  },
+                  "isOptional": true
+                },
+                {
+                  "name": "PartId",
+                  "value": "14b98efc-4351-4371-9241-1ece7c4dcf0a",
+                  "isOptional": true
+                },
+                {
+                  "name": "Version",
+                  "value": "2.0",
+                  "isOptional": true
+                },
+                {
+                  "name": "TimeRange",
+                  "value": "P1D",
+                  "isOptional": true
+                },
+                {
+                  "name": "DashboardId",
+                  "isOptional": true
+                },
+                {
+                  "name": "DraftRequestParameters",
+                  "isOptional": true
+                },
+                {
+                  "name": "Query",
+                  "value": " customEvents\n| where name == \"Group Monitor|User Licensing State\"\n| extend user_id = tostring(customDimensions[\"UserId\"])\n| extend status = tostring(customDimensions[\"Status\"])\n| extend error = tostring(customDimensions[\"Error\"])\n| extend sku_id = tostring(customDimensions[\"SkuId\"])\n| where status != \"Active\"\n| summarize user_count=dcount(user_id) by error;\n\n",
+                  "isOptional": true
+                },
+                {
+                  "name": "ControlType",
+                  "value": "FrameControlChart",
+                  "isOptional": true
+                },
+                {
+                  "name": "SpecificChart",
+                  "value": "Donut",
+                  "isOptional": true
+                },
+                {
+                  "name": "PartTitle",
+                  "value": "Analytics",
+                  "isOptional": true
+                },
+                {
+                  "name": "PartSubTitle",
+                  "value": "aadlicense-prd",
+                  "isOptional": true
+                },
+                {
+                  "name": "Dimensions",
+                  "value": {
+                    "xAxis": {
+                      "name": "error",
+                      "type": "string"
+                    },
+                    "yAxis": [
+                      {
+                        "name": "user_count",
+                        "type": "long"
+                      }
+                    ],
+                    "splitBy": [],
+                    "aggregation": "Sum"
+                  },
+                  "isOptional": true
+                },
+                {
+                  "name": "LegendOptions",
+                  "value": {
+                    "isEnabled": true,
+                    "position": "Right"
+                  },
+                  "isOptional": true
+                },
+                {
+                  "name": "IsQueryContainTimeRange",
+                  "value": false,
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
+              "settings": {
+                "content": {
+                  "PartTitle": "User Licensing Errors",
+                  "PartSubTitle": "by error type"
+                }
               }
             }
           }
@@ -723,12 +643,11 @@
                 "value": "Past 7 days"
               },
               "filteredPartIds": [
-                "StartboardPart-LogsDashboardPart-b04f2462-8dd3-49ac-b13d-78c496e99663",
-                "StartboardPart-LogsDashboardPart-b04f2462-8dd3-49ac-b13d-78c496e99665",
-                "StartboardPart-LogsDashboardPart-b04f2462-8dd3-49ac-b13d-78c496e99667",
-                "StartboardPart-LogsDashboardPart-b04f2462-8dd3-49ac-b13d-78c496e99669",
-                "StartboardPart-LogsDashboardPart-b04f2462-8dd3-49ac-b13d-78c496e9966b",
-                "StartboardPart-LogsDashboardPart-b04f2462-8dd3-49ac-b13d-78c496e9966d"
+                "StartboardPart-LogsDashboardPart-bda64c47-9eb1-4963-8dd2-778f5fda8009",
+                "StartboardPart-LogsDashboardPart-bda64c47-9eb1-4963-8dd2-778f5fda800b",
+                "StartboardPart-LogsDashboardPart-bda64c47-9eb1-4963-8dd2-778f5fda800d",
+                "StartboardPart-LogsDashboardPart-bda64c47-9eb1-4963-8dd2-778f5fda800f",
+                "StartboardPart-LogsDashboardPart-bda64c47-9eb1-4963-8dd2-778f5fda8011"
               ]
             }
           }
@@ -736,11 +655,11 @@
       }
     }
   },
-  "name": "AAD License Governor Group Metrics",
+  "name": "AAD License Governor Licensing Metrics",
   "type": "Microsoft.Portal/dashboards",
   "location": "INSERT LOCATION",
   "tags": {
-    "hidden-title": "AAD License Governor Group Metrics"
+    "hidden-title": "AAD License Governor Licensing Metrics"
   },
   "apiVersion": "2015-08-01-preview"
 }

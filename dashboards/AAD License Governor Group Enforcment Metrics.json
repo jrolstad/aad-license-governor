@@ -1,0 +1,529 @@
+{
+  "properties": {
+    "lenses": {
+      "0": {
+        "order": 0,
+        "parts": {
+          "0": {
+            "position": {
+              "x": 0,
+              "y": 0,
+              "colSpan": 6,
+              "rowSpan": 4
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "resourceTypeMode",
+                  "isOptional": true
+                },
+                {
+                  "name": "ComponentId",
+                  "isOptional": true
+                },
+                {
+                  "name": "Scope",
+                  "value": {
+                    "resourceIds": [
+                      "/subscriptions/2d518713-c5a2-4fcb-a600-307c349add12/resourceGroups/aadlicense-prd/providers/microsoft.insights/components/aadlicense-prd"
+                    ]
+                  },
+                  "isOptional": true
+                },
+                {
+                  "name": "PartId",
+                  "value": "10fb676d-13a6-42aa-a6d1-05314bd105f4",
+                  "isOptional": true
+                },
+                {
+                  "name": "Version",
+                  "value": "2.0",
+                  "isOptional": true
+                },
+                {
+                  "name": "TimeRange",
+                  "value": "P7D",
+                  "isOptional": true
+                },
+                {
+                  "name": "DashboardId",
+                  "isOptional": true
+                },
+                {
+                  "name": "DraftRequestParameters",
+                  "isOptional": true
+                },
+                {
+                  "name": "Query",
+                  "value": "customEvents\n| where name startswith \"License Governance|Change Summary\"\n| extend mode = tostring(customDimensions[\"AssignmentMode\"])\n| extend action_add = tolong(customDimensions[\"Added\"])\n| extend action_remove = tolong(customDimensions[\"Removed\"])\n| extend action_update = tolong(customDimensions[\"Updated\"])\n| summarize added = max(action_add), removed = max(action_remove), updated = max(action_update) by startofday(timestamp)",
+                  "isOptional": true
+                },
+                {
+                  "name": "ControlType",
+                  "value": "FrameControlChart",
+                  "isOptional": true
+                },
+                {
+                  "name": "SpecificChart",
+                  "value": "StackedColumn",
+                  "isOptional": true
+                },
+                {
+                  "name": "PartTitle",
+                  "value": "Analytics",
+                  "isOptional": true
+                },
+                {
+                  "name": "PartSubTitle",
+                  "value": "aadlicense-prd",
+                  "isOptional": true
+                },
+                {
+                  "name": "Dimensions",
+                  "value": {
+                    "xAxis": {
+                      "name": "timestamp",
+                      "type": "datetime"
+                    },
+                    "yAxis": [
+                      {
+                        "name": "added",
+                        "type": "long"
+                      },
+                      {
+                        "name": "removed",
+                        "type": "long"
+                      },
+                      {
+                        "name": "updated",
+                        "type": "long"
+                      }
+                    ],
+                    "splitBy": [],
+                    "aggregation": "Sum"
+                  },
+                  "isOptional": true
+                },
+                {
+                  "name": "LegendOptions",
+                  "value": {
+                    "isEnabled": true,
+                    "position": "Bottom"
+                  },
+                  "isOptional": true
+                },
+                {
+                  "name": "IsQueryContainTimeRange",
+                  "value": false,
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
+              "settings": {
+                "content": {
+                  "Query": "customEvents\n| where name startswith \"License Governance|Change Summary\"\n| extend mode = tostring(customDimensions[\"AssignmentMode\"])\n| extend action_add = tolong(customDimensions[\"Added\"])\n| extend action_remove = tolong(customDimensions[\"Removed\"])\n| extend action_update = tolong(customDimensions[\"Updated\"])\n| where mode == \"Enforce\"\n| summarize added = max(action_add), removed = max(action_remove), updated = max(action_update) by startofday(timestamp)\n"
+                }
+              },
+              "partHeader": {
+                "title": "Group License Enforcement Actions",
+                "subtitle": "by action"
+              }
+            }
+          },
+          "1": {
+            "position": {
+              "x": 6,
+              "y": 0,
+              "colSpan": 7,
+              "rowSpan": 4
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "resourceTypeMode",
+                  "isOptional": true
+                },
+                {
+                  "name": "ComponentId",
+                  "isOptional": true
+                },
+                {
+                  "name": "Scope",
+                  "value": {
+                    "resourceIds": [
+                      "/subscriptions/2d518713-c5a2-4fcb-a600-307c349add12/resourceGroups/aadlicense-prd/providers/microsoft.insights/components/aadlicense-prd"
+                    ]
+                  },
+                  "isOptional": true
+                },
+                {
+                  "name": "PartId",
+                  "value": "0ac805e6-105b-49fb-9461-c3f9e215a443",
+                  "isOptional": true
+                },
+                {
+                  "name": "Version",
+                  "value": "2.0",
+                  "isOptional": true
+                },
+                {
+                  "name": "TimeRange",
+                  "value": "P7D",
+                  "isOptional": true
+                },
+                {
+                  "name": "DashboardId",
+                  "isOptional": true
+                },
+                {
+                  "name": "DraftRequestParameters",
+                  "isOptional": true
+                },
+                {
+                  "name": "Query",
+                  "value": "customEvents\n| where name startswith \"License Governance|Change Summary\"\n| extend mode = tostring(customDimensions[\"AssignmentMode\"])\n| extend tenant_id = tostring(customDimensions[\"TenantId\"])\n| extend group_id = tostring(customDimensions[\"GroupId\"])\n| extend action_add = tolong(customDimensions[\"Added\"])\n| extend action_remove = tolong(customDimensions[\"Removed\"])\n| extend action_update = tolong(customDimensions[\"Updated\"])\n| summarize added = max(action_add), removed = max(action_remove), updated = max(action_update) by group_id, mode\n| order by group_id asc, mode asc\n\n",
+                  "isOptional": true
+                },
+                {
+                  "name": "ControlType",
+                  "value": "AnalyticsGrid",
+                  "isOptional": true
+                },
+                {
+                  "name": "SpecificChart",
+                  "isOptional": true
+                },
+                {
+                  "name": "PartTitle",
+                  "value": "Analytics",
+                  "isOptional": true
+                },
+                {
+                  "name": "PartSubTitle",
+                  "value": "aadlicense-prd",
+                  "isOptional": true
+                },
+                {
+                  "name": "Dimensions",
+                  "isOptional": true
+                },
+                {
+                  "name": "LegendOptions",
+                  "isOptional": true
+                },
+                {
+                  "name": "IsQueryContainTimeRange",
+                  "value": false,
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
+              "settings": {
+                "content": {
+                  "GridColumnsWidth": {
+                    "mode": "86px",
+                    "added": "88px",
+                    "removed": "90px",
+                    "updated": "97px",
+                    "group_id": "196px"
+                  }
+                }
+              },
+              "partHeader": {
+                "title": "Managed Group Actions",
+                "subtitle": "by mode and day"
+              }
+            }
+          },
+          "2": {
+            "position": {
+              "x": 0,
+              "y": 4,
+              "colSpan": 6,
+              "rowSpan": 4
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "resourceTypeMode",
+                  "isOptional": true
+                },
+                {
+                  "name": "ComponentId",
+                  "isOptional": true
+                },
+                {
+                  "name": "Scope",
+                  "value": {
+                    "resourceIds": [
+                      "/subscriptions/2d518713-c5a2-4fcb-a600-307c349add12/resourceGroups/aadlicense-prd/providers/microsoft.insights/components/aadlicense-prd"
+                    ]
+                  },
+                  "isOptional": true
+                },
+                {
+                  "name": "PartId",
+                  "value": "8f592fa7-cb4d-4a0a-a8d6-ba66b142e7fd",
+                  "isOptional": true
+                },
+                {
+                  "name": "Version",
+                  "value": "2.0",
+                  "isOptional": true
+                },
+                {
+                  "name": "TimeRange",
+                  "value": "P7D",
+                  "isOptional": true
+                },
+                {
+                  "name": "DashboardId",
+                  "isOptional": true
+                },
+                {
+                  "name": "DraftRequestParameters",
+                  "isOptional": true
+                },
+                {
+                  "name": "Query",
+                  "value": "customEvents\n| where name == \"Group Monitor|Processing State\"\n| extend group_id = tostring(customDimensions[\"GroupId\"])\n| extend processing_state = tostring(customDimensions[\"LicenseProcessingState\"])\n| summarize dcount(group_id) by processing_state, startofday(timestamp)",
+                  "isOptional": true
+                },
+                {
+                  "name": "ControlType",
+                  "value": "FrameControlChart",
+                  "isOptional": true
+                },
+                {
+                  "name": "SpecificChart",
+                  "value": "StackedColumn",
+                  "isOptional": true
+                },
+                {
+                  "name": "PartTitle",
+                  "value": "Analytics",
+                  "isOptional": true
+                },
+                {
+                  "name": "PartSubTitle",
+                  "value": "aadlicense-prd",
+                  "isOptional": true
+                },
+                {
+                  "name": "Dimensions",
+                  "value": {
+                    "xAxis": {
+                      "name": "timestamp",
+                      "type": "datetime"
+                    },
+                    "yAxis": [
+                      {
+                        "name": "dcount_group_id",
+                        "type": "long"
+                      }
+                    ],
+                    "splitBy": [
+                      {
+                        "name": "processing_state",
+                        "type": "string"
+                      }
+                    ],
+                    "aggregation": "Sum"
+                  },
+                  "isOptional": true
+                },
+                {
+                  "name": "LegendOptions",
+                  "value": {
+                    "isEnabled": true,
+                    "position": "Bottom"
+                  },
+                  "isOptional": true
+                },
+                {
+                  "name": "IsQueryContainTimeRange",
+                  "value": false,
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
+              "settings": {},
+              "partHeader": {
+                "title": "Managed Group License Processing State",
+                "subtitle": "by day"
+              }
+            }
+          },
+          "3": {
+            "position": {
+              "x": 6,
+              "y": 4,
+              "colSpan": 6,
+              "rowSpan": 4
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "resourceTypeMode",
+                  "isOptional": true
+                },
+                {
+                  "name": "ComponentId",
+                  "isOptional": true
+                },
+                {
+                  "name": "Scope",
+                  "value": {
+                    "resourceIds": [
+                      "/subscriptions/2d518713-c5a2-4fcb-a600-307c349add12/resourceGroups/aadlicense-prd/providers/microsoft.insights/components/aadlicense-prd"
+                    ]
+                  },
+                  "isOptional": true
+                },
+                {
+                  "name": "PartId",
+                  "value": "5c5fe38a-20d4-4604-9c12-25322af316d3",
+                  "isOptional": true
+                },
+                {
+                  "name": "Version",
+                  "value": "2.0",
+                  "isOptional": true
+                },
+                {
+                  "name": "TimeRange",
+                  "value": "P1D",
+                  "isOptional": true
+                },
+                {
+                  "name": "DashboardId",
+                  "isOptional": true
+                },
+                {
+                  "name": "DraftRequestParameters",
+                  "isOptional": true
+                },
+                {
+                  "name": "Query",
+                  "value": "customEvents\n| where name startswith \"License Governance|Change Summary\"\n| extend mode = tostring(customDimensions[\"AssignmentMode\"])\n| extend group_id = tostring(customDimensions[\"GroupId\"])\n| extend action_add = tolong(customDimensions[\"Added\"])\n| extend action_remove = tolong(customDimensions[\"Removed\"])\n| extend action_update = tolong(customDimensions[\"Updated\"])\n| where (action_add + action_update + action_remove) > 0\n| summarize updated_groups = dcount(group_id) by mode, startofday(timestamp)\n",
+                  "isOptional": true
+                },
+                {
+                  "name": "ControlType",
+                  "value": "FrameControlChart",
+                  "isOptional": true
+                },
+                {
+                  "name": "SpecificChart",
+                  "value": "StackedColumn",
+                  "isOptional": true
+                },
+                {
+                  "name": "PartTitle",
+                  "value": "Analytics",
+                  "isOptional": true
+                },
+                {
+                  "name": "PartSubTitle",
+                  "value": "aadlicense-prd",
+                  "isOptional": true
+                },
+                {
+                  "name": "Dimensions",
+                  "value": {
+                    "xAxis": {
+                      "name": "timestamp",
+                      "type": "datetime"
+                    },
+                    "yAxis": [
+                      {
+                        "name": "updated_groups",
+                        "type": "long"
+                      }
+                    ],
+                    "splitBy": [
+                      {
+                        "name": "mode",
+                        "type": "string"
+                      }
+                    ],
+                    "aggregation": "Sum"
+                  },
+                  "isOptional": true
+                },
+                {
+                  "name": "LegendOptions",
+                  "value": {
+                    "isEnabled": true,
+                    "position": "Bottom"
+                  },
+                  "isOptional": true
+                },
+                {
+                  "name": "IsQueryContainTimeRange",
+                  "value": false,
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart",
+              "settings": {
+                "content": {
+                  "PartTitle": "Managed Group License Actions",
+                  "PartSubTitle": "by mode"
+                }
+              },
+              "partHeader": {
+                "title": "Group License Modifications",
+                "subtitle": "by mode and day"
+              }
+            }
+          }
+        }
+      }
+    },
+    "metadata": {
+      "model": {
+        "timeRange": {
+          "value": {
+            "relative": {
+              "duration": 24,
+              "timeUnit": 1
+            }
+          },
+          "type": "MsPortalFx.Composition.Configuration.ValueTypes.TimeRange"
+        },
+        "filterLocale": {
+          "value": "en-us"
+        },
+        "filters": {
+          "value": {
+            "MsPortalFx_TimeRange": {
+              "model": {
+                "format": "local",
+                "granularity": "auto",
+                "relative": "7d"
+              },
+              "displayCache": {
+                "name": "Local Time",
+                "value": "Past 7 days"
+              },
+              "filteredPartIds": [
+                "StartboardPart-LogsDashboardPart-d92dad9e-4525-464c-b3c5-f067860c57f2",
+                "StartboardPart-LogsDashboardPart-d92dad9e-4525-464c-b3c5-f067860c57fc",
+                "StartboardPart-LogsDashboardPart-d92dad9e-4525-464c-b3c5-f067860c57fe",
+                "StartboardPart-LogsDashboardPart-d92dad9e-4525-464c-b3c5-f067860c5800"
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "name": "AAD License Governor Group Enforcment Metrics",
+  "type": "Microsoft.Portal/dashboards",
+  "location": "INSERT LOCATION",
+  "tags": {
+    "hidden-title": "AAD License Governor Group Enforcment Metrics"
+  },
+  "apiVersion": "2015-08-01-preview"
+}
