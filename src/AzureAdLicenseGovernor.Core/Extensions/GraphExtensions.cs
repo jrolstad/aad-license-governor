@@ -9,6 +9,8 @@ namespace AzureAdLicenseGovernor.Core.Extensions
         public static async Task<IEnumerable<TResponse>> ExecuteBatch<TResponse>(this Microsoft.Graph.IGraphServiceClient client,
           IEnumerable<Microsoft.Graph.IBaseRequest> requests)
         {
+            if(requests == null || !requests.Any()) return Enumerable.Empty<TResponse>();
+
             const int maximumBatchSize = 20; // Microsoft Graph API Batch Endpoint has a maximum of 20 requests in a single batch request
             var groupedRequests = requests.Split(maximumBatchSize);
 
